@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #d9d9d9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainMenuController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #d9d9d9;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.MainMenuController">
    <children>
       <Text fill="#1e1e1e" layoutX="232.0" layoutY="64.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.1" text="Welcome to" textAlignment="CENTER" wrappingWidth="134.841796875">
          <font>
@@ -23,7 +23,7 @@
       </Text>
       <Label layoutX="205.0" layoutY="140.0" prefHeight="16.0" prefWidth="191.0" text="Average Success: 100% (A+)" textAlignment="CENTER" textFill="#0dab1bed" />
       <Label layoutX="231.0" layoutY="156.0" text="Progress: 100% (A+)" textFill="#0dab1bed" />
-      <Button contentDisplay="TOP" layoutX="165.0" layoutY="187.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="135.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Practice" textFill="#ff9900">
+      <Button fx:id="practice" contentDisplay="TOP" layoutX="165.0" layoutY="187.0" mnemonicParsing="false" onAction="#practice" prefHeight="40.0" prefWidth="135.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Practice" textFill="#ff9900">
          <font>
             <Font name="DejaVu Sans Condensed Bold" size="16.0" />
          </font>
@@ -31,29 +31,29 @@
             <Insets />
          </opaqueInsets>
       </Button>
-      <Button layoutX="299.0" layoutY="187.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="135.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Challenge" textFill="#ff9900">
+      <Button fx:id="challenge" layoutX="299.0" layoutY="187.0" mnemonicParsing="false" onAction="#challenge" prefHeight="40.0" prefWidth="135.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Challenge" textFill="#ff9900">
          <font>
             <Font name="DejaVu Sans Condensed Bold" size="16.0" />
          </font>
       </Button>
       <Line endX="-9.0" endY="123.0" layoutX="309.0" layoutY="104.0" startX="-9.0" startY="83.0" stroke="#ff9900" />
-      <Button layoutX="248.0" layoutY="239.0" mnemonicParsing="false" opacity="0.93" prefHeight="16.0" prefWidth="105.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Create" textFill="#ff9900">
+      <Button fx:id="create" layoutX="248.0" layoutY="239.0" mnemonicParsing="false" onAction="#create" opacity="0.86" prefHeight="16.0" prefWidth="105.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Create" textFill="#ff9900">
          <font>
             <Font name="DejaVu Sans Condensed Bold" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="248.0" layoutY="282.0" mnemonicParsing="false" opacity="0.93" prefHeight="16.0" prefWidth="105.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Listen" textFill="#ff9900">
+      <Button fx:id="listen" layoutX="248.0" layoutY="282.0" mnemonicParsing="false" onAction="#listen" opacity="0.86" prefHeight="16.0" prefWidth="105.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Listen" textFill="#ff9900">
          <font>
             <Font name="DejaVu Sans Condensed Bold" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="248.0" layoutY="324.0" mnemonicParsing="false" opacity="0.93" prefHeight="16.0" prefWidth="105.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Stats" textFill="#ff9900">
+      <Button fx:id="stats" layoutX="248.0" layoutY="324.0" mnemonicParsing="false" onAction="#stats" opacity="0.86" prefHeight="16.0" prefWidth="105.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Stats" textFill="#ff9900">
          <font>
             <Font name="DejaVu Sans Condensed Bold" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="506.0" layoutY="360.0" mnemonicParsing="false" text="mic temp" />
-      <Button layoutX="14.0" layoutY="360.0" mnemonicParsing="false" text="?" />
+      <Button fx:id="micTest" layoutX="506.0" layoutY="360.0" mnemonicParsing="false" onAction="#micTest" text="mic temp" />
+      <Button fx:id="help" layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#help" text="?" />
    </children>
    <effect>
       <ColorAdjust brightness="-0.05" />
