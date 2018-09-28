@@ -17,6 +17,12 @@ public class Media {
 	private File _directory;
 	private static final File CURRENT_DIRECTORY = FileSystems.getDefault().getPath(".").toFile();
 
+	public Media(Challenge challenge) {
+		_fileName =  challenge.getFileName() + ".wav";
+		_originalName = null;
+		_directory = challenge.getDirectory();
+	}
+
 	public Media(Practice practice) {
 		_fileName =  practice.getFileName() + ".wav";
 		_originalName = null;

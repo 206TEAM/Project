@@ -33,15 +33,15 @@ public class Mediator {
 	public String getCurrentName() {
 		return _currentName;
 	}
-	
+
 	public void setFileName(String name) {
 		_currentFileName = name;
 	}
-	
+
 	public String getFileName() {
 		return _currentFileName;
 	}
-	
+
 	public void setCurrentName(String name) {
 		_currentName = name;
 	}
@@ -59,7 +59,7 @@ public class Mediator {
 		}
 	}
 
-	public List<String> getPracticeNames() {
+	public List<String> getChallengeNames() {
 		return _challengeNames;
 	}
 

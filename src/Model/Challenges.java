@@ -62,7 +62,7 @@ public class Challenges {
         List<String> names = Originals.getInstance().listNames();
 
         for (String name : names) {
-            File file = new File("Names/" + name + "/Challenges");
+            File file = new File("Names/" + name + "/Challenge");
             File[] fileList = file.listFiles();
 
             for (File f : fileList) {

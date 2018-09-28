@@ -61,12 +61,12 @@ public class Originals {
 		try {
 			List<String> names = listAllNames();
 			List<String> fileNames = listFileNames("Recordings");
-
+			//System.out.println("jfkdsljf");
 			// Make a folder for each creation containing sub-folders
 			for (String name : names) {
 				if (Files.notExists(Paths.get("Names/" + name))) {
 					Files.createDirectories(Paths.get("Names/" + name + "/Original"));
-					Files.createDirectories(Paths.get("Names/" + name + "/Practices"));
+					Files.createDirectories(Paths.get("Names/" + name + "/Challenge"));
 				}
 			}
 
