@@ -53,7 +53,7 @@ public class Challenge {
 
       /**
      *deletes a file specified by the fileName
-     * @param filePath must of the format filename.mp3 filename.mp4 etc
+     * @param filePath must of the format filename.wav etc
      */
     public void deleteFile(String filePath) {
 
@@ -84,9 +84,9 @@ public class Challenge {
             }
 
             if (names.size()==0) {
-                name = nameKey + "Practices1";
+                name = nameKey + "Challenge1";
             } else {
-                name = nameKey + "Practices" + Integer.toString(names.size() + 1);
+                name = nameKey + "Challenge" + Integer.toString(names.size() + 1);
 
             }
         return name;
@@ -100,7 +100,7 @@ public class Challenge {
     }
 
     public File getDirectory(){
-        return new File("Names" + System.getProperty("file.separator") + _nameKey + System.getProperty("file.separator") + "Practices");
+        return new File("Names" + System.getProperty("file.separator") + _nameKey + System.getProperty("file.separator") + "Challenges");
     }
 
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:controller="Control.StatsController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="600.0" style="-fx-background-color: #1e1e1e;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane prefHeight="234.0" prefWidth="600.0">
+         <children>
+            <ListView fx:id="poorListView" editable="true" layoutY="34.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffcccc;" />
+            <ListView fx:id="naListView" editable="true" layoutX="200.0" layoutY="34.0" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="goodListView" editable="true" layoutX="400.0" layoutY="34.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #b3ffb3;" />
+            <Text fill="#ffb8b8" layoutX="83.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Poor">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="245.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Not Attempted">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="#b6dab8" layoutX="481.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Good">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="13.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane layoutY="234.0" prefHeight="86.0" prefWidth="600.0" />
+      <TextArea fx:id="statsText" layoutY="234.0" prefHeight="86.0" prefWidth="600.0" promptText="Select a name" />
+   </children>
+</AnchorPane>

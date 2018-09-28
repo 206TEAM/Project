@@ -6,66 +6,19 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * This class represents a list of practices for each Name
- * _practices is a hashmap that contains the Name as the key value, and practice list for each name as the value.
- * _practiceNames is a list of the names that the user is currently practicing (originally selected)
- * _currentName is the name that the user is currently working on
+ * This class represents a list of challenges for each Name
+ * _challenges is a hashmap that contains the Name as the key value, and challenge list for each name as the value.
+ *
  */
 public class Challenges {
 
-    private HashMap<String, ArrayList<Practice>> _practices;
-    private ArrayList<String> _practiceNames;
-    protected String _currentName;
+    private HashMap<String, ArrayList<Challenge>> _challenges;
+
     private final static Challenges instance = new Challenges();
-    private String _currentFileName;
 
     private Challenges() {
-        _practices = new HashMap<String, ArrayList<Practice>>();
+        _challenges = new HashMap<String, ArrayList<Challenge>>();
         updateModel();
-    }
-
-    public void removePracticeName(String name){
-        _practiceNames.remove(name);
-    }
-
-    public void clearCurrentNames() {
-        _practiceNames = null;
-    }
-
-    /**
-     * gets the current name that is being worked on or selected
-     *
-     * @ the current name
-     */
-    public String getCurrentName() {
-        return _currentName;
-    }
-
-    /**
-     * sets the current name being worked on
-     *
-     * @param name the current name
-     */
-    public void setFileName(String name) {
-        _currentFileName = name;
-    }
-
-    /**
-     * gets the filename of the name that is being worked on or selected
-     *
-     * @return the file name
-     */
-    public String getFileName() {
-        return _currentFileName;
-    }
-
-    /**
-     * sets the current name being worked on
-     *
-     * @param name the current name
-     */
-    public void setCurrentName(String name) {
-        _currentName = name;
     }
 
     public static Challenges getInstance() {
@@ -73,55 +26,35 @@ public class Challenges {
     }
 
     /**
-     * creates a currently practicing names list
-     */
-    public void addNames(List<String> names) {
-        if (_practiceNames == null) {
-            _practiceNames = new ArrayList();
-            _practiceNames.addAll(names);
-        } else {
-            for (String name : names) {
-                if (!_practiceNames.contains(name)) {
-                    _practiceNames.add(name);
-                }
-            }
-        }
-    }
-
-    public List<String> getPracticeNames() {
-        return _practiceNames;
-    }
-
-    /**
-     * This method adds a practice recording into the practice list
+     * This method adds a challenge recording into the challenge list
      *
      * @param nameKey
-     * @param practice returns filename
+     * @param challenge returns filename
      */
-    public String addPractice(String nameKey, Practice practice) {
-        ArrayList<Practice> practiceList = new ArrayList<Practice>();
+    public String addChallenge(String nameKey, Challenge challenge) {
+        ArrayList<Challenge> challengeList = new ArrayList<Challenge>();
 
-        if (_practices.containsKey(nameKey)) { //if key already exists
-            practiceList = _practices.get(nameKey);
+        if (_challenges.containsKey(nameKey)) { //if key already exists
+            challengeList = _challenges.get(nameKey);
 
             // if list does not exist create it
-            if (practiceList == null) {
-                practiceList = new ArrayList<Practice>();
-                practiceList.add(practice);
-                _practices.put(nameKey, practiceList);
+            if (challengeList == null) {
+                challengeList = new ArrayList<Challenge>();
+                challengeList.add(challenge);
+                _challenges.put(nameKey, challengeList);
             } else {
-                practiceList.add(practice);
+                challengeList.add(challenge);
             }
         } else {
-            practiceList.add(practice);
-            _practices.put(nameKey, practiceList);
+            challengeList.add(challenge);
+            _challenges.put(nameKey, challengeList);
         }
 
-        return practice.getFileName();
+        return challenge.getFileName();
     }
 
     /**
-     * Populates the _practices with existing recording files in each folder.
+     * Populates the _challenges with existing recording files in each folder.
      * iterates through the names list from Original.java
      * goes into each folder and adds to the list
      */
@@ -129,30 +62,30 @@ public class Challenges {
         List<String> names = Originals.getInstance().listNames();
 
         for (String name : names) {
-            File file = new File("Names/" + name + "/Practices");
+            File file = new File("Names/" + name + "/Challenges");
             File[] fileList = file.listFiles();
 
             for (File f : fileList) {
                 String fullName = f.getName();
                 String fileName = fullName.substring(0, fullName.lastIndexOf('.'));
-                Practice practice = new Practice(name, fileName);
-                addPractice(name, practice);
+                Challenge challenge = new Challenge(name, fileName);
+                addChallenge(name, challenge);
             }
         }
     }
 
     /**
-     * returns a list of the fileNames of the practices given the nameKey
+     * returns a list of the fileNames of the challenges given the nameKey
      */
-    public List<String> listPractices(String nameKey) {
-        if (_practices.get(nameKey) != null) {
-            ArrayList<Practice> practiceList = _practices.get(nameKey);
-            List<String> practiceNames = new ArrayList<String>();
+    public List<String> listChallenges(String nameKey) {
+        if (_challenges.get(nameKey) != null) {
+            ArrayList<Challenge> challengeList = _challenges.get(nameKey);
+            List<String> challengeNames = new ArrayList<String>();
 
-            for (Practice practice : practiceList) {
-                practiceNames.add(practice.getFileName());
+            for (Challenge challenge : challengeList) {
+                challengeNames.add(challenge.getFileName());
             }
-            return practiceNames;
+            return challengeNames;
 
         } else {
             return null;
@@ -160,49 +93,49 @@ public class Challenges {
     }
 
     /**
-     * deletes the practice from directory AND the practices list
+     * deletes the challenge from directory AND the challenges list
      *
      * @param nameKey
      * @param fileName
      */
-    public void deletePractice(String nameKey, String fileName) {
-        Practice practiceDelete = getPractice(nameKey, fileName);
-        practiceDelete.delete(); // delete the practice
-        _practices.get(nameKey).remove(practiceDelete); //not sure if this works yet (needs testing)
+    public void deleteChallenge(String nameKey, String fileName) {
+        Challenge challengeDelete = getChallenge(nameKey, fileName);
+        challengeDelete.delete(); // delete the challenge
+        _challenges.get(nameKey).remove(challengeDelete); //not sure if this works yet (needs testing)
     }
 
     /**
-     * gets the practice from the filename of practice and the nameKey
+     * gets the challenge from the filename of challenge and the nameKey
      *
      * @param fileName
      * @return
      */
-    public Practice getPractice(String nameKey, String fileName) {
-        ArrayList<Practice> practiceList = _practices.get(nameKey);
+    public Challenge getChallenge(String nameKey, String fileName) {
+        ArrayList<Challenge> challengeList = _challenges.get(nameKey);
 
         int index = 0;
-        for (int i = 0; i < practiceList.size(); i++) {
-            if (practiceList.get(i).getFileName().equals(fileName)) {
+        for (int i = 0; i < challengeList.size(); i++) {
+            if (challengeList.get(i).getFileName().equals(fileName)) {
                 index = i;
                 break;
             }
         }
-        return practiceList.get(index);
+        return challengeList.get(index);
     }
 
     /**
      * this method generates a new recording based on the nameKey
-     * it then adds it to the _practices list
+     * it then adds it to the _challenges list
      *
      * @param nameKey
-     * @return practice
+     * @return challenge
      */
-    public String addNewPractice(String nameKey) {
-        // Create a new practice of the given name
-        Practice practice = new Practice(nameKey);
-        practice.create();
-        addPractice(nameKey, practice);
-        return practice.getFileName();
+    public String addNewChallenge(String nameKey) {
+        // Create a new challenge of the given name
+        Challenge challenge = new Challenge(nameKey);
+        challenge.create();
+        addChallenge(nameKey, challenge);
+        return challenge.getFileName();
     }
 
 }
