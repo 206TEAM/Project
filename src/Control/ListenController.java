@@ -3,6 +3,8 @@ package Control;
 import Model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,7 +23,7 @@ public class ListenController implements Initializable {
     @FXML
     public ListView<String> listView, challengeListView, originalListView;
     @FXML
-    public Text nameLabel;
+    public Text nameLabel, fileLabel;
     @FXML
     public ComboBox rating;
     @FXML
@@ -52,6 +54,7 @@ public class ListenController implements Initializable {
             listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         }
     }
+
     @FXML
     public void selectName(MouseEvent event) {
         //todo rating show
@@ -61,6 +64,7 @@ public class ListenController implements Initializable {
 
         //todo populate sublists
         populateSubLists();
+        System.out.println("hi");
     }
 
     /**
@@ -84,6 +88,7 @@ public class ListenController implements Initializable {
 
     /**
      * Method for when user selects a challenge name.
+     *
      * @param event
      */
     @FXML
@@ -91,10 +96,10 @@ public class ListenController implements Initializable {
         String name = challengeListView.getSelectionModel().getSelectedItem();
         if (name != null) {
             //showRatings(false);
-           // playButton_3.setDisable(false);
+            // playButton_3.setDisable(false);
             //deleteButton_3.setDisable(false);
         } else {
-           // playButton_3.setDisable(true);
+            // playButton_3.setDisable(true);
             //deleteButton_3.setDisable(true);
         }
 
@@ -104,17 +109,21 @@ public class ListenController implements Initializable {
 
     /**
      * when user selects an original file name, they can play it
+     *
      * @param event
      */
     @FXML
     public void selectNameOriginal(MouseEvent event) {
         String fileName = originalListView.getSelectionModel().getSelectedItem();
         String name = listView.getSelectionModel().getSelectedItem();
+        System.out.println(fileName);
 
         if (fileName != null) {
+            fileLabel.setText(fileName);
             //showRatings(true);
             //playButton_3.setDisable(false);
             //deleteButton_3.setDisable(true);
+            play.setDisable(false);
         } else {
             //playButton_3.setDisable(true);
         }
@@ -134,11 +143,14 @@ public class ListenController implements Initializable {
     }
 
     @FXML
-    public void play(ActionEvent actionEvent) {
+    public void play(ActionEvent event) {
+        System.out.println("play");
         String name = Mediator.getInstance().getCurrentName(); //getting the name
-        Thread thread = new Thread(new Runnable() {
+
+        Task<Void> task = new Task<Void>() {
             @Override
-            public void run() {
+            protected Void call() throws Exception {
+                //generates file which adds to creation list
                 Media media;
                 if (_type.equals("original")) { //if type is original
 
@@ -155,23 +167,26 @@ public class ListenController implements Initializable {
                     media = new Media(Challenges.getInstance().getChallenge(name, _selected));
                 }
                 media.play();
+                return null;
             }
+        };
+
+        //after creating the creation, user reviews the audio
+        task.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED, e -> {
+            progressText.setText("Play.");
         });
-        thread.setDaemon(true);
-        thread.start();
-        if (_type.equals("original")) {
-            //Mediator.getInstance().showProgress(progressBar, "Original", _selected);
-        } else {
-            //Mediator.getInstance().showProgress(progressBar, "Challenges", _selected + ".wav");
-        }
 
         progressText.setText("Playing...");
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
+
     }
 
     @FXML
     public void delete(ActionEvent actionEvent) {
         //todo popup "Are you sure?", then delete challenge recording
-        if (_type.equals("challenge")){
+        if (_type.equals("challenge")) {
             String name = Mediator.getInstance().getCurrentName();
             if (name != null) {
                 Challenges.getInstance().deleteChallenge(name, _selected);
