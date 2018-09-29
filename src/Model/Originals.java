@@ -276,7 +276,7 @@ public class Originals {
 	 *         returns 0.
 	 */
 	public String getRating(Original original) {
-		String output = "good";
+		String output = "&good&";
 		if (original != null) {
 			try {
 				int counter = -1;
@@ -293,7 +293,7 @@ public class Originals {
 				}
 
 				if (found) {
-					Pattern pattern = Pattern.compile("[0-9]+$");
+					Pattern pattern = Pattern.compile("&[a-z]+&");
 					Matcher matcher = pattern.matcher(line);
 					if (matcher.find()) {
 						output = matcher.group(0);

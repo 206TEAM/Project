@@ -63,6 +63,7 @@ public class ListenController implements Initializable {
         String name = listView.getSelectionModel().getSelectedItem();
         nameLabel.setText(name);
         Mediator.getInstance().setCurrentName(name);
+        disableButtons();
 
         //todo populate sublists
         populateSubLists();
@@ -221,9 +222,9 @@ public class ListenController implements Initializable {
             System.out.println(_good);
             if (_good == false) {
                 System.out.println("good is false!!! :D");
-                Originals.getInstance().setRating(original, "bad");
+                Originals.getInstance().setRating(original, "&bad&");
             } else {
-                Originals.getInstance().setRating(original, "good");
+                Originals.getInstance().setRating(original, "&good&");
             }
             loadRating(original);
         }
@@ -232,11 +233,15 @@ public class ListenController implements Initializable {
     @FXML
     private void loadRating(Original original) {
         String rating = Originals.getInstance().getRating(original);
-        System.out.println("rating from loadRating!!!" + rating);
-        if (rating == "bad") {
-            badButton.setStyle("fx-background-color: #FFF");
+        if (rating.equals("&bad&")){
+            badButton.setStyle("-fx-background-color: #FF0000; ");
+            goodButton.setStyle("-fx-background-color: #8FBC8F; ");
+
+
         } else {
-            goodButton.setStyle("fx-background-color: #FFF");
+            goodButton.setStyle("-fx-background-color: #228B22; ");
+            badButton.setStyle("-fx-background-color: #FF9999; ");
+            System.out.println("goodbutton");
         }
     }
 
@@ -254,6 +259,11 @@ public class ListenController implements Initializable {
         //todo same as correct()
         _good = false;
         ratingHandler();
+    }
+
+    public void disableButtons() {
+        goodButton.setDisable(true);
+        badButton.setDisable(true);
     }
 
 

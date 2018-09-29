@@ -1,12 +1,16 @@
 
-Beena: bad
-Chamara: bad
+Beena: &bad&
+Chamara: &good&
 
-Catherine: good
+Catherine: &bad&
 
 Jonathan: good
-Bruce: good
+Bruce: &bad&
 
-Ardern: good
+Ardern: &bad&
 
 Isabella: good
+
+Chen: &bad&
+
+Ahn: &bad&
