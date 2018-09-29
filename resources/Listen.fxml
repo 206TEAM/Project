@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.ListenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.ListenController">
    <children>
       <Pane prefHeight="320.0" prefWidth="200.0">
          <children>
@@ -38,8 +38,8 @@
             </ProgressBar>
             <Label fx:id="progressText" layoutX="175.0" layoutY="75.0" text="Play" textFill="#1e1e1e" />
             <Button fx:id="delete" disable="true" layoutX="300.0" layoutY="70.0" mnemonicParsing="false" onAction="#delete" prefHeight="26.0" prefWidth="29.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="❌" textFill="RED" />
-            <Button fx:id="correct" disable="true" layoutX="201.0" layoutY="255.0" mnemonicParsing="false" onAction="#correct" prefHeight="37.0" prefWidth="93.0" style="-fx-background-radius: 0; -fx-background-color: #00cc00;" text="Good  ✔️" textFill="#014a01" />
-            <Button fx:id="wrong" disable="true" layoutX="108.0" layoutY="255.0" mnemonicParsing="false" onAction="#wrong" prefHeight="37.0" prefWidth="93.0" style="-fx-background-radius: 0; -fx-background-color: #cc0000;" text="❌  Bad" textFill="#400000" />
+            <Button fx:id="goodButton" disable="true" layoutX="201.0" layoutY="255.0" mnemonicParsing="false" onAction="#goodAction" prefHeight="37.0" prefWidth="93.0" style="-fx-background-radius: 0; -fx-background-color: #00cc00;" text="Good  ✔️" textFill="#014a01" />
+            <Button fx:id="badButton" disable="true" layoutX="108.0" layoutY="255.0" mnemonicParsing="false" onAction="#badAction" prefHeight="37.0" prefWidth="93.0" style="-fx-background-radius: 0; -fx-background-color: #cc0000;" text="❌  Bad" textFill="#400000" />
             <Label fx:id="progressText1" layoutX="108.0" layoutY="298.0" prefHeight="16.0" prefWidth="170.0" text="*Rate the quality" textFill="#1e1e1e" />
             <Text fx:id="nameLabel" fill="#ff9900" layoutX="14.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
                <font>

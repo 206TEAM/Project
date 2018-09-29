@@ -241,7 +241,7 @@ public class Originals {
 	 * @param original name of the {@code Original}.
 	 * @param rating rating to set.
 	 */
-	public void setRating(Original original, int rating) {
+	public void setRating(Original original, String rating) {
 		String name = original.getName() + original.getVersion();
 		String text = name + ": " + rating;
 		try {
@@ -259,6 +259,7 @@ public class Originals {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println("from set rating" + rating);
 	}
 
 	/**
@@ -274,8 +275,8 @@ public class Originals {
 	 *         If no rating is specified for the given name, then
 	 *         returns 0.
 	 */
-	public int getRating(Original original) {
-		int output = 0;
+	public String getRating(Original original) {
+		String output = "good";
 		if (original != null) {
 			try {
 				int counter = -1;
@@ -295,13 +296,14 @@ public class Originals {
 					Pattern pattern = Pattern.compile("[0-9]+$");
 					Matcher matcher = pattern.matcher(line);
 					if (matcher.find()) {
-						output = Integer.parseInt(matcher.group(0));
+						output = matcher.group(0);
 					}
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+		System.out.println("from .txt file " + output);
 		return output;
 	}
 

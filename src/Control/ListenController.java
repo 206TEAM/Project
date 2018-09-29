@@ -1,6 +1,7 @@
 package Control;
 
 import Model.*;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -31,13 +32,14 @@ public class ListenController implements Initializable {
     @FXML
     public ProgressBar playProgressBar;
     @FXML
-    public Button play, delete, correct, wrong;
+    public Button play, delete, goodButton, badButton;
     @FXML
     public Label progressText;
 
     /*****fields******/
     private String _selected;
     private String _type;
+    private boolean _good;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -64,7 +66,6 @@ public class ListenController implements Initializable {
 
         //todo populate sublists
         populateSubLists();
-        System.out.println("hi");
     }
 
     /**
@@ -118,11 +119,12 @@ public class ListenController implements Initializable {
         String name = listView.getSelectionModel().getSelectedItem();
         System.out.println(fileName);
 
+
         if (fileName != null) {
             fileLabel.setText(fileName);
             //showRatings(true);
-            //playButton_3.setDisable(false);
-            //deleteButton_3.setDisable(true);
+            goodButton.setDisable(false);
+            badButton.setDisable(false);
             play.setDisable(false);
         } else {
             //playButton_3.setDisable(true);
@@ -139,7 +141,7 @@ public class ListenController implements Initializable {
         } else {
             original = Originals.getInstance().getOriginal(fileName);
         }
-        //loadRating(original);
+        loadRating(original);
     }
 
     @FXML
@@ -200,14 +202,58 @@ public class ListenController implements Initializable {
 
     }
 
-    @FXML
-    public void correct(ActionEvent actionEvent) {
-        //todo edit stats of name based on challenge recording success ratio
+    private void ratingHandler() {
+        String fileName = originalListView.getSelectionModel().getSelectedItem();
+        String name = listView.getSelectionModel().getSelectedItem();
+        Original original;
+
+        System.out.println(_good);
+        System.out.println(fileName);
+
+        if (fileName != null) {
+            if (Originals.getInstance().getFileName(name).size() > 1) {
+                original = Originals.getInstance().getOriginalWithVersions(fileName, name);
+            } else {
+                original = Originals.getInstance().getOriginal(fileName);
+            }
+
+
+            System.out.println(_good);
+            if (_good == false) {
+                System.out.println("good is false!!! :D");
+                Originals.getInstance().setRating(original, "bad");
+            } else {
+                Originals.getInstance().setRating(original, "good");
+            }
+            loadRating(original);
+        }
     }
 
     @FXML
-    public void wrong(ActionEvent actionEvent) {
+    private void loadRating(Original original) {
+        String rating = Originals.getInstance().getRating(original);
+        System.out.println("rating from loadRating!!!" + rating);
+        if (rating == "bad") {
+            badButton.setStyle("fx-background-color: #FFF");
+        } else {
+            goodButton.setStyle("fx-background-color: #FFF");
+        }
+    }
+
+    @FXML
+    public void goodAction(ActionEvent event) {
+        //todo edit stats of name based on challenge recording success rating
+        _good = true;
+        ratingHandler();
+
+    }
+
+    @FXML
+    public void badAction(ActionEvent actionEvent) {
+        System.out.println("bad button");
         //todo same as correct()
+        _good = false;
+        ratingHandler();
     }
 
 
