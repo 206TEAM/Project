@@ -16,12 +16,24 @@ public class Mediator {
 	private MainMenuController _main;
 	private PracticeMainController _subMain;
 
+	private List<String> _practiceMainList;
+
 	/********fields are for challenges********/
 	private ArrayList<String> _challengeNames;
 	private String _currentName;
 	private String _currentFileName;
+	private List<String> _challengeList;
+	private double _difficulty;
 
 	/********methods for getting/setting challenge related things********/
+	public void setChallengeList(List<String> challengeList) {
+		_challengeList = challengeList;
+	}
+
+	public List<String> getChallengeList() {
+		return _challengeList;
+	}
+
 	public void removePracticeName(String name){
 		_challengeNames.remove(name);
 	}
@@ -83,6 +95,14 @@ public class Mediator {
 		 } else if (parent == ParentController.Type.SUB_MAIN) {
 		 	_subMain.loadPane(page);
 		 }
+	}
+
+	public void setPracticeMainList(List<String> list) {
+		_practiceMainList = list;
+	}
+
+	public List<String> getPracticeMainList() {
+		return _practiceMainList;
 	}
 
 	public static Mediator getInstance() {

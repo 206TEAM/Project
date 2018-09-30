@@ -15,7 +15,7 @@
    <children>
       <Pane prefHeight="320.0" prefWidth="200.0">
          <children>
-            <ListView fx:id="practiceListView" layoutX="-1.0" layoutY="29.0" prefHeight="163.0" prefWidth="200.0" />
+            <ListView fx:id="practiceListView" layoutX="-1.0" layoutY="29.0" onMouseClicked="#nameSelected" prefHeight="163.0" prefWidth="200.0" />
             <Rectangle fill="#ff9900" height="29.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="200.0" />
             <Rectangle fill="#ff9900" height="29.0" layoutY="192.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="200.0" />
             <ListView fx:id="versionListView" layoutX="-1.0" layoutY="221.0" prefHeight="99.0" prefWidth="200.0" />

@@ -1,21 +1,26 @@
 package Control;
 
 import Model.Mediator;
+import Model.Originals;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class PracticeMainController extends ParentController{
-	@FXML public ListView practiceListView;
-	@FXML public ListView versionListView;
+public class PracticeMainController extends ParentController {
+	@FXML public ListView<String> practiceListView;
+	@FXML public ListView<String> versionListView;
 	@FXML public Button addPractice;
 	@FXML public Text nameLabel;
 	@FXML public ComboBox rating;
@@ -28,6 +33,9 @@ public class PracticeMainController extends ParentController{
 	public void initialize(URL location, ResourceBundle resources) {
 		_mediator = Mediator.getInstance();
 		_mediator.setParent(this);
+		List<String> list = _mediator.getPracticeMainList();
+		ObservableList<String> practiceList = FXCollections.observableArrayList(list);
+		practiceListView.setItems(practiceList);
 	}
 
 	@FXML
@@ -35,6 +43,15 @@ public class PracticeMainController extends ParentController{
 		_mediator.loadPane(Type.HEADER, "Practice1");
 	}
 
+	@FXML
+	public void nameSelected(MouseEvent mouseEvent) {
+		String name = practiceListView.getSelectionModel().getSelectedItem();
+		if (name != null) {
+			List<String> versions = Originals.getInstance().getFileName(name);
+			ObservableList<String> versionsToDisplay = FXCollections.observableArrayList(versions);
+			versionListView.setItems(versionsToDisplay);
+		}
+	}
 	/**
 	 * Load a scene into the {@code subPane}.
 	 *
@@ -44,4 +61,6 @@ public class PracticeMainController extends ParentController{
 	public void loadPane(String page) {
 		super.loadPane(page, subPane);
 	}
+
+
 }

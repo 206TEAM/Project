@@ -8,8 +8,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -29,26 +31,32 @@ public class SelectPracticeController implements Initializable {
 		_mediator = Mediator.getInstance();
 		List<String> names = Originals.getInstance().listNames();
 
-		java.util.Collections.sort(names);
 		if (names.size() == 0) {
 			selectListView.setVisible(false);
 		} else {
 			selectListView.setVisible(true);
 
-			ObservableList<String> challengeNames = FXCollections.observableArrayList(names);
-			selectListView.setItems(challengeNames);
-			selectListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+			Collections.sort(names);
+			ObservableList<String> practiceNames = FXCollections.observableArrayList(names);
+			selectListView.setItems(practiceNames);
+			selectListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		}
 	}
 
 	@FXML
 	public void go(ActionEvent actionEvent) {
+		_mediator.setPracticeMainList(selectListView.getSelectionModel().getSelectedItems());
 		_mediator.loadPane(ParentController.Type.HEADER,"PracticeMain");
 		_mediator.loadPane(ParentController.Type.SUB_MAIN, "PracticeRecord");
 	}
 
 	@FXML
 	public void shuffle(ActionEvent actionEvent) {
+		if (shuffle.isSelected()) {
+			FXCollections.shuffle(selectListView.getItems());
+		} else {
+			FXCollections.sort(selectListView.getItems());
+		}
 	}
 
 	@FXML
@@ -61,5 +69,13 @@ public class SelectPracticeController implements Initializable {
 
 	@FXML
 	public void create(ActionEvent actionEvent) { //todo COMBINE TWO NAMES
+	}
+
+	@FXML
+	public void listViewSelected(MouseEvent mouseEvent) {
+		if (selectListView.getSelectionModel().getSelectedItems().size() > 0) {
+			shuffle.setDisable(false);
+			go.setDisable(false);
+		}
 	}
 }
