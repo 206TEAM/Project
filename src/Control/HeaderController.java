@@ -19,14 +19,17 @@ public class HeaderController extends ParentController {
 	@FXML public Pane headerPane;
 	@FXML public Text menuLabel;
 
+	private Mediator _mediator;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		Mediator.getInstance().setParent(this);
+		_mediator = Mediator.getInstance();
+		_mediator.setParent(this);
 	}
 
 	@FXML
 	public void home(MouseEvent mouseEvent) {
-		loadPane("MainMenu");
+		_mediator.loadPane(Type.MAIN, "MainMenu");
 	}
 
 	@FXML

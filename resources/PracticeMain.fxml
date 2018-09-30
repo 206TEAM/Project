@@ -24,7 +24,7 @@
             <Button fx:id="addPractice" contentDisplay="TEXT_ONLY" layoutX="169.0" layoutY="2.0" mnemonicParsing="false" onAction="#add" prefHeight="26.0" prefWidth="29.0" style="-fx-background-color: #ff9900;" text="+" textFill="#1e1e1e" />
          </children>
       </Pane>
-      <Pane layoutX="200.0" prefHeight="72.0" prefWidth="400.0" style="-fx-background-color: #1e1e1e;">
+      <Pane layoutX="200.0" prefHeight="72.0" prefWidth="400.0">
          <children>
             <Text fx:id="nameLabel" fill="#ff9900" layoutX="14.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
                <font>

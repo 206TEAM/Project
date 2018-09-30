@@ -21,7 +21,7 @@ public abstract class ParentController implements Initializable {
 		Pane newPane = null;
 		try {
 			newPane = FXMLLoader.load(getClass().getResource("/" + page + ".fxml"));
-			pane.getChildren().addAll(newPane);
+			pane.getChildren().setAll(newPane);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

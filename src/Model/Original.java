@@ -79,7 +79,9 @@ public class Original {
 		if (matcher.find()) {
 			name.append(matcher.group(0));
 			name.setLength(name.length() - 4); // Removes .wav file extension
-			return name.toString();
+			String output = name.toString();
+
+			return output.substring(0,1).toUpperCase() + output.substring(1).toLowerCase();
 		} else {
 			throw new InvalidNameException("Name must contain only letters and spaces");
 		}
