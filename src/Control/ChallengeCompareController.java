@@ -4,8 +4,8 @@ import Model.Mediator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.text.Text;
 
 public class ChallengeCompareController {
 
@@ -13,8 +13,8 @@ public class ChallengeCompareController {
 	@FXML public Button playOriginal;
 	@FXML public ProgressBar practiceProgressBar;
 	@FXML public Button playPractice;
-	@FXML public Label originalProgressText;
-	@FXML public Label practiceProgressText;
+	@FXML public Text originalProgressText;
+	@FXML public Text practiceProgressText;
 	@FXML public Button correct;
 	@FXML public Button wrong;
 
