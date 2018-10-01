@@ -14,13 +14,13 @@
             <ColorAdjust brightness="0.07" contrast="0.42" hue="-0.83" saturation="-0.09" />
          </effect>
       </ProgressBar>
-      <Button fx:id="play" layoutX="72.0" layoutY="69.0" mnemonicParsing="false" onAction="#play" prefHeight="20.0" prefWidth="29.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="▶️" textFill="#00ff12" />
+      <Button fx:id="play" disable="true" layoutX="72.0" layoutY="69.0" mnemonicParsing="false" onAction="#play" prefHeight="20.0" prefWidth="29.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="▶️" textFill="#00ff12" />
       <Button fx:id="record" layoutX="138.0" layoutY="119.0" mnemonicParsing="false" onAction="#record" prefHeight="39.0" prefWidth="125.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Record" textFill="#ff9900">
          <font>
             <Font size="17.0" />
          </font>
       </Button>
-      <Button fx:id="next" layoutX="159.0" layoutY="171.0" mnemonicParsing="false" onAction="#next" prefHeight="26.0" prefWidth="84.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Next" textFill="#ff9900" />
-      <Label fx:id="progressText" layoutX="161.0" layoutY="74.0" text="Play original" textFill="#1e1e1e" />
+      <Button fx:id="next" disable="true" layoutX="159.0" layoutY="171.0" mnemonicParsing="false" onAction="#next" prefHeight="26.0" prefWidth="84.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Next" textFill="#ff9900" />
+      <Label fx:id="progressText" layoutX="153.0" layoutY="74.0" text="Select a name" textFill="#1e1e1e" />
    </children>
 </AnchorPane>

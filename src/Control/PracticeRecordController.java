@@ -3,12 +3,16 @@ package Control;
 import Model.Mediator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 
-public class PracticeRecordController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class PracticeRecordController implements Initializable {
 
 	@FXML public ProgressBar progressBar;
 	@FXML public Button play;
@@ -17,6 +21,12 @@ public class PracticeRecordController {
 	@FXML public Label progressText; // if there's multiple originals, say "Select a version"
 
 	private boolean _recordState;
+
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+
+	}
 
 	@FXML
 	public void play(ActionEvent actionEvent) {
@@ -50,4 +60,5 @@ public class PracticeRecordController {
 	public void next(ActionEvent actionEvent) {
 		Mediator.getInstance().loadPane(ParentController.Type.SUB_MAIN, "PracticeCompare");
 	}
+
 }

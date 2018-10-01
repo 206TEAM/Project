@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -45,7 +46,20 @@ public class SelectPracticeController implements Initializable {
 
 	@FXML
 	public void go(ActionEvent actionEvent) {
-		_mediator.setPracticeMainList(selectListView.getSelectionModel().getSelectedItems());
+		List<String> practiceList = _mediator.getPracticeMainList();
+		List<String> selectedList = selectListView.getSelectionModel().getSelectedItems();
+
+		if (practiceList == null) {
+			practiceList = selectedList;
+		} else {
+			for (String name : selectedList) {
+				if (!practiceList.contains(name)) {
+					practiceList.add(name);
+				}
+			}
+		}
+
+		_mediator.setPracticeMainList(practiceList);
 		_mediator.loadPane(ParentController.Type.HEADER,"PracticeMain");
 		_mediator.loadPane(ParentController.Type.SUB_MAIN, "PracticeRecord");
 	}
