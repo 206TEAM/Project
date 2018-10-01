@@ -69,8 +69,9 @@ public class ChallengePlayController implements Initializable {
 	public void next(ActionEvent actionEvent) {
 		if (next.getText().equals("Done")) {
 			_mediator.setPracticeMainList(_challengeList);
-			_mediator.loadPane(ParentController.Type.HEADER, "PracticeMain");
-			_mediator.loadPane(ParentController.Type.SUB_MAIN, "Challenge3");
+			//_mediator.loadPane(ParentController.Type.HEADER, "PracticeMain");
+			_mediator.loadPane(ParentController.Type.MAIN, "Header");
+            _mediator.loadPane(ParentController.Type.HEADER, "ChallengeMain");
 		} else {
 			nextName();
 		}
@@ -88,7 +89,12 @@ public class ChallengePlayController implements Initializable {
 		Thread thread = new Thread(new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-				Challenges.getInstance().addNewChallenge(_challengeList.get(_iteration));
+
+				String name = _challengeList.get(_iteration - 1);
+				System.out.println(name);
+				String fileName = Challenges.getInstance().addNewChallenge(name);
+				Mediator.getInstance().addChallengeFile(fileName);
+                     System.out.println(fileName);
 				return null;
 			}
 		});
