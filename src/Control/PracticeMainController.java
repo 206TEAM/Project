@@ -1,6 +1,7 @@
 package Control;
 
 import Model.Mediator;
+import Model.Original;
 import Model.Originals;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,10 +47,27 @@ public class PracticeMainController extends ParentController {
 	@FXML
 	public void nameSelected(MouseEvent mouseEvent) {
 		String name = practiceListView.getSelectionModel().getSelectedItem();
+		Mediator.getInstance().setCurrentName(name);
 		if (name != null) {
 			List<String> versions = Originals.getInstance().getFileName(name);
 			ObservableList<String> versionsToDisplay = FXCollections.observableArrayList(versions);
 			versionListView.setItems(versionsToDisplay);
+			nameLabel.setText(name);
+		}
+	}
+
+	@FXML
+	public void selectNameOriginal(MouseEvent event) {
+		String fileName = versionListView.getSelectionModel().getSelectedItem();
+		String name = practiceListView.getSelectionModel().getSelectedItem();
+		System.out.println(fileName);
+
+
+
+		if (fileName != null) {
+			Mediator.getInstance().setOriginalFilename(name);
+		} else {
+			//playButton_3.setDisable(true);
 		}
 	}
 	/**

@@ -13,14 +13,15 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="600.0" style="-fx-background-color: #d9d9d9;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.SelectPracticeController">
    <children>
-      <ListView fx:id="selectListView" layoutY="25.0" prefHeight="269.0" prefWidth="198.0" />
-      <Button fx:id="go" layoutX="374.0" layoutY="180.0" mnemonicParsing="false" onAction="#go" prefHeight="33.0" prefWidth="70.0" style="-fx-background-radius: 0; -fx-background-color: #1e1e1e;" text="Go" textFill="#ff9900">
+      <Text fill="#727272" layoutX="38.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Database is empty" />
+      <ListView fx:id="selectListView" layoutY="25.0" onMouseClicked="#listViewSelected" prefHeight="269.0" prefWidth="198.0" />
+      <Button fx:id="go" disable="true" layoutX="374.0" layoutY="180.0" mnemonicParsing="false" onAction="#go" prefHeight="33.0" prefWidth="70.0" style="-fx-background-radius: 0; -fx-background-color: #1e1e1e;" text="Go" textFill="#ff9900">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <CheckBox fx:id="shuffle" layoutX="374.0" layoutY="151.0" mnemonicParsing="false" onAction="#shuffle" text="Shuffle" textFill="#1e1e1e" />
-      <TextField fx:id="search" layoutY="-6.0" onAction="#search" prefHeight="33.0" prefWidth="121.0" promptText="Search" />
+      <CheckBox fx:id="shuffle" disable="true" layoutX="374.0" layoutY="151.0" mnemonicParsing="false" onAction="#shuffle" text="Shuffle" textFill="#1e1e1e" />
+      <TextField fx:id="search" layoutY="1.0" onAction="#search" prefHeight="26.0" prefWidth="121.0" promptText="Search" />
       <SplitMenuButton fx:id="filter" layoutX="121.0" layoutY="1.0" mnemonicParsing="false" onAction="#filter" popupSide="RIGHT" prefHeight="26.0" prefWidth="77.0" style="-fx-background-radius: 0;" text="Filter" textFill="#1a1a1a">
         <items>
           <MenuItem mnemonicParsing="false" text="Action 1" />

@@ -100,7 +100,7 @@ public class Challenge {
     }
 
     public File getDirectory(){
-        return new File("Names" + System.getProperty("file.separator") + _nameKey + System.getProperty("file.separator") + "Challenges");
+        return new File("Names" + System.getProperty("file.separator") + _nameKey + System.getProperty("file.separator") + "Challenge");
     }
 
 }

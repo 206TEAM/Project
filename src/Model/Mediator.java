@@ -6,107 +6,117 @@ import Control.ParentController;
 import Control.PracticeMainController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Mediator {
 
-	private final static Mediator SINGLETON = new Mediator();
+    private final static Mediator SINGLETON = new Mediator();
 
-	private HeaderController _header;
-	private MainMenuController _main;
-	private PracticeMainController _subMain;
+    private HeaderController _header;
+    private MainMenuController _main;
+    private ParentController _subMain;
 
-	private List<String> _practiceMainList;
+    private List<String> _practiceMainList;
 
-	/********fields are for challenges********/
-	private ArrayList<String> _challengeNames;
-	private String _currentName;
-	private String _currentFileName;
-	private List<String> _challengeList;
-	private double _difficulty;
+    /********fields are for challenges********/
+    //private ArrayList<String> _challengeNames;
+    private String _currentName;
+    private String _currentFileName;
+    private String _originalFileName;
+    private List<String> _challengeList;
+    private List<String> _challengeFileList;
+    private double _difficulty;
 
-	/********methods for getting/setting challenge related things********/
-	public void setChallengeList(List<String> challengeList) {
-		_challengeList = challengeList;
-	}
+    /********methods for getting/setting challenge related things********/
+    public void setChallengeList(List<String> challengeList) {
+        _challengeList = challengeList;
+    }
 
-	public List<String> getChallengeList() {
-		return _challengeList;
-	}
+    public void addChallengeFile(String fileName) {
+        if (_challengeFileList == null) {
+            _challengeFileList = new ArrayList();
+            _challengeFileList.add(fileName);
+        } else {
+            _challengeFileList.add(fileName);
+        }
+    }
 
-	public void removePracticeName(String name){
-		_challengeNames.remove(name);
-	}
+    public List<String> getChallengeFiles() {
+        return _challengeFileList;
+    }
 
-	public void clearCurrentNames() {
-		_challengeNames = null;
-	}
+    public List<String> getChallengeList() {
+        return _challengeList;
+    }
 
-	public String getCurrentName() {
-		return _currentName;
-	}
+    public void removePracticeName(String name) {
+       // _challengeNames.remove(name);
+    }
 
-	public void setFileName(String name) {
-		_currentFileName = name;
-	}
+    public void clearCurrentNames() {
+      //  _challengeNames = null;
+    }
 
-	public String getFileName() {
-		return _currentFileName;
-	}
+    public String getCurrentName() {
+        return _currentName;
+    }
 
-	public void setCurrentName(String name) {
-		_currentName = name;
-	}
+    public void setCurrentName(String name) {
+        _currentName = name;
+    }
 
-	public void addNames(List<String> names) {
-		if (_challengeNames == null) {
-			_challengeNames = new ArrayList();
-			_challengeNames.addAll(names);
-		} else {
-			for (String name : names) {
-				if (!_challengeNames.contains(name)) {
-					_challengeNames.add(name);
-				}
-			}
-		}
-	}
+    public String getOriginalFilename(){
+        return _originalFileName;
+    }
 
-	public List<String> getChallengeNames() {
-		return _challengeNames;
-	}
+    public void setOriginalFilename(String name){
+        _originalFileName = name;
+    }
 
-	/*********Methods for setting scenes**********/
+    public String getChallengeFile(String name){
+        int index = 0;
+        for (int i=0;i<_challengeList.size();i++){
+            if (_challengeList.get(i).equals(name)){
+                index = i;
+            }
+        }
+        return _challengeFileList.get(index);
+    }
 
-	public void setParent(ParentController parent) {
-		if (parent instanceof HeaderController) {
-			_header = (HeaderController) parent;
-		} else if (parent instanceof MainMenuController) {
-			_main = (MainMenuController) parent;
-		} else {
-			_subMain = (PracticeMainController) parent;
-		}
-	}
 
-	public void loadPane(ParentController.Type parent, String page) {
-		 if (parent == ParentController.Type.HEADER) {
-		 	_header.loadPane(page);
-		 } else if (parent == ParentController.Type.MAIN) {
-		 	_main.loadPane(page);
-		 } else if (parent == ParentController.Type.SUB_MAIN) {
-		 	_subMain.loadPane(page);
-		 }
-	}
+    /*********Methods for setting scenes**********/
 
-	public void setPracticeMainList(List<String> list) {
-		_practiceMainList = list;
-	}
+    public void setParent(ParentController parent) {
+        if (parent instanceof HeaderController) {
+            _header = (HeaderController) parent;
+        } else if (parent instanceof MainMenuController) {
+            _main = (MainMenuController) parent;
+        } else {
+            _subMain = parent;
+        }
+    }
 
-	public List<String> getPracticeMainList() {
-		return _practiceMainList;
-	}
+    public void loadPane(ParentController.Type parent, String page) {
+        if (parent == ParentController.Type.HEADER) {
+            _header.loadPane(page);
+        } else if (parent == ParentController.Type.MAIN) {
+            _main.loadPane(page);
+        } else if (parent == ParentController.Type.SUB_MAIN) {
+            _subMain.loadPane(page);
+        }
+    }
 
-	public static Mediator getInstance() {
-		return SINGLETON;
-	}
+    public void setPracticeMainList(List<String> list) {
+        _practiceMainList = list;
+    }
+
+    public List<String> getPracticeMainList() {
+        return _practiceMainList;
+    }
+
+    public static Mediator getInstance() {
+        return SINGLETON;
+    }
 
 }
