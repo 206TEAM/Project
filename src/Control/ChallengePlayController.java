@@ -1,10 +1,13 @@
 package Control;
 
+import Model.Challenges;
+import Model.Media;
 import Model.Mediator;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,6 +34,7 @@ public class ChallengePlayController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		_mediator = Mediator.getInstance();
+
 		_challengeList = _mediator.getChallengeList();
 		_iteration = 0;
 
@@ -63,7 +67,6 @@ public class ChallengePlayController implements Initializable {
 
 	@FXML
 	public void next(ActionEvent actionEvent) {
-		//todo stop and save recording
 		if (next.getText().equals("Done")) {
 			_mediator.setPracticeMainList(_challengeList);
 			_mediator.loadPane(ParentController.Type.HEADER, "PracticeMain");
@@ -82,7 +85,15 @@ public class ChallengePlayController implements Initializable {
 	}
 
 	private void record() {
-		//todo record audio
+		Thread thread = new Thread(new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				Challenges.getInstance().addNewChallenge(_challengeList.get(_iteration));
+				return null;
+			}
+		});
+		thread.setDaemon(true);
+		thread.start();
 	}
 
 	private void loadName() {
