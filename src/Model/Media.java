@@ -16,6 +16,7 @@ public class Media {
 	private String _originalName;
 	private File _directory;
 	private static final File CURRENT_DIRECTORY = FileSystems.getDefault().getPath(".").toFile();
+	private static Process PROCESS;
 
 	public Media(Challenge challenge) {
 		_fileName =  challenge.getFileName() + ".wav";
@@ -98,10 +99,14 @@ public class Media {
 		pb.directory(directory);
 
 		try {
-			Process process = pb.start();
-			process.waitFor();
+			PROCESS = pb.start();
+			PROCESS.waitFor();
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void cancel() {
+		PROCESS.destroy();
 	}
 }

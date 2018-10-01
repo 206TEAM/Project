@@ -47,7 +47,8 @@ public class SelectPracticeController implements Initializable {
 	@FXML
 	public void go(ActionEvent actionEvent) {
 		List<String> practiceList = _mediator.getPracticeMainList();
-		List<String> selectedList = selectListView.getSelectionModel().getSelectedItems();
+		List<String> selectedListTemp = selectListView.getSelectionModel().getSelectedItems();
+		List<String> selectedList = new ArrayList<>(selectedListTemp);
 
 		if (practiceList == null) {
 			practiceList = selectedList;

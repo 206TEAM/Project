@@ -114,6 +114,7 @@ public class ChallengePlayController implements Initializable {
 			_timeLine.stop();
 			timer.setProgress(1.0);
 		} else {
+			Media.cancel();
 			timer();
 			record();
 			loadName();
