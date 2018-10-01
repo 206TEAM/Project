@@ -77,26 +77,26 @@ public class ChallengeCompareController extends ParentController {
        // System.out.println("name of original is " + name);
        // System.out.println("fileName is " + fileName);
 
+
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                Media media;
+	            Media media;
 
-                String name = Mediator.getInstance().getCurrentName();
-                String fileName = Mediator.getInstance().getOriginalFilename();
+	            String name = Mediator.getInstance().getCurrentName();
+	            String fileName = Mediator.getInstance().getOriginalFilename();
 
-                Original original;
-                if (Originals.getInstance().getFileName(name).size() > 1) {
-                    original = Originals.getInstance().getOriginalWithVersions(fileName, name);
-                   // System.out.println(original.getFileName());
-                } else {
-                    original = Originals.getInstance().getOriginal(fileName);
-                    //System.out.println(original.getFileName());
-                }
+	            Original original;
+	            if (Originals.getInstance().getFileName(name).size() > 1) {
+		            original = Originals.getInstance().getOriginalWithVersions(fileName, name);
+		            // System.out.println(original.getFileName());
+	            } else {
+		            original = Originals.getInstance().getOriginal(fileName);
+		            //System.out.println(original.getFileName());
+	            }
 
-
-                media = new Media(original);
-                media.play();
+	            media = new Media(original);
+	            media.play();
             }
         });
         thread.setDaemon(true);
@@ -175,7 +175,7 @@ public class ChallengeCompareController extends ParentController {
 
 
         if (fileName != null) {
-            Mediator.getInstance().setOriginalFilename(name);
+            Mediator.getInstance().setOriginalFilename(fileName);
             playOriginal.setDisable(false);
         } else {
             playOriginal.setDisable(true);
