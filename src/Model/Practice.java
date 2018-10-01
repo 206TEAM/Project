@@ -20,7 +20,7 @@ public class Practice {
 
     public Practice(String nameKey) {
         _nameKey = nameKey;
-        _fileName = generateFileName(nameKey);
+        _fileName = generateFileName();
     }
 
     public Practice(String nameKey, String fileName) {
@@ -28,12 +28,6 @@ public class Practice {
         _fileName = fileName;
     }
 
-    /**
-     * creates a practice
-     */
-    public void create() {
-        justAudio();
-    }
 
     /**
      * this deletes a practice
@@ -45,10 +39,14 @@ public class Practice {
     /**
      * this creates the audio component of the practice
      */
-    public void justAudio() {
+    public void record() {
         String command = "ffmpeg -f alsa -i default -t 5 " + _fileName + ".wav";
         File directory = getDirectory();
         Media.process(command, directory);
+    }
+
+    public void stopRecording() {
+    	Media.cancel();
     }
 
       /**
@@ -72,10 +70,9 @@ public class Practice {
     /**
      * generates file name based on other recordings.
      *
-     * @param nameKey name that the {@code Practice} is linked to
-     * @return a fileName in the format <q>(nameKey)Practices(version)</q>
+     * @return a fileName in the format <q>(nameKey)Practice(version)</q>
      */
-    private String generateFileName(String nameKey){
+    private String generateFileName(){
         List<String> names = new ArrayList<String>();
         String name;
         File directory = getDirectory();
@@ -84,9 +81,9 @@ public class Practice {
             }
 
             if (names.size()==0) {
-                name = nameKey + "Practices1";
+                name = _nameKey + "Practice1";
             } else {
-                name = nameKey + "Practices" + Integer.toString(names.size() + 1);
+                name = _nameKey + "Practice" + Integer.toString(names.size() + 1);
 
             }
         return name;
@@ -100,7 +97,7 @@ public class Practice {
     }
 
     public File getDirectory(){
-        return new File("Names" + System.getProperty("file.separator") + _nameKey + System.getProperty("file.separator") + "Practices");
+        return new File("Temp");
     }
 
 }

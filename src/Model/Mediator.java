@@ -1,10 +1,21 @@
 package Model;
 
-import Control.HeaderController;
-import Control.MainMenuController;
-import Control.ParentController;
-import Control.PracticeMainController;
+import Control.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.scene.control.ProgressIndicator;
+import javafx.util.Duration;
 
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +26,7 @@ public class Mediator {
 
     private HeaderController _header;
     private MainMenuController _main;
-    private ParentController _subMain;
+    private PracticeMainController _subMain;
 
     private List<String> _practiceMainList;
 
@@ -27,6 +38,10 @@ public class Mediator {
     private List<String> _challengeList;
     private List<String> _challengeFileList;
     private double _difficulty;
+
+    public void addObserver(Observer o) {
+    	_subMain.addObserver(o);
+    }
 
     /********methods for getting/setting challenge related things********/
     public void setChallengeList(List<String> challengeList) {
@@ -93,7 +108,7 @@ public class Mediator {
         } else if (parent instanceof MainMenuController) {
             _main = (MainMenuController) parent;
         } else {
-            _subMain = parent;
+            _subMain = (PracticeMainController) parent;
         }
     }
 
@@ -119,4 +134,38 @@ public class Mediator {
         return SINGLETON;
     }
 
+	/**
+	 * Sets the duration of which the progress bar goes from
+	 * 0 to 100 to be the length that the audio file it is
+	 * playing plays for.
+	 *
+	 * @param progress the {@code ProgressIndicator} being displayed
+	 * @param dir whether it is an {@code Original} or a {@code Practice}
+	 * @param fileName name of the file being played
+	 */
+	public void showProgress(ProgressIndicator progress, String dir, String fileName, EventHandler<ActionEvent> event) {
+		double duration = 0;
+		try {
+			File file = new File("Names/" + _currentName + "/" + dir +  "/" + fileName);
+			AudioInputStream ais = AudioSystem.getAudioInputStream(file);
+			AudioFormat format = ais.getFormat();
+
+			long frames = ais.getFrameLength();
+			duration = (frames+0.0) / format.getFrameRate();
+		} catch (UnsupportedAudioFileException | IOException e) {
+			e.printStackTrace();
+		}
+
+		Timeline timeLine = new Timeline(
+				new KeyFrame(Duration.ZERO, new KeyValue(progress.progressProperty(), 0)),
+				new KeyFrame(Duration.seconds(duration), event,
+						new KeyValue(progress.progressProperty(), 1)));
+		timeLine.setCycleCount(1);
+		timeLine.play();
+	}
+
+	public void showProgress(ProgressIndicator progress, String dir, String fileName) {
+		EventHandler<ActionEvent> event = Event::consume; //do nothing
+		showProgress(progress,dir,fileName,event);
+	}
 }

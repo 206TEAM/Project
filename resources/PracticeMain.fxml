@@ -18,7 +18,7 @@
             <ListView fx:id="practiceListView" layoutX="-1.0" layoutY="29.0" onMouseClicked="#nameSelected" prefHeight="163.0" prefWidth="200.0" />
             <Rectangle fill="#ff9900" height="29.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="200.0" />
             <Rectangle fill="#ff9900" height="29.0" layoutY="192.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="200.0" />
-            <ListView fx:id="versionListView" layoutX="-1.0" layoutY="221.0" prefHeight="99.0" prefWidth="200.0" />
+            <ListView fx:id="versionListView" layoutX="-1.0" layoutY="221.0" onMouseClicked="#selectNameOriginal" prefHeight="99.0" prefWidth="200.0" />
             <Text fill="#1e1e1e" layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Names" />
             <Text fill="#1e1e1e" layoutX="14.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Versions" />
             <Button fx:id="addPractice" contentDisplay="TEXT_ONLY" layoutX="169.0" layoutY="2.0" mnemonicParsing="false" onAction="#add" prefHeight="26.0" prefWidth="29.0" style="-fx-background-color: #ff9900;" text="+" textFill="#1e1e1e" />

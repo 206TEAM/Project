@@ -1,7 +1,6 @@
 package Control;
 
 import Model.Mediator;
-import Model.Original;
 import Model.Originals;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,11 +28,13 @@ public class PracticeMainController extends ParentController {
 	@FXML public Pane subPane;
 
 	private Mediator _mediator;
+	private Observer _observer;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		_mediator = Mediator.getInstance();
 		_mediator.setParent(this);
+
 		List<String> list = _mediator.getPracticeMainList();
 		ObservableList<String> practiceList = FXCollections.observableArrayList(list);
 		practiceListView.setItems(practiceList);
@@ -47,12 +48,20 @@ public class PracticeMainController extends ParentController {
 	@FXML
 	public void nameSelected(MouseEvent mouseEvent) {
 		String name = practiceListView.getSelectionModel().getSelectedItem();
-		Mediator.getInstance().setCurrentName(name);
+		_mediator.setCurrentName(name);
 		if (name != null) {
 			List<String> versions = Originals.getInstance().getFileName(name);
 			ObservableList<String> versionsToDisplay = FXCollections.observableArrayList(versions);
 			versionListView.setItems(versionsToDisplay);
 			nameLabel.setText(name);
+			_mediator.setCurrentName(name);
+
+			if (versionsToDisplay.size() == 1) {
+				versionListView.getSelectionModel().select(0);
+				notifyObserver(name, versionListView.getSelectionModel().getSelectedItem(), 1);
+			} else {
+				// todo select the original with a good rating over bad one
+			}
 		}
 	}
 
@@ -60,14 +69,10 @@ public class PracticeMainController extends ParentController {
 	public void selectNameOriginal(MouseEvent event) {
 		String fileName = versionListView.getSelectionModel().getSelectedItem();
 		String name = practiceListView.getSelectionModel().getSelectedItem();
-		System.out.println(fileName);
-
-
-
 		if (fileName != null) {
-			Mediator.getInstance().setOriginalFilename(name);
-		} else {
-			//playButton_3.setDisable(true);
+			_mediator.setOriginalFilename(fileName);
+			_mediator.setCurrentName(name);
+			notifyObserver(name, fileName, versionListView.getItems().size());
 		}
 	}
 	/**
@@ -80,5 +85,25 @@ public class PracticeMainController extends ParentController {
 		super.loadPane(page, subPane);
 	}
 
+	/**
+	 * Adds observers so that Sub-scenes can get notified
+	 * when an item is selected in {@code practiceListView} or
+	 * {@code versionListView}.
+	 *
+	 * @param o {@link Observer} to add
+	 */
+	public void addObserver(Observer o) {
+		_observer = o;
+	}
+
+	/**
+	 * Notifies the sub-scene that an item was selected
+	 * and informs the {@code Observer} which item was selected.
+	 *
+	 * @see #addObserver(Observer)
+	 */
+	private void notifyObserver(String name, String fileName, int numberOfVersions) {
+		_observer.update(name, fileName, numberOfVersions);
+	}
 
 }

@@ -9,6 +9,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -40,8 +41,11 @@ public class ChallengePlayController implements Initializable {
 
 		_timeLine = new Timeline(
 				new KeyFrame(Duration.ZERO, new KeyValue(timer.progressProperty(), 0)),
-				new KeyFrame(Duration.seconds(5), event -> {
-					nextName();
+				new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						ChallengePlayController.this.nextName();
+					}
 				}, new KeyValue(timer.progressProperty(), 1)));
 		_timeLine.setCycleCount(_challengeList.size());
 
