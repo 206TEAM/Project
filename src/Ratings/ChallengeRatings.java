@@ -1,9 +1,9 @@
-package Model;
+package Ratings;
 
-import java.io.File;
-import java.util.ArrayList;
+import Model.Challenge;
+import Model.Challenges;
+
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * This class represents a list of challenges for each Name

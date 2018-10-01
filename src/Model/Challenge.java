@@ -17,15 +17,18 @@ public class Challenge {
 
     private String _fileName;
     private String _nameKey;
+    private Boolean _good;
 
     public Challenge(String nameKey) {
         _nameKey = nameKey;
         _fileName = generateFileName(nameKey);
+        _good = null;
     }
 
     public Challenge(String nameKey, String fileName) {
         _nameKey = nameKey;
         _fileName = fileName;
+        _good = null;
     }
 
     /**
@@ -101,6 +104,14 @@ public class Challenge {
 
     public File getDirectory(){
         return new File("Names" + System.getProperty("file.separator") + _nameKey + System.getProperty("file.separator") + "Challenge");
+    }
+
+    public void setRating(Boolean rating){
+        _good = rating;
+    }
+
+    public Boolean getRating(){
+        return _good;
     }
 
 }

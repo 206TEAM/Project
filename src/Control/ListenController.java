@@ -149,6 +149,8 @@ public class ListenController implements Initializable {
     public void play(ActionEvent event) {
         System.out.println("play");
         String name = Mediator.getInstance().getCurrentName(); //getting the name
+        System.out.println(name);
+        System.out.println(_selected);
 
         Task<Void> task = new Task<Void>() {
             @Override

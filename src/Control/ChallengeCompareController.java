@@ -1,6 +1,7 @@
 package Control;
 
 import Model.*;
+import Ratings.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -56,6 +57,8 @@ public class ChallengeCompareController extends ParentController {
 
     private Mediator _mediator;
 
+    /***********fields****************/
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -105,46 +108,52 @@ public class ChallengeCompareController extends ParentController {
 
     @FXML
     public void playChallenge(ActionEvent actionEvent) {
-        System.out.println("playing practice");
-//        practiceProgressText.setText("Playing...");
-        String name = Mediator.getInstance().getCurrentName();
-        String fileName = Mediator.getInstance().getChallengeFile(name);
-
-        Task<Void> task = new Task<Void>() {
+        correct.setDisable(false);
+        wrong.setDisable(false);
+        Thread thread = new Thread(new Runnable() {
             @Override
-            protected Void call() throws Exception {
-                //generates file which adds to creation list
+            public void run() {
                 Media media;
+
+                String name = Mediator.getInstance().getCurrentName();
+                String fileName = Mediator.getInstance().getOriginalFilename();
 
                 media = new Media(Challenges.getInstance().getChallenge(name, fileName));
 
                 media.play();
-                return null;
             }
-        };
-
-        //after creating the creation, user reviews the audio
-        task.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED, e -> {
-            practiceProgressText.setText("Play.");
         });
-
+        thread.setDaemon(true);
+        thread.start();
 
     }
+
 
     @FXML
     public void correct(ActionEvent actionEvent) {
         //todo mark this name (and this challenge recording) to be a success (Add it to stats)
-
-        // if (practiceListView.size() == 0) {
-        Mediator.getInstance().loadPane(ParentController.Type.MAIN, "MainMenu");
+        processRating(true);
     }
 
     @FXML
     public void wrong(ActionEvent actionEvent) {
         //todo mark this name (and this challenge Recording) to be a failure
+        processRating(false);
+    }
 
-        // if (practiceListView.size() == 0) {
-        Mediator.getInstance().loadPane(ParentController.Type.MAIN, "MainMenu");
+    private void processRating(Boolean rating){
+        String name = Mediator.getInstance().getCurrentName();
+        String fileName = Mediator.getInstance().getChallengeFile(name);
+        ChallengeRatings.getInstance().setRating(name, fileName, rating);
+
+        challengeListView.getItems().remove(name);
+        if (challengeListView.getItems().size()==0){
+            Mediator.getInstance().loadPane(ParentController.Type.MAIN, "MainMenu");
+        } else {
+            wrong.setDisable(true);
+            correct.setDisable(true);
+            nameLabel.setText("--");
+        }
     }
 
 
