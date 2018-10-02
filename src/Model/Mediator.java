@@ -20,15 +20,25 @@ public class Mediator {
     private List<String> _practiceMainList;
 
     /********fields are for challenges********/
+    private ChallengeSession _session;
+
+
     //private ArrayList<String> _challengeNames;
     private String _currentName;
     private String _currentFileName;
     private String _originalFileName;
     private List<String> _challengeList;
     private List<String> _challengeFileList;
-    private double _difficulty;
 
-    /********methods for getting/setting challenge related things********/
+    /********method for getting session object********/
+    public void setChallengeSession(ChallengeSession session){
+        _session = session;
+    }
+
+    public ChallengeSession getChallengeSession(){
+        return _session;
+    }
+
     public void setChallengeList(List<String> challengeList) {
         _challengeList = challengeList;
     }
@@ -51,11 +61,11 @@ public class Mediator {
     }
 
     public void removePracticeName(String name) {
-       // _challengeNames.remove(name);
+        // _challengeNames.remove(name);
     }
 
     public void clearCurrentNames() {
-      //  _challengeNames = null;
+        //  _challengeNames = null;
     }
 
     public String getCurrentName() {
@@ -83,7 +93,6 @@ public class Mediator {
         }
         return _challengeFileList.get(index);
     }
-
 
     /*********Methods for setting scenes**********/
 

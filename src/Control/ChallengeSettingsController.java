@@ -1,5 +1,6 @@
 package Control;
 
+import Model.ChallengeSession;
 import Model.Mediator;
 import Model.Originals;
 import javafx.event.ActionEvent;
@@ -22,6 +23,9 @@ public class ChallengeSettingsController implements Initializable {
 	@FXML public Text howDifficult;
 
 	private Mediator _mediator;
+
+	/***fields***/
+	private double _difficulty;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -52,10 +56,10 @@ public class ChallengeSettingsController implements Initializable {
 			numberOfChallenges = Integer.parseInt(howMany.getText());
 		}
 
-		List<String> challengeList = Originals.getInstance().listNames();
-		Collections.shuffle(challengeList);
-
-		_mediator.setChallengeList(challengeList.subList(0, numberOfChallenges));
+		//todo difficulty
+		_difficulty = 1.0;
+		ChallengeSession session = new ChallengeSession(numberOfChallenges, _difficulty);
+		Mediator.getInstance().setChallengeSession(session);
 
 		// TODO implement DIFFICULTY with math and stuff (THIS WILL CHANGE HOW THE RANDOM NAMES ARE SELECTED)
 		_mediator.loadPane(ParentController.Type.HEADER, "Challenge2");
