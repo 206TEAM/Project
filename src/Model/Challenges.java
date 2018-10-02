@@ -74,6 +74,11 @@ public class Challenges {
         }
     }
 
+    public int getChallengeSize(String nameKey){
+        ArrayList<Challenge> challengeList = _challenges.get(nameKey);
+        return challengeList.size();
+    }
+
     /**
      * returns a list of the fileNames of the challenges given the nameKey
      */
