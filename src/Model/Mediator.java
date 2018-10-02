@@ -164,8 +164,19 @@ public class Mediator {
 		timeLine.play();
 	}
 
+	/**.d
+	 * Shows progress without an event occuring after it is finished.
+	 *
+	 * @param progress
+	 * @param dir
+	 * @param fileName
+	 */
 	public void showProgress(ProgressIndicator progress, String dir, String fileName) {
 		EventHandler<ActionEvent> event = Event::consume; //do nothing
 		showProgress(progress,dir,fileName,event);
+	}
+
+	public void fireDisableTables() {
+		_subMain.disableTables();
 	}
 }

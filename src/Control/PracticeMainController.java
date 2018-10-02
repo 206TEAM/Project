@@ -85,6 +85,11 @@ public class PracticeMainController extends ParentController {
 		super.loadPane(page, subPane);
 	}
 
+	public void disableTables() {
+		practiceListView.setDisable(true);
+		versionListView.setDisable(true);
+	}
+
 	/**
 	 * Adds observers so that Sub-scenes can get notified
 	 * when an item is selected in {@code practiceListView} or
@@ -104,6 +109,10 @@ public class PracticeMainController extends ParentController {
 	 */
 	private void notifyObserver(String name, String fileName, int numberOfVersions) {
 		_observer.update(name, fileName, numberOfVersions);
+	}
+
+	private void notifyObserver(String name) {
+		_observer.update(name);
 	}
 
 }

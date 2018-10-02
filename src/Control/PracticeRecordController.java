@@ -33,6 +33,7 @@ public class PracticeRecordController extends PracticeMainController implements 
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		_recordState = false;
 		Mediator.getInstance().addObserver(this);
 	}
 
@@ -64,6 +65,7 @@ public class PracticeRecordController extends PracticeMainController implements 
 
 	@FXML
 	public void record(ActionEvent actionEvent) {
+		Mediator.getInstance().fireDisableTables();
 		if (_recordState) {
 			_currentPractice.stopRecording();
 			this.stopRecording();
@@ -72,7 +74,6 @@ public class PracticeRecordController extends PracticeMainController implements 
 
 			progressBar.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
 			progressText.setText("Recording...");
-			 _currentPractice = new Practice(_currentName);
 			_practices.add(_currentPractice);
 
 			Task<Void> task = new Task<Void>() {
@@ -99,13 +100,21 @@ public class PracticeRecordController extends PracticeMainController implements 
 	private void stopRecording(){
 		progressBar.setProgress(0.0); // reset progress bar
 		progressText.setText("Play Original");
+		record.setText("Re-record");
+		next.setDisable(false);
 		_recordState = false; // resets it to give opportunity to re-record.
 	}
 
-	public void update(String name, String fileName, int numberOfVersions) {
+	public void update(String name) {
 		_currentName = name;
+		_currentPractice = new Practice(name);
+		play.setDisable(false);
+		record.setDisable(false);
+	}
+
+	public void update(String name, String fileName, int numberOfVersions) {
+		update(name);
 		_currentFileName = fileName;
 		_numVersions = numberOfVersions;
-		play.setDisable(false);
 	}
 }

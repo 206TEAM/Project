@@ -15,7 +15,7 @@
          </effect>
       </ProgressBar>
       <Button fx:id="play" disable="true" layoutX="72.0" layoutY="69.0" mnemonicParsing="false" onAction="#play" prefHeight="20.0" prefWidth="29.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="▶️" textFill="#00ff12" />
-      <Button fx:id="record" layoutX="138.0" layoutY="119.0" mnemonicParsing="false" onAction="#record" prefHeight="39.0" prefWidth="125.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Record" textFill="#ff9900">
+      <Button fx:id="record" disable="true" layoutX="138.0" layoutY="119.0" mnemonicParsing="false" onAction="#record" prefHeight="39.0" prefWidth="125.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Record" textFill="#ff9900">
          <font>
             <Font size="17.0" />
          </font>
