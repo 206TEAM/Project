@@ -1,18 +1,3 @@
 
-Beena: &bad&
-Chamara: &good&
-
-Catherine: &bad&
-
-Jonathan: good
-Bruce: &bad&
-
-Ardern: &bad&
-
-Isabella: good
-
-Chen: &bad&
-
-Ahn: &bad&
-
-Chen2: &bad&
+Chen1: &good&
+Chen2: &good&

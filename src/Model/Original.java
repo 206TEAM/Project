@@ -108,6 +108,15 @@ public class Original {
 		return _name + _version;
 	}
 
+	public String getFileNameWithVersion() {
+		StringBuilder fileName = new StringBuilder(_fileName);
+		fileName.setLength(fileName.length() - 4);
+		fileName.append(_version);
+		fileName.append(".wav");
+
+		return fileName.toString();
+	}
+
 	public String getFileName() {
 		return _fileName;
 	}

@@ -40,12 +40,7 @@ public abstract class ParentController implements Initializable {
 
 	public void playFile(Text progressText, Button playButton, ProgressBar progressBar, String fileName, String name,
 	                     int numVersions) {
-		Original original;
-		if (numVersions > 1) {
-			original = Originals.getInstance().getOriginalWithVersions(fileName, name);
-		} else {
-			original = Originals.getInstance().getOriginal(fileName);
-		}
+		Original original = getOriginal(fileName, name, numVersions);
 		playFile(progressText, playButton, progressBar, "Names/" + name + "/Original/" + fileName, new Media(original));
 	}
 
@@ -63,5 +58,15 @@ public abstract class ParentController implements Initializable {
 		Thread thread = new Thread(media::play);
 		thread.setDaemon(true);
 		thread.start();
+	}
+
+	public Original getOriginal(String fileName, String name, int numVersions) {
+		Original original;
+		if (numVersions > 1) {
+			original = Originals.getInstance().getOriginalWithVersions(fileName, name);
+		} else {
+			original = Originals.getInstance().getOriginal(fileName);
+		}
+		return original;
 	}
 }
