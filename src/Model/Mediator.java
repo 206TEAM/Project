@@ -38,21 +38,22 @@ public class Mediator {
     private String _currentName;
     private String _currentFileName;
     private String _originalFileName;
+    private Practice _currentPractice;
     private int _numVersions;
     private List<String> _challengeList;
     private List<String> _challengeFileList;
 
-    /********method for getting session object********/
+	public void addObserver(Observer o) {
+		_practiceMain.addObserver(o);
+	}
+
+	/********method for getting session object********/
     public void setChallengeSession(ChallengeSession session){
         _session = session;
     }
 
     public ChallengeSession getChallengeSession(){
         return _session;
-    }
-
-    public void addObserver(Observer o) {
-    	_practiceMain.addObserver(o);
     }
 
     /********methods for getting/setting challenge related things********/
@@ -93,6 +94,14 @@ public class Mediator {
         _currentName = name;
     }
 
+    public void setCurrentPractice(Practice practice) {
+    	_currentPractice = practice;
+    }
+
+    public Practice getCurrentPractice() {
+    	return _currentPractice;
+    }
+
     public String getOriginalFilename(){
         return _originalFileName;
     }
@@ -105,10 +114,15 @@ public class Mediator {
     	_numVersions = numVersions;
     }
 
-    public void setCurrent(String name, String fileName, int numVersions) {
+    public int getNumVersions() {
+    	return _numVersions;
+    }
+
+    public void setCurrent(String name, String fileName, int numVersions, Practice practice) {
     	setCurrentName(name);
     	setOriginalFilename(fileName);
     	setNumVersions(numVersions);
+    	setCurrentPractice(practice);
     }
 
     public String getChallengeFile(String name){
@@ -169,12 +183,11 @@ public class Mediator {
 	 *
 	 * @param progress the {@code ProgressIndicator} being displayed
 	 * @param dir whether it is an {@code Original} or a {@code Practice}
-	 * @param fileName name of the file being played
 	 */
-	public void showProgress(ProgressIndicator progress, String dir, String fileName, EventHandler<ActionEvent> event) {
+	public void showProgress(ProgressIndicator progress, String dir, EventHandler<ActionEvent> event) {
 		double duration = 0;
 		try {
-			File file = new File("Names/" + _currentName + "/" + dir +  "/" + fileName);
+			File file = new File(dir);
 			AudioInputStream ais = AudioSystem.getAudioInputStream(file);
 			AudioFormat format = ais.getFormat();
 
@@ -195,11 +208,11 @@ public class Mediator {
 	/**
 	 * Shows progress without triggering an event occurring after it is finished.
 	 *
-	 * @see #showProgress(ProgressIndicator, String, String, EventHandler)
+	 * @see #showProgress(ProgressIndicator, String, EventHandler)
 	 */
 	public void showProgress(ProgressIndicator progress, String dir, String fileName) {
 		EventHandler<ActionEvent> event = Event::consume; //do nothing
-		showProgress(progress,dir,fileName,event);
+		showProgress(progress,dir,event);
 	}
 
 	public void fireDisableTable(PracticeMainController.TableType type1, PracticeMainController.TableType type2, boolean disable) {
@@ -217,5 +230,9 @@ public class Mediator {
 	 */
 	public void fireDisableTable(PracticeMainController.TableType type, boolean disable) {
 		_practiceMain.setDisableTables(type, disable);
+	}
+
+	public void fireTableValues(List<String> newTable) {
+		_practiceMain.setTableValues(newTable);
 	}
 }

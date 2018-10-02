@@ -38,30 +38,29 @@ public abstract class ParentController implements Initializable {
 
 	public abstract void loadPane(String page);
 
-	public void playFile(Text progressText, Button playButton, ProgressBar progressBar,
-	                     String fileName, String name, int numVersions) {
+	public void playFile(Text progressText, Button playButton, ProgressBar progressBar, String fileName, String name,
+	                     int numVersions) {
+		Original original;
+		if (numVersions > 1) {
+			original = Originals.getInstance().getOriginalWithVersions(fileName, name);
+		} else {
+			original = Originals.getInstance().getOriginal(fileName);
+		}
+		playFile(progressText, playButton, progressBar, "Names/" + name + "/Original/" + fileName, new Media(original));
+	}
+
+	public void playFile(Text progressText, Button playButton, ProgressBar progressBar, String dir, Media media) {
 		Mediator mediator = Mediator.getInstance();
 		EventHandler<ActionEvent> doAfter = event -> {
 			progressText.setText("Done");
 			playButton.setDisable(false);
-			mediator.fireDisableTable(PracticeMainController.TableType.PRACTICE, PracticeMainController.TableType.VERSION, false);
 		};
-		mediator.showProgress(progressBar, "Original", fileName, doAfter);
+		mediator.showProgress(progressBar, dir, doAfter);
 		progressText.setText("Playing...");
 		playButton.setDisable(true);
 		mediator.fireDisableTable(PracticeMainController.TableType.PRACTICE, PracticeMainController.TableType.VERSION, true);
 
-		Thread thread = new Thread(() -> {
-			Original original;
-			if (numVersions > 1) {
-				original = Originals.getInstance().getOriginalWithVersions(fileName, name);
-			} else {
-				original = Originals.getInstance().getOriginal(fileName);
-			}
-
-			Media media = new Media(original);
-			media.play();
-		});
+		Thread thread = new Thread(media::play);
 		thread.setDaemon(true);
 		thread.start();
 	}

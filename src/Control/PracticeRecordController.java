@@ -1,10 +1,10 @@
 package Control;
 
-import Model.*;
+import Model.Mediator;
+import Model.Practice;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
@@ -12,8 +12,6 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.text.Text;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class PracticeRecordController extends PracticeMainController implements Observer {
@@ -28,7 +26,6 @@ public class PracticeRecordController extends PracticeMainController implements 
 	private String _currentName;
 	private String _currentFileName;
 	private int _numVersions;
-	private List<Practice> _practices = new ArrayList<>();
 	private Practice _currentPractice;
 
 	private Mediator _mediator;
@@ -43,6 +40,7 @@ public class PracticeRecordController extends PracticeMainController implements 
 	@FXML
 	public void play(ActionEvent actionEvent) {
 		super.playFile(progressText, play, progressBar, _currentFileName, _currentName, _numVersions);
+		_mediator.fireDisableTable(PracticeMainController.TableType.PRACTICE, PracticeMainController.TableType.VERSION, false);
 	}
 
 	@FXML
@@ -56,7 +54,6 @@ public class PracticeRecordController extends PracticeMainController implements 
 
 			progressBar.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
 			progressText.setText("Recording...");
-			_practices.add(_currentPractice);
 
 			Task<Void> task = new Task<Void>() {
 				@Override
@@ -87,9 +84,9 @@ public class PracticeRecordController extends PracticeMainController implements 
 		_recordState = false; // resets it to give opportunity to re-record.
 	}
 
-	public void update(String name, String fileName, int numberOfVersions) {
+	public void update(String name, String fileName, int numberOfVersions, Practice practice) {
 		_currentName = name;
-		_currentPractice = new Practice(name);
+		_currentPractice = practice;
 		_currentFileName = fileName;
 		_numVersions = numberOfVersions;
 		play.setDisable(false);

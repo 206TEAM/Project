@@ -2,6 +2,7 @@ package Control;
 
 import Model.Mediator;
 import Model.Originals;
+import Model.Practice;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -37,10 +38,7 @@ public class PracticeMainController extends ParentController {
 	public void initialize(URL location, ResourceBundle resources) {
 		_mediator = Mediator.getInstance();
 		_mediator.setParent(this);
-
-		List<String> list = _mediator.getPracticeMainList();
-		ObservableList<String> practiceList = FXCollections.observableArrayList(list);
-		practiceListView.setItems(practiceList);
+		setTableValues(_mediator.getPracticeMainList());
 	}
 
 	@FXML
@@ -93,6 +91,11 @@ public class PracticeMainController extends ParentController {
 		}
 	}
 
+	public void setTableValues(List<String> practiceList) {
+		ObservableList<String> practices = FXCollections.observableArrayList(practiceList);
+		practiceListView.setItems(practices);
+	}
+
 	/**
 	 * Adds observers so that Sub-scenes can get notified
 	 * when an item is selected in {@code practiceListView} or
@@ -111,7 +114,8 @@ public class PracticeMainController extends ParentController {
 	 * @see #addObserver(Observer)
 	 */
 	private void notifyObserver(String name, String fileName, int numberOfVersions) {
-		_mediator.setCurrent(name, fileName, numberOfVersions);
-		_observer.update(name, fileName, numberOfVersions);
+		Practice practice = new Practice(name);
+		_mediator.setCurrent(name, fileName, numberOfVersions, practice);
+		_observer.update(name, fileName, numberOfVersions, practice);
 	}
 }
