@@ -62,7 +62,7 @@ public class SelectPracticeController implements Initializable {
 
 		_mediator.setPracticeMainList(practiceList);
 		_mediator.loadPane(ParentController.Type.HEADER,"PracticeMain");
-		_mediator.loadPane(ParentController.Type.SUB_MAIN, "PracticeRecord");
+		_mediator.loadPane(ParentController.Type.PRACTICE, "PracticeRecord");
 	}
 
 	@FXML

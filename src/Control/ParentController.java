@@ -24,7 +24,7 @@ import java.io.IOException;
  */
 public abstract class ParentController implements Initializable {
 
-	public enum Type { HEADER, MAIN, SUB_MAIN }
+	public enum Type {HEADER, MAIN, SUB_MAIN, PRACTICE}
 
 	void loadPane(String page, Pane pane) {
 		Pane newPane = null;

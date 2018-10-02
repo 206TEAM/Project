@@ -48,7 +48,7 @@ public class PracticeCompareController extends PracticeMainController implements
 	@FXML
 	public void next(ActionEvent actionEvent) {
 		// if (practiceListView.size() > 0)
-		Mediator.getInstance().loadPane(ParentController.Type.SUB_MAIN, "PracticeCompare");
+		Mediator.getInstance().loadPane(Type.PRACTICE, "PracticeCompare");
 		// else { Mediator.getInstance().loadPane(ParentController.Type.MAIN, "MainMenu"); }
 	}
 

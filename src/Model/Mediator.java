@@ -17,7 +17,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Mediator {
@@ -26,7 +25,8 @@ public class Mediator {
 
     private HeaderController _header;
     private MainMenuController _main;
-    private PracticeMainController _subMain;
+    private ChallengeCompareController _subMain;
+    private PracticeMainController _practiceMain;
 
     private List<String> _practiceMainList;
 
@@ -52,7 +52,7 @@ public class Mediator {
     }
 
     public void addObserver(Observer o) {
-    	_subMain.addObserver(o);
+    	_practiceMain.addObserver(o);
     }
 
     /********methods for getting/setting challenge related things********/
@@ -122,15 +122,20 @@ public class Mediator {
     }
 
     /*********Methods for setting scenes**********/
+    public void setParent(HeaderController parent) {
+    	_header = parent;
+    }
 
-    public void setParent(ParentController parent) {
-        if (parent instanceof HeaderController) {
-            _header = (HeaderController) parent;
-        } else if (parent instanceof MainMenuController) {
-            _main = (MainMenuController) parent;
-        } else {
-            _subMain = parent;
-        }
+    public void setParent(MainMenuController parent) {
+    	_main = parent;
+    }
+
+    public void setParent(ChallengeCompareController parent) {
+    	_subMain = parent;
+    }
+
+    public void setParent(PracticeMainController parent) {
+    	_practiceMain = parent;
     }
 
     public void loadPane(ParentController.Type parent, String page) {
@@ -140,6 +145,8 @@ public class Mediator {
             _main.loadPane(page);
         } else if (parent == ParentController.Type.SUB_MAIN) {
             _subMain.loadPane(page);
+        } else if (parent == ParentController.Type.PRACTICE) {
+        	_practiceMain.loadPane(page);
         }
     }
 
@@ -209,7 +216,6 @@ public class Mediator {
 	 *                otherwise, enables the table.
 	 */
 	public void fireDisableTable(PracticeMainController.TableType type, boolean disable) {
-		_subMain.setDisableTables(type, disable);
+		_practiceMain.setDisableTables(type, disable);
 	}
-
 }

@@ -76,7 +76,7 @@ public class PracticeRecordController extends PracticeMainController implements 
 
 	@FXML
 	public void next(ActionEvent actionEvent) {
-		_mediator.loadPane(ParentController.Type.SUB_MAIN, "PracticeCompare");
+		_mediator.loadPane(ParentController.Type.PRACTICE, "PracticeCompare");
 	}
 
 	private void stopRecording(){
