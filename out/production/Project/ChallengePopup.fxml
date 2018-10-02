@@ -7,9 +7,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="349.0" prefWidth="513.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.ConcatenateNamesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="349.0" prefWidth="513.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ListView fx:id="incorrectList" layoutX="26.0" layoutY="127.0" onMouseClicked="#selectNameOriginal" prefHeight="155.0" prefWidth="168.0" />
+      <ListView fx:id="wrongListView" layoutX="26.0" layoutY="127.0" prefHeight="155.0" prefWidth="168.0" />
       <Rectangle fill="#ff9900" height="19.0" layoutX="26.0" layoutY="109.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="168.0" />
       <Text fill="#1e1e1e" layoutX="68.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect" />
       <Text fx:id="nameLabel" fill="#ff9900" layoutX="212.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score">
@@ -37,7 +37,7 @@
             <Font name="DejaVu Sans Bold" size="26.0" />
          </font>
       </Text>
-      <ListView fx:id="correctList" layoutX="329.0" layoutY="127.0" onMouseClicked="#selectNameOriginal" prefHeight="155.0" prefWidth="160.0" />
+      <ListView fx:id="correctListView" layoutX="329.0" layoutY="127.0" prefHeight="155.0" prefWidth="160.0" />
       <Rectangle fill="#ff9900" height="19.0" layoutX="329.0" layoutY="109.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="160.0" />
       <Text fill="#1e1e1e" layoutX="374.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correct" />
       <Button fx:id="challengeButton" layoutX="212.0" layoutY="231.0" mnemonicParsing="false" onAction="#cancel" prefHeight="29.0" prefWidth="98.0" text="Challenge">

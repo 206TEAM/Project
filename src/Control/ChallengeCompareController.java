@@ -4,10 +4,12 @@ import Model.*;
 import Ratings.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
+import Main.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -16,7 +18,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -56,14 +61,17 @@ public class ChallengeCompareController extends ParentController {
     public Pane subPane;
 
     private Mediator _mediator;
+    private Main main;
 
     /***********fields****************/
+    private ChallengeSession _session;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         _mediator = Mediator.getInstance();
         _mediator.setParent(this);
+        _session = Mediator.getInstance().getChallengeSession();
         List<String> list = _mediator.getPracticeMainList();
         ObservableList<String> practiceList = FXCollections.observableArrayList(list);
         challengeListView.setItems(practiceList);
@@ -86,7 +94,7 @@ public class ChallengeCompareController extends ParentController {
             public void run() {
 	            Media media;
 
-	            String name = Mediator.getInstance().getCurrentName();
+	            String name = _session.getCurrentName();
 	            String fileName = Mediator.getInstance().getOriginalFilename();
 
 	            Original original;
@@ -115,8 +123,8 @@ public class ChallengeCompareController extends ParentController {
             public void run() {
                 Media media;
 
-                String name = Mediator.getInstance().getCurrentName();
-                String fileName = Mediator.getInstance().getOriginalFilename();
+                String name = _session.getCurrentName();
+                String fileName = _session.getChallengeFile(name);
 
                 media = new Media(Challenges.getInstance().getChallenge(name, fileName));
 
@@ -142,13 +150,14 @@ public class ChallengeCompareController extends ParentController {
     }
 
     private void processRating(Boolean rating){
-        String name = Mediator.getInstance().getCurrentName();
-        String fileName = Mediator.getInstance().getChallengeFile(name);
+        String name = _session.getCurrentName();
+        String fileName = _session.getChallengeFile(name);
         ChallengeRatings.getInstance().setRating(name, fileName, rating);
 
         challengeListView.getItems().remove(name);
         if (challengeListView.getItems().size()==0){
-            Mediator.getInstance().loadPane(ParentController.Type.MAIN, "MainMenu");
+            popup();
+            //Mediator.getInstance().loadPane(ParentController.Type.MAIN, "MainMenu");
         } else {
             wrong.setDisable(true);
             correct.setDisable(true);
@@ -165,7 +174,7 @@ public class ChallengeCompareController extends ParentController {
     @FXML
     public void nameSelected(MouseEvent mouseEvent) {
         String name = challengeListView.getSelectionModel().getSelectedItem();
-        Mediator.getInstance().setCurrentName(name);
+        _session.setCurrentName(name);
         if (name != null) {
             List<String> versions = Originals.getInstance().getFileName(name);
             ObservableList<String> versionsToDisplay = FXCollections.observableArrayList(versions);
@@ -179,12 +188,11 @@ public class ChallengeCompareController extends ParentController {
     @FXML
     public void selectNameOriginal(MouseEvent event) {
         String fileName = versionListView.getSelectionModel().getSelectedItem();
-        String name = challengeListView.getSelectionModel().getSelectedItem();
         System.out.println(fileName);
 
 
         if (fileName != null) {
-            Mediator.getInstance().setOriginalFilename(fileName);
+           Mediator.getInstance().setOriginalFilename(fileName);
             playOriginal.setDisable(false);
         } else {
             playOriginal.setDisable(true);
@@ -199,5 +207,29 @@ public class ChallengeCompareController extends ParentController {
     @Override
     public void loadPane(String page) {
         super.loadPane(page, subPane);
+    }
+
+
+    public void popup() {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/ChallengePopup.fxml"));
+        PopupController popupController = new PopupController();
+        loader.setController(popupController);
+        Parent layout;
+        try {
+            layout = loader.load();
+            Scene scene = new Scene(layout);
+            Stage popupStage = new Stage();
+            popupController.setStage(popupStage);
+
+            if (this.main != null) {
+                popupStage.initOwner(main.getPrimaryStage());
+            }
+            popupStage.initModality(Modality.WINDOW_MODAL);
+            popupStage.setScene(scene);
+            popupStage.showAndWait();
+        } catch (IOException error) {
+            error.printStackTrace();
+        }
     }
 }

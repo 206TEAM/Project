@@ -1,5 +1,6 @@
 package Control;
 
+import Model.ChallengeSession;
 import Model.Challenges;
 import Model.Media;
 import Model.Mediator;
@@ -30,13 +31,14 @@ public class ChallengePlayController implements Initializable {
 	private int _iteration;
 	private List<String> _challengeList;
 	private Timeline _timeLine;
+	private ChallengeSession _session;
 	private Mediator _mediator;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		_session = Mediator.getInstance().getChallengeSession();
 		_mediator = Mediator.getInstance();
-
-		_challengeList = _mediator.getChallengeList();
+		_challengeList = _session.getChallengeList();
 		_iteration = 0;
 
 		_timeLine = new Timeline(
@@ -97,7 +99,7 @@ public class ChallengePlayController implements Initializable {
 				String name = _challengeList.get(_iteration - 1);
 				System.out.println(name);
 				String fileName = Challenges.getInstance().addNewChallenge(name);
-				Mediator.getInstance().addChallengeFile(fileName);
+				_session.addChallengeFile(fileName);
                      System.out.println(fileName);
 				return null;
 			}

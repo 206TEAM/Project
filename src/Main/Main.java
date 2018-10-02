@@ -1,3 +1,5 @@
+package Main;
+
 import Model.Originals;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +14,11 @@ import java.nio.file.Paths;
 import java.util.Comparator;
 
 public class Main extends Application {
+	private Stage primaryStage;
+
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
 
 	@Override
 	public void start(Stage primaryStage) {
