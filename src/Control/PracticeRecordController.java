@@ -31,41 +31,23 @@ public class PracticeRecordController extends PracticeMainController implements 
 	private List<Practice> _practices = new ArrayList<>();
 	private Practice _currentPractice;
 
+	private Mediator _mediator;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		_mediator = Mediator.getInstance();
 		_recordState = false;
-		Mediator.getInstance().addObserver(this);
+		_mediator.addObserver(this);
 	}
 
 	@FXML
 	public void play(ActionEvent actionEvent) {
-		EventHandler<ActionEvent> doAfter = event -> {
-			progressText.setText("Done");
-			play.setDisable(false);
-		};
-		Mediator.getInstance().showProgress(progressBar, "Original", _currentFileName, doAfter);
-
-		progressText.setText("Playing...");
-		play.setDisable(true);
-
-		Thread thread = new Thread(() -> {
-			Original original;
-			if (_numVersions > 1) {
-				original = Originals.getInstance().getOriginalWithVersions(_currentFileName, _currentName);
-			} else {
-				original = Originals.getInstance().getOriginal(_currentFileName);
-			}
-
-			Media media = new Media(original);
-			media.play();
-		});
-		thread.setDaemon(true);
-		thread.start();
+		super.playFile(progressText, play, progressBar, _currentFileName, _currentName, _numVersions);
 	}
 
 	@FXML
 	public void record(ActionEvent actionEvent) {
-		Mediator.getInstance().fireDisableTables();
+		_mediator.fireDisableTable(TableType.PRACTICE, TableType.VERSION, true);
 		if (_recordState) {
 			_currentPractice.stopRecording();
 			this.stopRecording();
@@ -94,7 +76,7 @@ public class PracticeRecordController extends PracticeMainController implements 
 
 	@FXML
 	public void next(ActionEvent actionEvent) {
-		Mediator.getInstance().loadPane(ParentController.Type.SUB_MAIN, "PracticeCompare");
+		_mediator.loadPane(ParentController.Type.SUB_MAIN, "PracticeCompare");
 	}
 
 	private void stopRecording(){
@@ -105,16 +87,12 @@ public class PracticeRecordController extends PracticeMainController implements 
 		_recordState = false; // resets it to give opportunity to re-record.
 	}
 
-	public void update(String name) {
+	public void update(String name, String fileName, int numberOfVersions) {
 		_currentName = name;
 		_currentPractice = new Practice(name);
-		play.setDisable(false);
-		record.setDisable(false);
-	}
-
-	public void update(String name, String fileName, int numberOfVersions) {
-		update(name);
 		_currentFileName = fileName;
 		_numVersions = numberOfVersions;
+		play.setDisable(false);
+		record.setDisable(false);
 	}
 }

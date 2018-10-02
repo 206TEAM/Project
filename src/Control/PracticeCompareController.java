@@ -4,20 +4,40 @@ import Model.Mediator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.text.Text;
 
-public class PracticeCompareController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class PracticeCompareController extends PracticeMainController implements Observer {
 	@FXML public Button playOriginal;
 	@FXML public Button playPractice;
 	@FXML public Button next;
-	@FXML public Label originalProgressText;
-	@FXML public Label practiceProgressText;
+	@FXML public Text originalProgressText;
+	@FXML public Text practiceProgressText;
+	@FXML public ProgressBar originalProgressBar;
+	@FXML public ProgressBar practiceProgressBar;
+
+	private Mediator _mediator;
+	private String _currentFileName;
+	private String _currentName;
+	private int _numVersions;
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		_mediator = Mediator.getInstance();
+		_mediator.fireDisableTable(TableType.VERSION, false);
+		_mediator.addObserver(this);
+		//todo SET THE CURRENT FILENAME, NAME, NUMBER OF VERSION.
+		//TODO play PRACTICE
+		//todo USER RESTRICTIONS.
+	}
 
 	@FXML
 	public void playOriginal(ActionEvent actionEvent) {
-		//todo play original audio
-		//todo progressbar ting
-		originalProgressText.setText("Playing...");
+		super.playFile(originalProgressText, playOriginal, originalProgressBar,
+				_mediator.getOriginalFilename(), _mediator.getCurrentName(), _numVersions);
 	}
 
 	@FXML
@@ -30,5 +50,9 @@ public class PracticeCompareController {
 		// if (practiceListView.size() > 0)
 		Mediator.getInstance().loadPane(ParentController.Type.SUB_MAIN, "PracticeCompare");
 		// else { Mediator.getInstance().loadPane(ParentController.Type.MAIN, "MainMenu"); }
+	}
+
+	@Override
+	public void update(String name, String fileName, int numberOfVersions) {
 	}
 }

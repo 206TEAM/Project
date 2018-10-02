@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class PracticeMainController extends ParentController {
+
+	public enum TableType { PRACTICE, VERSION }
+
 	@FXML public ListView<String> practiceListView;
 	@FXML public ListView<String> versionListView;
 	@FXML public Button addPractice;
@@ -54,7 +57,6 @@ public class PracticeMainController extends ParentController {
 			ObservableList<String> versionsToDisplay = FXCollections.observableArrayList(versions);
 			versionListView.setItems(versionsToDisplay);
 			nameLabel.setText(name);
-			_mediator.setCurrentName(name);
 
 			if (versionsToDisplay.size() == 1) {
 				versionListView.getSelectionModel().select(0);
@@ -70,8 +72,6 @@ public class PracticeMainController extends ParentController {
 		String fileName = versionListView.getSelectionModel().getSelectedItem();
 		String name = practiceListView.getSelectionModel().getSelectedItem();
 		if (fileName != null) {
-			_mediator.setOriginalFilename(fileName);
-			_mediator.setCurrentName(name);
 			notifyObserver(name, fileName, versionListView.getItems().size());
 		}
 	}
@@ -85,9 +85,12 @@ public class PracticeMainController extends ParentController {
 		super.loadPane(page, subPane);
 	}
 
-	public void disableTables() {
-		practiceListView.setDisable(true);
-		versionListView.setDisable(true);
+	public void setDisableTables(TableType type, boolean disable) {
+		if (type.equals(TableType.PRACTICE)) {
+			practiceListView.setDisable(disable);
+		} else if (type.equals(TableType.VERSION)) {
+			versionListView.setDisable(disable);
+		}
 	}
 
 	/**
@@ -108,11 +111,7 @@ public class PracticeMainController extends ParentController {
 	 * @see #addObserver(Observer)
 	 */
 	private void notifyObserver(String name, String fileName, int numberOfVersions) {
+		_mediator.setCurrent(name, fileName, numberOfVersions);
 		_observer.update(name, fileName, numberOfVersions);
 	}
-
-	private void notifyObserver(String name) {
-		_observer.update(name);
-	}
-
 }

@@ -35,6 +35,7 @@ public class Mediator {
     private String _currentName;
     private String _currentFileName;
     private String _originalFileName;
+    private int _numVersions;
     private List<String> _challengeList;
     private List<String> _challengeFileList;
     private double _difficulty;
@@ -85,8 +86,18 @@ public class Mediator {
         return _originalFileName;
     }
 
-    public void setOriginalFilename(String name){
-        _originalFileName = name;
+    public void setOriginalFilename(String fileName){
+        _originalFileName = fileName;
+    }
+
+    public void setNumVersions(int numVersions) {
+    	_numVersions = numVersions;
+    }
+
+    public void setCurrent(String name, String fileName, int numVersions) {
+    	setCurrentName(name);
+    	setOriginalFilename(fileName);
+    	setNumVersions(numVersions);
     }
 
     public String getChallengeFile(String name){
@@ -164,19 +175,31 @@ public class Mediator {
 		timeLine.play();
 	}
 
-	/**.d
-	 * Shows progress without an event occuring after it is finished.
+	/**
+	 * Shows progress without triggering an event occurring after it is finished.
 	 *
-	 * @param progress
-	 * @param dir
-	 * @param fileName
+	 * @see #showProgress(ProgressIndicator, String, String, EventHandler)
 	 */
 	public void showProgress(ProgressIndicator progress, String dir, String fileName) {
 		EventHandler<ActionEvent> event = Event::consume; //do nothing
 		showProgress(progress,dir,fileName,event);
 	}
 
-	public void fireDisableTables() {
-		_subMain.disableTables();
+	public void fireDisableTable(PracticeMainController.TableType type1, PracticeMainController.TableType type2, boolean disable) {
+		fireDisableTable(type1, disable);
+		fireDisableTable(type2, disable);
 	}
+
+	/**
+	 * Disables a table in {@link PracticeMainController} so that
+	 * the user cannot change their selection.
+	 *
+	 * @param type which table to disable/enable
+	 * @param disable if {@code true}, then disables the table;
+	 *                otherwise, enables the table.
+	 */
+	public void fireDisableTable(PracticeMainController.TableType type, boolean disable) {
+		_subMain.setDisableTables(type, disable);
+	}
+
 }
