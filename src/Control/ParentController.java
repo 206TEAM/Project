@@ -44,12 +44,12 @@ public abstract class ParentController implements Initializable {
 		EventHandler<ActionEvent> doAfter = event -> {
 			progressText.setText("Done");
 			playButton.setDisable(false);
-			mediator.fireDisableTable(PracticeMainController.TableType.PRACTICE, PracticeMainController.TableType.VERSION, false);
+			//mediator.fireDisableTable(PracticeMainController.TableType.PRACTICE, PracticeMainController.TableType.VERSION, false);
 		};
 		mediator.showProgress(progressBar, "Original", fileName, doAfter);
 		progressText.setText("Playing...");
 		playButton.setDisable(true);
-		mediator.fireDisableTable(PracticeMainController.TableType.PRACTICE, PracticeMainController.TableType.VERSION, true);
+	//	mediator.fireDisableTable(PracticeMainController.TableType.PRACTICE, PracticeMainController.TableType.VERSION, true);
 
 		Thread thread = new Thread(() -> {
 			Original original;

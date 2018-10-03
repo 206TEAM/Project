@@ -75,8 +75,11 @@ public class Challenges {
     }
 
     public int getChallengeSize(String nameKey){
-        ArrayList<Challenge> challengeList = _challenges.get(nameKey);
-        return challengeList.size();
+        if(_challenges.get(nameKey)!=null){
+            return _challenges.get(nameKey).size();
+        } else {
+            return 0;
+        }
     }
 
     /**

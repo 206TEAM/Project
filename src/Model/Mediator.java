@@ -52,7 +52,7 @@ public class Mediator {
     }
 
     public void addObserver(Observer o) {
-    	_practiceMain.addObserver(o);
+    	//_practiceMain.addObserver(o);
     }
 
     /********methods for getting/setting challenge related things********/
@@ -171,8 +171,9 @@ public class Mediator {
 	 * @param dir whether it is an {@code Original} or a {@code Practice}
 	 * @param fileName name of the file being played
 	 */
+
 	public void showProgress(ProgressIndicator progress, String dir, String fileName, EventHandler<ActionEvent> event) {
-		double duration = 0;
+		/**double duration = 0;
 		try {
 			File file = new File("Names/" + _currentName + "/" + dir +  "/" + fileName);
 			AudioInputStream ais = AudioSystem.getAudioInputStream(file);
@@ -190,6 +191,7 @@ public class Mediator {
 						new KeyValue(progress.progressProperty(), 1)));
 		timeLine.setCycleCount(1);
 		timeLine.play();
+         **/
 	}
 
 	/**
@@ -198,14 +200,14 @@ public class Mediator {
 	 * @see #showProgress(ProgressIndicator, String, String, EventHandler)
 	 */
 	public void showProgress(ProgressIndicator progress, String dir, String fileName) {
-		EventHandler<ActionEvent> event = Event::consume; //do nothing
-		showProgress(progress,dir,fileName,event);
+		//EventHandler<ActionEvent> event = Event::consume; //do nothing
+		//showProgress(progress,dir,fileName,event);
 	}
 
-	public void fireDisableTable(PracticeMainController.TableType type1, PracticeMainController.TableType type2, boolean disable) {
-		fireDisableTable(type1, disable);
-		fireDisableTable(type2, disable);
-	}
+	//public void fireDisableTable(PracticeMainController.TableType type1, PracticeMainController.TableType type2, boolean disable) {
+		//fireDisableTable(type1, disable);
+		//fireDisableTable(type2, disable);
+	//}
 
 	/**
 	 * Disables a table in {@link PracticeMainController} so that
@@ -215,7 +217,7 @@ public class Mediator {
 	 * @param disable if {@code true}, then disables the table;
 	 *                otherwise, enables the table.
 	 */
-	public void fireDisableTable(PracticeMainController.TableType type, boolean disable) {
-		_practiceMain.setDisableTables(type, disable);
-	}
+	//public void fireDisableTable(PracticeMainController.TableType type, boolean disable) {
+		//_practiceMain.setDisableTables(type, disable);
+	//}
 }
