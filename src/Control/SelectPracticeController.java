@@ -10,12 +10,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 public class SelectPracticeController implements Initializable {
 
@@ -49,6 +54,7 @@ public class SelectPracticeController implements Initializable {
 				names.removeAll(previouslySelected);
 				ObservableList<String> previewNames = FXCollections.observableArrayList(previouslySelected);
 				previewList.setItems(previewNames);
+				disableButtons(false);
 			}
 
 			Collections.sort(names);
@@ -146,12 +152,38 @@ public class SelectPracticeController implements Initializable {
 	}
 
 	private void upload() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Upload a List");
+		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("text files", "*.txt"));
 
+		File file = fileChooser.showOpenDialog(go.getScene().getWindow());
+
+		List<String> uploadedNames = new ArrayList<>();
+
+		try (Stream<String> stream = Files.lines(file.toPath())) {
+			stream.forEach(e -> {
+				List<String> names = new ArrayList<>(selectListView.getItems());
+				if (containsName(e, names)) {
+					e = e.substring(0,1).toUpperCase() + e.substring(1).toLowerCase();
+					uploadedNames.add(e);
+				}
+			});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (uploadedNames.size() > 0) {
+			disableButtons(false);
+			previewList.getItems().addAll(uploadedNames);
+		}
 	}
 
 	private void disableButtons(boolean disable) {
 		go.setDisable(disable);
 		shuffle.setDisable(disable);
 		reset.setDisable(disable);
+	}
+
+	private boolean containsName(String string, List<String> list){
+		return list.stream().anyMatch(x -> x.equalsIgnoreCase(string));
 	}
 }
