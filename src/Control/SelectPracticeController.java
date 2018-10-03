@@ -4,6 +4,7 @@ import Model.Mediator;
 import Model.Originals;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,8 +23,11 @@ public class SelectPracticeController implements Initializable {
 	@FXML public Button go;
 	@FXML public CheckBox shuffle;
 	@FXML public TextField search;
-	@FXML public SplitMenuButton filter;
-	@FXML public Button create;
+	@FXML public MenuButton add;
+	@FXML public ListView<String> previewList;
+	@FXML public MenuItem combine;
+	@FXML public MenuItem upload;
+	@FXML public Button reset;
 
 	private Mediator _mediator;
 
@@ -32,22 +36,43 @@ public class SelectPracticeController implements Initializable {
 		_mediator = Mediator.getInstance();
 		List<String> names = Originals.getInstance().listNames();
 
+		combine.setOnAction(event -> combine());
+		upload.setOnAction(event -> upload());
+
 		if (names.size() == 0) {
 			selectListView.setVisible(false);
 		} else {
 			selectListView.setVisible(true);
 
+			List<String> previouslySelected = Mediator.getInstance().getPracticeMainList();
+			if (previouslySelected != null) {
+				names.removeAll(previouslySelected);
+				ObservableList<String> previewNames = FXCollections.observableArrayList(previouslySelected);
+				previewList.setItems(previewNames);
+			}
+
 			Collections.sort(names);
 			ObservableList<String> practiceNames = FXCollections.observableArrayList(names);
-			selectListView.setItems(practiceNames);
-			selectListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+			FilteredList<String> filteredList = new FilteredList<>(practiceNames, s -> true);
+			selectListView.setItems(filteredList);
+			selectListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+			search.textProperty().addListener(((observable, oldValue, newValue) -> {
+				filteredList.setPredicate(string -> {
+					if (newValue==null || newValue.isEmpty()) {
+						return true;
+					}
+					return string.toUpperCase().contains(newValue.toUpperCase());
+				});
+				selectListView.setItems(filteredList);
+			}));
 		}
 	}
 
 	@FXML
 	public void go(ActionEvent actionEvent) {
 		List<String> practiceList = _mediator.getPracticeMainList();
-		List<String> selectedListTemp = selectListView.getSelectionModel().getSelectedItems();
+		List<String> selectedListTemp = previewList.getItems();
 		List<String> selectedList = new ArrayList<>(selectedListTemp);
 
 		if (practiceList == null) {
@@ -66,31 +91,67 @@ public class SelectPracticeController implements Initializable {
 	}
 
 	@FXML
+	public void reset(ActionEvent actionEvent) {
+		List<String> allNames = Originals.getInstance().listNames();
+		ObservableList<String> list = FXCollections.observableList(allNames);
+		selectListView.setItems(list);
+		previewList.getItems().clear();
+		disableButtons(true);
+	}
+
+	@FXML
 	public void shuffle(ActionEvent actionEvent) {
 		if (shuffle.isSelected()) {
-			FXCollections.shuffle(selectListView.getItems());
+			FXCollections.shuffle(previewList.getItems());
 		} else {
-			FXCollections.sort(selectListView.getItems());
+			FXCollections.sort(previewList.getItems());
 		}
 	}
 
-	@FXML
-	public void filter(ActionEvent actionEvent) {
-	}
-
-	@FXML
-	public void search(ActionEvent actionEvent) {
-	}
-
-	@FXML
-	public void create(ActionEvent actionEvent) { //todo COMBINE TWO NAMES
-	}
 
 	@FXML
 	public void listViewSelected(MouseEvent mouseEvent) {
-		if (selectListView.getSelectionModel().getSelectedItems().size() > 0) {
-			shuffle.setDisable(false);
-			go.setDisable(false);
+		String selectedItem = selectListView.getSelectionModel().getSelectedItem();
+		if (selectedItem != null) {
+			if (!previewList.getItems().contains(selectedItem)) {
+				previewList.getItems().add(selectedItem);
+			}
+			disableButtons(false);
 		}
+
+	}
+
+	@FXML
+	public void previewListSelected(MouseEvent mouseEvent) {
+		String selectedItem = previewList.getSelectionModel().getSelectedItem();
+		if (selectedItem != null) {
+			previewList.getItems().remove(selectedItem);
+			if (previewList.getItems().size() == 0) {
+				disableButtons(true);
+			}
+		}
+	}
+
+	//TODO can make it so it removes from select practice. Requires a bit of work... not sure if necessary.
+//	private void transferListItem(ListView<String> removeFrom, ListView<String> addTo) {
+//		String toAdd = removeFrom.getSelectionModel().getSelectedItem();
+//		if (toAdd != null) {
+//			addTo.getItems().add(toAdd);
+//			removeFrom.getItems().remove(toAdd);
+//		}
+//	}
+
+	private void combine() {
+		//todo make new page
+	}
+
+	private void upload() {
+
+	}
+
+	private void disableButtons(boolean disable) {
+		go.setDisable(disable);
+		shuffle.setDisable(disable);
+		reset.setDisable(disable);
 	}
 }
