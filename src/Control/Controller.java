@@ -76,8 +76,16 @@ abstract class Controller implements Initializable {
 
 	public void playFile(Text progressText, Button playButton, ProgressBar progressBar, String fileName, String name,
 	                     int numVersions) {
-		Original original = getOriginal(fileName, name, numVersions);
-		playFile(progressText, playButton, progressBar, "Names/" + name + "/Original/" + fileName, new Media(original));
+		Original original;
+		String dir;
+		if (name.contains(" ")) {
+			original = _originals.getConcatOriginal(name);
+			dir = "Temp/" + fileName;
+		} else {
+			original = getOriginal(fileName, name, numVersions);
+			dir = "Names/" + name + "/Original/" + fileName;
+		}
+		playFile(progressText, playButton, progressBar, dir, new Media(original));
 	}
 
 	/**

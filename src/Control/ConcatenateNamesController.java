@@ -1,6 +1,7 @@
 package Control;
 
 import Model.Media;
+import Model.Original;
 import Model.Originals;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -92,6 +93,7 @@ public class ConcatenateNamesController extends SelectPracticeController {
 
 		String newName = _newName.replace(' ', '_');
 		Media.concatNames(newName);
+		_originals.addConcat(new Original(_newName, newName + ".wav"));
 
 		super.getInstance().addValue(_newName);
 		exit();

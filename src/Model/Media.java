@@ -37,7 +37,11 @@ public class Media {
 		System.out.println(fileName);
 		_fileName = fileName.substring(0, fileName.lastIndexOf('.')) + original.getVersion() + ".wav";
 		_originalName = original.getName();
-		_directory = original.getDirectory();
+		if (_originalName.contains(" ")) {
+			_directory = new File("Temp");
+		} else {
+			_directory = original.getDirectory();
+		}
 	}
 
 	/**

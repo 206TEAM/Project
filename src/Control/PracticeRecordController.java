@@ -1,6 +1,5 @@
 package Control;
 
-import Model.Mediator;
 import Model.Practice;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
@@ -28,11 +27,8 @@ public class PracticeRecordController extends PracticeMainController implements 
 	private int _numVersions;
 	private Practice _currentPractice;
 
-	private Mediator _mediator;
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		_mediator = Mediator.getInstance();
 		_recordState = false;
 		_mediator.addObserver(this);
 	}

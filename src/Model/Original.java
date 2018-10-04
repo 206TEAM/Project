@@ -52,6 +52,13 @@ public class Original {
 		}
 	}
 
+	public Original(String name, String fileName) {
+		if (Files.exists(Paths.get("Temp/" + fileName))) {
+			_fileName = fileName;
+			_name = name;
+		}
+	}
+
 	/**
 	 * Extracts a name that is user-friendly from the file name
 	 * of an {@code Original}.

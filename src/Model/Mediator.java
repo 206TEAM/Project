@@ -236,7 +236,4 @@ public class Mediator {
 		_practiceMain.setTableValues(newTable);
 	}
 
-	public void fireAddPreview(String name) {
-
-	}
 }

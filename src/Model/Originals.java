@@ -23,6 +23,7 @@ import java.util.regex.Pattern;
 public class Originals {
 
 	private List<Original> _originals = new ArrayList<>();
+	private List<Original> _concats = new ArrayList<>();
 
 	private static final Originals _SINGLETON = new Originals();
 
@@ -350,6 +351,28 @@ public class Originals {
 			e.printStackTrace();
 		}
 		return -1;
+	}
+
+	public void addConcat(Original concat) {
+		_concats.add(concat);
+	}
+
+	public String getConcatFileName(String name) {
+		for (Original original : _concats) {
+			if (original.getName().equals(name)) {
+				return original.getFileName();
+			}
+		}
+		return null;
+	}
+
+	public Original getConcatOriginal(String name) {
+		for (Original original : _concats) {
+			if (original.getName().equals(name)) {
+				return original;
+			}
+		}
+		return null;
 	}
 
 	/**

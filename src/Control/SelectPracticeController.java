@@ -200,6 +200,8 @@ public class SelectPracticeController extends Controller {
 
 	protected void addValue(String name) {
 		previewList.getItems().add(name);
+
+		disableButtons(false);
 	}
 
 	protected SelectPracticeController getInstance() {

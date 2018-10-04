@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -54,8 +55,15 @@ public class PracticeMainController extends ParentController {
 		String name = practiceListView.getSelectionModel().getSelectedItem();
 		_mediator.setCurrentName(name);
 		if (name != null) {
-			List<String> versions = Originals.getInstance().getFileName(name);
-			ObservableList<String> versionsToDisplay = FXCollections.observableArrayList(versions);
+			List<String> versions = _originals.getFileName(name);
+			ObservableList<String> versionsToDisplay;
+
+			if (versions.size() == 0) {
+				versions = new ArrayList<>();
+				versions.add(_originals.getConcatFileName(name));
+			}
+
+			versionsToDisplay = FXCollections.observableArrayList(versions);
 			versionListView.setItems(versionsToDisplay);
 			nameLabel.setText(name);
 			rateLabel.setOpacity(1.0);
@@ -105,12 +113,14 @@ public class PracticeMainController extends ParentController {
 		String fileName = versionListView.getSelectionModel().getSelectedItem();
 		String name = practiceListView.getSelectionModel().getSelectedItem();
 		Original original = super.getOriginal(fileName,name,versionListView.getItems().size());
-		if (_good) {
-			Originals.getInstance().setRating(original, "&good&");
-		} else {
-			Originals.getInstance().setRating(original,"&bad&");
+		if (!name.contains(" ")) {
+			if (_good) {
+				_originals.setRating(original, "&good&");
+			} else {
+				_originals.setRating(original, "&bad&");
+			}
+			loadRating(original);
 		}
-		loadRating(original);
 	}
 
 	private void ratingHandler(String fileName, String name) {
@@ -146,7 +156,7 @@ public class PracticeMainController extends ParentController {
 	}
 
 	private void loadRating(Original original) {
-		String rating = Originals.getInstance().getRating(original);
+		String rating = _originals.getRating(original);
 		if (rating.equals("&bad&")){
 			badButton.setStyle("-fx-background-color: #FF0000; ");
 			goodButton.setStyle("-fx-background-color: #8FBC8F; ");
