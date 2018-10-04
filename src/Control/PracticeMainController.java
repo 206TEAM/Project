@@ -16,8 +16,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -36,7 +34,6 @@ public class PracticeMainController extends ParentController {
 	@FXML public Text fileLabel;
 	@FXML public Text rateLabel;
 
-	private Mediator _mediator;
 	private Observer _observer;
 	private boolean _good;
 
@@ -69,31 +66,13 @@ public class PracticeMainController extends ParentController {
 				versionListView.getSelectionModel().selectFirst();
 				 fileName = versionListView.getSelectionModel().getSelectedItem();
 			} else {
-				List<Original> allVersions = Originals.getInstance().getAllVersions(name);
-				List<String> goodFiles = new ArrayList<>();
-
-				for (Original original : allVersions) {
-					if (Originals.getInstance().getRating(original).equals("&good&")) {
-						goodFiles.add(original.getFileNameWithVersion());
-					}
-				}
-
-				if (goodFiles.size() == 1) {
-					fileName = goodFiles.get(0);
-				} else if (goodFiles.size() > 1) {
-					Collections.shuffle(goodFiles);
-					fileName = goodFiles.get(0);
-				} else {
-					Collections.shuffle(allVersions);
-					fileName = allVersions.get(0).getFileNameWithVersion();
-				}
+				fileName = pickBestOriginal(name);
 				for (int i = 0; i < versions.size(); i++) {
 					if (versions.get(i).equals(fileName)) {
 						versionListView.getSelectionModel().select(i);
 						break;
 					}
 				}
-
 			}
 			notifyObserver(name, fileName, versionListView.getItems().size());
 			ratingHandler(fileName, name);

@@ -7,10 +7,14 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +26,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
-public class SelectPracticeController implements Initializable {
+public class SelectPracticeController extends Controller {
 
 	@FXML public ListView<String> selectListView;
 	@FXML public Button go;
@@ -34,11 +38,11 @@ public class SelectPracticeController implements Initializable {
 	@FXML public MenuItem upload;
 	@FXML public Button reset;
 
-	private Mediator _mediator;
+	private static SelectPracticeController _INSTANCE;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		_mediator = Mediator.getInstance();
+		_INSTANCE = this;
 		List<String> names = Originals.getInstance().listNames();
 
 		combine.setOnAction(event -> combine());
@@ -148,7 +152,16 @@ public class SelectPracticeController implements Initializable {
 //	}
 
 	private void combine() {
-		//todo make new page
+		Parent root;
+		try {
+			root = FXMLLoader.load(getClass().getResource("/ConcatenateNames.fxml"));
+			Stage stage = new Stage();
+			stage.setTitle("Combine Names");
+			stage.setScene(new Scene(root, 450, 259));
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void upload() {
@@ -160,20 +173,22 @@ public class SelectPracticeController implements Initializable {
 
 		List<String> uploadedNames = new ArrayList<>();
 
-		try (Stream<String> stream = Files.lines(file.toPath())) {
-			stream.forEach(e -> {
-				List<String> names = new ArrayList<>(selectListView.getItems());
-				if (containsName(e, names)) {
-					e = e.substring(0,1).toUpperCase() + e.substring(1).toLowerCase();
-					uploadedNames.add(e);
-				}
-			});
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		if (uploadedNames.size() > 0) {
-			disableButtons(false);
-			previewList.getItems().addAll(uploadedNames);
+		if (file != null) {
+			try (Stream<String> stream = Files.lines(file.toPath())) {
+				stream.forEach(e -> {
+					List<String> names = new ArrayList<>(selectListView.getItems());
+					if (containsName(e, names)) {
+						e = e.substring(0, 1).toUpperCase() + e.substring(1).toLowerCase();
+						uploadedNames.add(e);
+					}
+				});
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			if (uploadedNames.size() > 0) {
+				disableButtons(false);
+				previewList.getItems().addAll(uploadedNames);
+			}
 		}
 	}
 
@@ -183,7 +198,11 @@ public class SelectPracticeController implements Initializable {
 		reset.setDisable(disable);
 	}
 
-	private boolean containsName(String string, List<String> list){
-		return list.stream().anyMatch(x -> x.equalsIgnoreCase(string));
+	protected void addValue(String name) {
+		previewList.getItems().add(name);
+	}
+
+	protected SelectPracticeController getInstance() {
+		return _INSTANCE;
 	}
 }

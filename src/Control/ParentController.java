@@ -14,6 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Represents all classes which can contain Sub-scenes.
@@ -22,7 +23,7 @@ import java.io.IOException;
  *
  * @author Eric Pedrido
  */
-public abstract class ParentController implements Initializable {
+public abstract class ParentController extends Controller {
 
 	public enum Type {HEADER, MAIN, SUB_MAIN, PRACTICE}
 
@@ -37,36 +38,4 @@ public abstract class ParentController implements Initializable {
 	}
 
 	public abstract void loadPane(String page);
-
-	public void playFile(Text progressText, Button playButton, ProgressBar progressBar, String fileName, String name,
-	                     int numVersions) {
-		Original original = getOriginal(fileName, name, numVersions);
-		playFile(progressText, playButton, progressBar, "Names/" + name + "/Original/" + fileName, new Media(original));
-	}
-
-	public void playFile(Text progressText, Button playButton, ProgressBar progressBar, String dir, Media media) {
-		Mediator mediator = Mediator.getInstance();
-		EventHandler<ActionEvent> doAfter = event -> {
-			progressText.setText("Done");
-			playButton.setDisable(false);
-		};
-		mediator.showProgress(progressBar, dir, doAfter);
-		progressText.setText("Playing...");
-		playButton.setDisable(true);
-		mediator.fireDisableTable(PracticeMainController.TableType.PRACTICE, PracticeMainController.TableType.VERSION, true);
-
-		Thread thread = new Thread(media::play);
-		thread.setDaemon(true);
-		thread.start();
-	}
-
-	public Original getOriginal(String fileName, String name, int numVersions) {
-		Original original;
-		if (numVersions > 1) {
-			original = Originals.getInstance().getOriginalWithVersions(fileName, name);
-		} else {
-			original = Originals.getInstance().getOriginal(fileName);
-		}
-		return original;
-	}
 }

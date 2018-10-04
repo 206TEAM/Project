@@ -235,4 +235,8 @@ public class Mediator {
 	public void fireTableValues(List<String> newTable) {
 		_practiceMain.setTableValues(newTable);
 	}
+
+	public void fireAddPreview(String name) {
+
+	}
 }

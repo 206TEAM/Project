@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
 /**
  * Responsible for handling various interactions with the media
@@ -86,6 +88,18 @@ public class Media {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void concatNames(String outputName) {
+		String command = "ffmpeg -f concat -safe 0 -i list.txt -c copy Temp/output.wav";
+		process(command, CURRENT_DIRECTORY);
+		cleanUp(outputName);
+	}
+
+	private static void cleanUp(String file) {
+		String command = "ffmpeg -hide_banner -i Temp/output.wav -af silenceremove=1:0:-40dB:1:5:-40dB:0:peak " +
+				"Temp/" + file + ".wav";
+		process(command, CURRENT_DIRECTORY);
 	}
 
 	/**
