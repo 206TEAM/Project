@@ -52,6 +52,13 @@ public class Original {
 		}
 	}
 
+	public Original(String name, String fileName) {
+		if (Files.exists(Paths.get("Temp/" + fileName))) {
+			_fileName = fileName;
+			_name = name;
+		}
+	}
+
 	/**
 	 * Extracts a name that is user-friendly from the file name
 	 * of an {@code Original}.
@@ -106,6 +113,15 @@ public class Original {
 
 	public String getNameWithVersion() {
 		return _name + _version;
+	}
+
+	public String getFileNameWithVersion() {
+		StringBuilder fileName = new StringBuilder(_fileName);
+		fileName.setLength(fileName.length() - 4);
+		fileName.append(_version);
+		fileName.append(".wav");
+
+		return fileName.toString();
 	}
 
 	public String getFileName() {

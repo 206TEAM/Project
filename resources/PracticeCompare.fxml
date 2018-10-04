@@ -11,13 +11,13 @@
    <children>
       <ProgressBar fx:id="originalProgressBar" layoutX="101.0" layoutY="55.0" prefHeight="30.0" prefWidth="200.0" progress="0.0">
          <effect>
-            <ColorAdjust brightness="0.07" contrast="0.42" hue="-0.83" saturation="-0.09" />
+            <ColorAdjust brightness="0.12" contrast="0.56" hue="-0.47" saturation="-0.14" />
          </effect>
       </ProgressBar>
       <Button fx:id="playOriginal" layoutX="72.0" layoutY="57.0" mnemonicParsing="false" onAction="#playOriginal" prefHeight="20.0" prefWidth="29.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="▶️" textFill="#00ff12" />
       <ProgressBar fx:id="practiceProgressBar" layoutX="101.0" layoutY="109.0" prefHeight="30.0" prefWidth="200.0" progress="0.0">
          <effect>
-            <ColorAdjust brightness="0.07" contrast="0.42" hue="0.12" saturation="-0.09" />
+            <ColorAdjust brightness="0.12" contrast="0.56" hue="-0.06" saturation="-0.14" />
          </effect>
       </ProgressBar>
       <Button fx:id="playPractice" layoutX="72.0" layoutY="111.0" mnemonicParsing="false" onAction="#playPractice" prefHeight="20.0" prefWidth="29.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="▶️" textFill="#00ff12" />

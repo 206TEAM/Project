@@ -23,6 +23,7 @@ import java.util.regex.Pattern;
 public class Originals {
 
 	private List<Original> _originals = new ArrayList<>();
+	private List<Original> _concats = new ArrayList<>();
 
 	private static final Originals _SINGLETON = new Originals();
 
@@ -217,7 +218,7 @@ public class Originals {
 		return getOriginal(name, version);
 	}
 
-	public String extractVersion(String fileName) {
+	private String extractVersion(String fileName) {
 		StringBuilder version = new StringBuilder();
 		String output = null;
 
@@ -228,6 +229,30 @@ public class Originals {
 			version.append(matcher.group(0));
 			version.setLength(version.length() - 4);
 			output = version.toString();
+		}
+		return output;
+	}
+
+	/**
+	 * Gets all versions of {@code Original}'s corresponding
+	 * to the same name.
+	 *
+	 * @param name the name of {@code Original} to get versions from
+	 * @return a List of all {@code Original}'s that correspond to the name.
+	 */
+	public List<Original> getAllVersions(String name) {
+		List<Original> output = new ArrayList<>();
+		int i = 1;
+		while (true) {
+			String version = String.valueOf(i);
+			Original original = getOriginal(name, version);
+			if (original == null) {
+				break;
+			} else {
+				if (!output.contains(original))
+				output.add(original);
+			}
+			i++;
 		}
 		return output;
 	}
@@ -326,6 +351,28 @@ public class Originals {
 			e.printStackTrace();
 		}
 		return -1;
+	}
+
+	public void addConcat(Original concat) {
+		_concats.add(concat);
+	}
+
+	public String getConcatFileName(String name) {
+		for (Original original : _concats) {
+			if (original.getName().equals(name)) {
+				return original.getFileName();
+			}
+		}
+		return null;
+	}
+
+	public Original getConcatOriginal(String name) {
+		for (Original original : _concats) {
+			if (original.getName().equals(name)) {
+				return original;
+			}
+		}
+		return null;
 	}
 
 	/**

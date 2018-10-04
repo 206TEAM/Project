@@ -19,7 +19,11 @@ public class Practice {
     private String _nameKey;
 
     public Practice(String nameKey) {
-        _nameKey = nameKey;
+    	if (nameKey.contains(" ")) {
+    		_nameKey = nameKey.replace(' ', '_');
+	    } else {
+		    _nameKey = nameKey;
+	    }
         _fileName = generateFileName();
     }
 
@@ -79,18 +83,13 @@ public class Practice {
      * @return a fileName in the format <q>(nameKey)Practice(version)</q>
      */
     private String generateFileName(){
-        List<String> names = new ArrayList<String>();
-        String name;
+        int version = 1;
+        String name = _nameKey + "Practice" + version;
         File directory = getDirectory();
             for (File f : directory.listFiles()) {
-                names.add(f.getName()); //adds the file names from directory into the list
-            }
-
-            if (names.size()==0) {
-                name = _nameKey + "Practice1";
-            } else {
-                name = _nameKey + "Practice" + Integer.toString(names.size() + 1);
-
+                if (f.getName().equals(name)) {
+                    name = _nameKey + "Practice" + version;
+                }
             }
         return name;
     }
