@@ -56,10 +56,6 @@ public class Mediator {
         return _session;
     }
 
-    public void addObserver(Observer o) {
-    	_practiceMain.addObserver(o);
-    }
-
     /********methods for getting/setting challenge related things********/
     public void setChallengeList(List<String> challengeList) {
         _challengeList = challengeList;
