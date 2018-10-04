@@ -202,7 +202,6 @@ public class ListenController implements Initializable {
                 }
             }
         }
-
     }
 
     private void ratingHandler() {

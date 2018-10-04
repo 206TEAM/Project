@@ -34,7 +34,7 @@ public class PracticeCompareController extends PracticeMainController implements
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		_mediator = Mediator.getInstance();
-		_mediator.fireDisableTable(TableType.VERSION, false);
+		//_mediator.fireDisableTable(TableType.VERSION, false);
 		_mediator.addObserver(this);
 
 		_currentFileName = _mediator.getOriginalFilename();

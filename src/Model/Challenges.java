@@ -74,6 +74,14 @@ public class Challenges {
         }
     }
 
+    public int getChallengeSize(String nameKey){
+        if(_challenges.get(nameKey)!=null){
+            return _challenges.get(nameKey).size();
+        } else {
+            return 0;
+        }
+    }
+
     /**
      * returns a list of the fileNames of the challenges given the nameKey
      */
