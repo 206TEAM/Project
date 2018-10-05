@@ -125,13 +125,6 @@ public class ChallengeRatings {
         }
     }
 
-    /**
-     * returns number of attempts of name (essentially number of challenge files).
-     */
-    public int getAttempts(String nameKey){
-        return Challenges.getInstance().getChallengeSize(nameKey);
-    }
-
     public int getScore(String nameKey) {
         return _challengesRating.get(nameKey);
     }

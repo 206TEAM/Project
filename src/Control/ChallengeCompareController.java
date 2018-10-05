@@ -83,12 +83,6 @@ public class ChallengeCompareController extends ParentController {
         //todo progress bar ting
         originalProgressText.setText("Playing...");
 
-        //String name = Mediator.getInstance().getCurrentName();
-        //String fileName = Mediator.getInstance().getOriginalFilename();
-       // System.out.println("name of original is " + name);
-       // System.out.println("fileName is " + fileName);
-
-
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -156,8 +150,8 @@ public class ChallengeCompareController extends ParentController {
 
         challengeListView.getItems().remove(name);
         if (challengeListView.getItems().size()==0){
+            Mediator.getInstance().removeInChallengeSession();
             popup();
-            //Mediator.getInstance().loadPane(ParentController.Type.MAIN, "MainMenu");
         } else {
             wrong.setDisable(true);
             correct.setDisable(true);

@@ -1,14 +1,16 @@
 package Control;
 
+import Model.ChallengeSession;
 import Model.Mediator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class HeaderController extends ParentController {
@@ -29,7 +31,47 @@ public class HeaderController extends ParentController {
 
 	@FXML
 	public void home(MouseEvent mouseEvent) {
-		_mediator.loadPane(Type.MAIN, "MainMenu");
+		Boolean inSession = Mediator.getInstance().getChallengeStatus();
+
+		if (inSession) {
+			boolean confirmAction = false;
+			confirmAction = confirmAction();
+
+			// If the user confirms, delete it
+			if (confirmAction) {
+				ChallengeSession _session = Mediator.getInstance().getChallengeSession();
+				_session.abortSession(); //gets rid of challenges
+				Mediator.getInstance().removeInChallengeSession();
+				_mediator.loadPane(Type.MAIN, "MainMenu");
+			}
+		} else {
+			_mediator.loadPane(Type.MAIN, "MainMenu");
+			Mediator.getInstance().removeInChallengeSession();
+		}
+	}
+
+	/**
+	 * A confirmation popup that asks user if they want to delete their creation
+	 */
+	public boolean confirmAction() {
+		Label l = new Label("Are you sure you want to abandon your challenge session?");
+		l.setWrapText(true);
+
+		Alert alert = new Alert(Alert.AlertType.WARNING);
+		alert.setTitle("Abandon");
+		alert.getDialogPane().setContent(l);
+
+		//Creates the buttons
+		ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+		ButtonType yesButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+		alert.getButtonTypes().setAll(yesButton, noButton);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == yesButton) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@FXML

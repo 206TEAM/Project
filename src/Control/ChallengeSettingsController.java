@@ -49,6 +49,8 @@ public class ChallengeSettingsController implements Initializable {
 
 	@FXML
 	public void start(ActionEvent actionEvent) {
+		Mediator.getInstance().setInChallengeSession();
+
 		int numberOfChallenges;
 		if (howMany.getText().equals("How Many")) {
 			numberOfChallenges = 1;

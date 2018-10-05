@@ -42,6 +42,7 @@ public class Mediator {
     private int _numVersions;
     private List<String> _challengeList;
     private List<String> _challengeFileList;
+    private Boolean _inChallengeSession;
 
 	public void addObserver(Observer o) {
 		_practiceMain.addObserver(o);
@@ -50,6 +51,19 @@ public class Mediator {
 	/********method for getting session object********/
     public void setChallengeSession(ChallengeSession session){
         _session = session;
+    }
+
+    //todo add enums
+    public void  setInChallengeSession(){ //for aborting (when click home button).
+        _inChallengeSession = true;
+    }
+
+    public void  removeInChallengeSession(){
+        _inChallengeSession = false;
+    }
+
+    public Boolean getChallengeStatus(){
+        return _inChallengeSession;
     }
 
     public ChallengeSession getChallengeSession(){

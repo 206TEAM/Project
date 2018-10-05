@@ -80,6 +80,18 @@ public class ChallengeSession {
         return _challengeFileList.get(index);
     }
 
+    /**
+     * this gets rid of all the challenge files
+     */
+    public void abortSession(){
+        for (int i=0; i<_challengeList.size();i++) {
+            String name = _challengeList.get(i);
+            if (name != null) {
+                Challenges.getInstance().deleteChallenge(name, _challengeFileList.get(i));
+            }
+        }
+    }
+
     public void getLists(){
         _goodList = new ArrayList<String>();
         _badList = new ArrayList<String>();
