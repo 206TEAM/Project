@@ -34,9 +34,7 @@ public class Mediator {
     private ChallengeSession _session;
 
 	private ParentController.PageType _currentPage;
-    //private ArrayList<String> _challengeNames;
     private String _currentName;
-    private String _currentFileName;
     private String _originalFileName;
     private Practice _currentPractice;
     private int _numVersions;
@@ -71,34 +69,6 @@ public class Mediator {
     }
 
     /********methods for getting/setting challenge related things********/
-    public void setChallengeList(List<String> challengeList) {
-        _challengeList = challengeList;
-    }
-
-    public void addChallengeFile(String fileName) {
-        if (_challengeFileList == null) {
-            _challengeFileList = new ArrayList();
-            _challengeFileList.add(fileName);
-        } else {
-            _challengeFileList.add(fileName);
-        }
-    }
-
-    public List<String> getChallengeFiles() {
-        return _challengeFileList;
-    }
-
-    public List<String> getChallengeList() {
-        return _challengeList;
-    }
-
-    public void removePracticeName(String name) {
-        // _challengeNames.remove(name);
-    }
-
-    public void clearCurrentNames() {
-        //  _challengeNames = null;
-    }
 
     public String getCurrentName() {
         return _currentName;
@@ -137,16 +107,6 @@ public class Mediator {
     	setOriginalFilename(fileName);
     	setNumVersions(numVersions);
     	setCurrentPractice(practice);
-    }
-
-    public String getChallengeFile(String name){
-        int index = 0;
-        for (int i=0;i<_challengeList.size();i++){
-            if (_challengeList.get(i).equals(name)){
-                index = i;
-            }
-        }
-        return _challengeFileList.get(index);
     }
 
     /*********Methods for setting scenes**********/
