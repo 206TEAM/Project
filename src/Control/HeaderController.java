@@ -43,22 +43,7 @@ public class HeaderController extends ParentController {
 	@FXML
 	public void home(MouseEvent mouseEvent) {
 
-        Boolean inSession = _mediator.getChallengeStatus();
-        if (inSession) {
-            boolean confirmAction = false;
-            confirmAction = confirmAction();
-
-            // If the user confirms, delete it
-            if (confirmAction) {
-                ChallengeSession _session =_mediator.getChallengeSession();
-                _session.abortSession(); //gets rid of challenges
-                _mediator.removeInChallengeSession();
-                _mediator.loadPane(Type.MAIN, "MainMenu");
-            }
-        } else {
-            _mediator.loadPane(Type.MAIN, "MainMenu");
-            Mediator.getInstance().removeInChallengeSession();
-        }
+        //Boolean inSession = _mediator.getChallengeStatus();
 
 		if (_page == PageType.CHALLENGE || _page == PageType.PRACTICE) {
 			String text;
@@ -67,30 +52,28 @@ public class HeaderController extends ParentController {
 			} else {
 				text = "The Challenge list will be lost";
 			}
+            boolean confirmAction = false;
+            confirmAction = confirmAction(text);
 
-			ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
-			ButtonType no = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-			Alert warning = createAlert(Alert.AlertType.CONFIRMATION, "Warning message",
-					"Are you sure you wish to exit?", text, new ButtonType[]{yes, no});
-
-			Optional<ButtonType> result = warning.showAndWait();
-			if (result.get() == yes) {
+            // If the user confirms, delete it
+            if (confirmAction) {
+                ChallengeSession _session =_mediator.getChallengeSession();
+                _session.abortSession(); //gets rid of challenges
+                _mediator.removeInChallengeSession();
+                _mediator.loadPane(Type.MAIN, "MainMenu");
 				_mediator.setPracticeMainList(new ArrayList<>());
-				_mediator.loadPane(Type.MAIN, "MainMenu");
-			} else {
-				warning.close();
-			}
-		} else {
-			_mediator.loadPane(Type.MAIN, "MainMenu");
-		}
+            }
+        } else {
+            _mediator.loadPane(Type.MAIN, "MainMenu");
+            //Mediator.getInstance().removeInChallengeSession();
+        }
 	}
 
 	/**
 	 * A confirmation popup that asks user if they want to delete their creation
 	 */
-	public boolean confirmAction() {
-		Label l = new Label("Are you sure you want to abandon your challenge session?");
+	public boolean confirmAction(String text) {
+		Label l = new Label(text);
 		l.setWrapText(true);
 
 		Alert alert = new Alert(Alert.AlertType.WARNING);
