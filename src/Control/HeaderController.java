@@ -2,7 +2,10 @@ package Control;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -10,6 +13,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class HeaderController extends ParentController {
@@ -19,6 +24,8 @@ public class HeaderController extends ParentController {
 	@FXML public Pane headerPane;
 	@FXML public Text menuLabel;
 
+	private PageType _page;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		_mediator.setParent(this);
@@ -26,16 +33,39 @@ public class HeaderController extends ParentController {
 
 	@FXML
 	public void home(MouseEvent mouseEvent) {
-		_mediator.loadPane(Type.MAIN, "MainMenu");
+		if (_page == PageType.CHALLENGE || _page == PageType.PRACTICE) {
+			Alert warning = new Alert(Alert.AlertType.CONFIRMATION);
+			warning.setTitle("Warning message");
+			warning.setHeaderText("Are you sure you wish to exit?");
+
+			String text;
+			if (_page == PageType.PRACTICE) {
+				text = "Your playlist will be lost";
+			} else {
+				text = "The Challenge list will be lost";
+			}
+			warning.setContentText(text);
+
+			ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+			ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+			warning.getButtonTypes().setAll(yes, cancel);
+
+			Optional<ButtonType> result = warning.showAndWait();
+			if (result.get() == yes) {
+				_mediator.setPracticeMainList(new ArrayList<>());
+				_mediator.loadPane(Type.MAIN, "MainMenu");
+			} else {
+				warning.close();
+			}
+		} else {
+			_mediator.loadPane(Type.MAIN, "MainMenu");
+		}
 	}
 
 	@FXML
-	public void micTest(ActionEvent actionEvent) { //todo MIC TEST POPUP
+	public void micTest(ActionEvent actionEvent) {
 		createPopUp("MicTest", "Microphone Test", 450, 259);
-	}
-
-	@FXML
-	public void help(ActionEvent actionEvent) {//todo HELP POPUP
 	}
 
 	public void setPage(PageType pageType) {
@@ -49,6 +79,7 @@ public class HeaderController extends ParentController {
 		} else {
 			text = "Stats";
 		}
+		_page = pageType;
 		menuLabel.setText(text);
 	}
 
