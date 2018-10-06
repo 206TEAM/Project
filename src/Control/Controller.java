@@ -7,19 +7,15 @@ import Model.Originals;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -41,7 +37,7 @@ import java.util.List;
  */
 abstract class Controller implements Initializable {
 	public Mediator _mediator = Mediator.getInstance();
-	public Originals _originals = Originals.getInstance();
+	protected Originals _originals = Originals.getInstance();
 
 	/**
 	 * Same as {@link List#contains(Object)} method, except
@@ -160,6 +156,17 @@ abstract class Controller implements Initializable {
 		}
 	}
 
+	protected Alert createAlert(Alert.AlertType type, String title, String headerText, String contentText, ButtonType[] buttons) {
+		Alert alert = new Alert(type);
+		alert.setTitle(title);
+		alert.setHeaderText(headerText);
+		alert.setContentText(contentText);
+
+		alert.getButtonTypes().setAll(buttons);
+
+		return alert;
+	}
+
 	protected void searchListener(FilteredList<String> filteredList, String newValue, ListView<String> listView) {
 		filteredList.setPredicate(string -> {
 			if (newValue==null || newValue.isEmpty()) {
@@ -197,5 +204,10 @@ abstract class Controller implements Initializable {
 						new KeyValue(progress.progressProperty(), 1)));
 		timeLine.setCycleCount(1);
 		timeLine.play();
+	}
+
+	protected void exit(Pane pane) {
+		Stage stage = (Stage) pane.getScene().getWindow();
+		stage.close();
 	}
 }
