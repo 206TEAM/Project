@@ -33,7 +33,7 @@ public class Mediator {
     /********fields are for challenges********/
     private ChallengeSession _session;
 
-
+	private ParentController.PageType _currentPage;
     //private ArrayList<String> _challengeNames;
     private String _currentName;
     private String _currentFileName;
@@ -152,9 +152,14 @@ public class Mediator {
     	_practiceMain = parent;
     }
 
+    public void setPageType(ParentController.PageType type) {
+    	_currentPage = type;
+    }
+
     public void loadPane(ParentController.Type parent, String page) {
         if (parent == ParentController.Type.HEADER) {
             _header.loadPane(page);
+            _header.setPage(_currentPage);
         } else if (parent == ParentController.Type.MAIN) {
             _main.loadPane(page);
         } else if (parent == ParentController.Type.SUB_MAIN) {

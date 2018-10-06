@@ -19,11 +19,8 @@ public class HeaderController extends ParentController {
 	@FXML public Pane headerPane;
 	@FXML public Text menuLabel;
 
-	private Mediator _mediator;
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		_mediator = Mediator.getInstance();
 		_mediator.setParent(this);
 	}
 
@@ -38,6 +35,20 @@ public class HeaderController extends ParentController {
 
 	@FXML
 	public void help(ActionEvent actionEvent) {//todo HELP POPUP
+	}
+
+	public void setPage(PageType pageType) {
+		String text;
+		if (pageType == PageType.PRACTICE) {
+			text = "Practice";
+		} else if (pageType == PageType.CHALLENGE) {
+			text = "Challenge";
+		} else if (pageType == PageType.LISTEN) {
+			text = "Listen";
+		} else {
+			text = "Stats";
+		}
+		menuLabel.setText(text);
 	}
 
 	/**

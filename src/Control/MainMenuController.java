@@ -26,12 +26,12 @@ public class MainMenuController extends ParentController {
 
 	@FXML
 	public void practice(ActionEvent actionEvent) {
-		loadNextPane("Practice1");
+		loadNextPane("Practice1", PageType.PRACTICE);
 	}
 
 	@FXML
 	public void challenge(ActionEvent actionEvent) {
-		loadNextPane("Challenge1");
+		loadNextPane("Challenge1", PageType.CHALLENGE);
 	}
 
 	@FXML
@@ -41,13 +41,13 @@ public class MainMenuController extends ParentController {
 
 	@FXML
 	public void listen(ActionEvent actionEvent) {
-		loadNextPane("Listen");
+		loadNextPane("Listen", PageType.LISTEN);
 	}
 
 	@FXML
 	public void stats(ActionEvent actionEvent) {
 		// if (notAttemptedTable.size() > 0)
-		loadNextPane("Stats");
+		loadNextPane("Stats", PageType.STATS);
 		// else loadPane("StatsAllAttempted") // todo NOT SURE IF I WANT TO DO 2 DIFFERENT STATS PAGES
 	}
 
@@ -76,9 +76,11 @@ public class MainMenuController extends ParentController {
 	 * on which button was pressed.
 	 *
 	 * @param page scene to load under a Header.
+	 * @param type indicates what type of page it is switching to.
 	 */
-	private void loadNextPane(String page) {
+	private void loadNextPane(String page, PageType type) {
 		super.loadPane("Header", mainPane);
+		_mediator.setPageType(type);
 		_mediator.loadPane(Type.HEADER, page);
 	}
 }

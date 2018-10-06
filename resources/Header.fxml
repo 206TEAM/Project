@@ -21,7 +21,7 @@
                </cursor>
             </Text>
             <Line endX="36.0" layoutX="332.0" layoutY="45.0" startX="-100.0" stroke="WHITE" strokeWidth="2.0" />
-            <Text fx:id="menuLabel" fill="#ff9900" layoutX="274.0" layoutY="50.0" nodeOrientation="LEFT_TO_RIGHT" strokeType="OUTSIDE" strokeWidth="0.0" text="Stats" textAlignment="CENTER" textOrigin="TOP">
+            <Text fx:id="menuLabel" fill="#ff9900" layoutX="191.0" layoutY="49.0" nodeOrientation="LEFT_TO_RIGHT" strokeType="OUTSIDE" strokeWidth="0.0" text="Stats" textAlignment="CENTER" textOrigin="TOP" wrappingWidth="218.0869140625">
                <font>
                   <Font name="DejaVu Sans Bold" size="17.0" />
                </font>

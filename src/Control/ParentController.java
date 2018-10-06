@@ -27,6 +27,8 @@ public abstract class ParentController extends Controller {
 
 	public enum Type {HEADER, MAIN, SUB_MAIN, PRACTICE}
 
+	public enum PageType{PRACTICE, CHALLENGE, LISTEN, STATS}
+
 	void loadPane(String page, Pane pane) {
 		Pane newPane = null;
 		try {
