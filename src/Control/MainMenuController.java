@@ -1,15 +1,15 @@
 package Control;
 
-import Model.Mediator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainMenuController extends ParentController{
+public class MainMenuController extends ParentController {
 	@FXML public Button practice;
 	@FXML public Button challenge;
 	@FXML public Button create;
@@ -19,12 +19,9 @@ public class MainMenuController extends ParentController{
 	@FXML public Button micTest;
 	@FXML public AnchorPane mainPane;
 
-	private Mediator _mediator;
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		Mediator.getInstance().setParent(this);
-		_mediator = Mediator.getInstance();
+		_mediator.setParent(this);
 	}
 
 	@FXML
@@ -38,7 +35,8 @@ public class MainMenuController extends ParentController{
 	}
 
 	@FXML
-	public void create(ActionEvent actionEvent) { //todo CREATE POPUP
+	public void create(ActionEvent actionEvent) {
+		createPopUp();
 	}
 
 	@FXML

@@ -4,13 +4,21 @@ import Model.Media;
 import Model.Mediator;
 import Model.Original;
 import Model.Originals;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -121,6 +129,29 @@ abstract class Controller implements Initializable {
 			fileName = allVersions.get(0).getFileNameWithVersion();
 		}
 		return fileName;
+	}
+
+	protected void createPopUp() {
+		Parent root;
+		try {
+			root = FXMLLoader.load(getClass().getResource("/ConcatenateNames.fxml"));
+			Stage stage = new Stage();
+			stage.setTitle("Combine Names");
+			stage.setScene(new Scene(root, 450, 259));
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	protected void searchListener(FilteredList<String> filteredList, String newValue, ListView<String> listView) {
+		filteredList.setPredicate(string -> {
+			if (newValue==null || newValue.isEmpty()) {
+				return true;
+			}
+			return string.toUpperCase().contains(newValue.toUpperCase());
+		});
+		listView.setItems(filteredList);
 	}
 
 }
