@@ -22,108 +22,115 @@ import java.net.URL;
 import java.util.*;
 
 public class ChallengePlayController implements Initializable {
-	@FXML public Text nameLabel;
-	@FXML public ProgressIndicator timer;
-	@FXML public Button next;
-	@FXML public Text countdown;
+    @FXML
+    public Text nameLabel;
+    @FXML
+    public ProgressIndicator timer;
+    @FXML
+    public Button next;
+    @FXML
+    public Text countdown;
 
-	private int _seconds;
-	private int _iteration;
-	private List<String> _challengeList;
-	private Timeline _timeLine;
-	private ChallengeSession _session;
-	private Mediator _mediator;
+    private int _seconds;
+    private int _iteration;
+    private List<String> _challengeList;
+    private Timeline _timeLine;
+    private ChallengeSession _session;
+    private Mediator _mediator;
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		_session = Mediator.getInstance().getChallengeSession();
-		_mediator = Mediator.getInstance();
-		_challengeList = _session.getChallengeList();
-		_iteration = 0;
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        _session = Mediator.getInstance().getChallengeSession();
+        _mediator = Mediator.getInstance();
+        _challengeList = _session.getChallengeList();
+        _iteration = 0;
 
-		_timeLine = new Timeline(
-				new KeyFrame(Duration.ZERO, new KeyValue(timer.progressProperty(), 0)),
-				new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent event) {
-						ChallengePlayController.this.nextName();
-					}
-				}, new KeyValue(timer.progressProperty(), 1)));
-		_timeLine.setCycleCount(_challengeList.size());
+        _timeLine = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(timer.progressProperty(), 0)),
+                new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        ChallengePlayController.this.nextName();
+                    }
+                }, new KeyValue(timer.progressProperty(), 1)));
+        _timeLine.setCycleCount(_challengeList.size());
 
-		Timer countdownTimer = new Timer(true);
-		_seconds = 3;
-		countdownTimer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				if (_seconds == 0) {
-					countdownTimer.cancel();
-					countdown.setVisible(false);
-					next.setDisable(false);
-					timer();
-					record();
-					loadName();
-				} else {
-					countdown.setText(String.valueOf(_seconds));
-					_seconds--;
-				}
-			}
-		}, 0, 1000);
-	}
+        Timer countdownTimer = new Timer(true);
+        _seconds = 3;
+        countdownTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (_seconds == 0) {
+                    countdownTimer.cancel();
+                    countdown.setVisible(false);
+                    next.setDisable(false);
+                    timer();
+                    record();
+                    loadName();
+                } else {
+                    countdown.setText(String.valueOf(_seconds));
+                    _seconds--;
+                }
+            }
+        }, 0, 1000);
+    }
 
-	@FXML
-	public void next(ActionEvent actionEvent) {
-		if (next.getText().equals("Done")) {
-			_mediator.setPracticeMainList(_challengeList);
-			//_mediator.loadPane(ParentController.Type.HEADER, "PracticeMain");
-			_mediator.loadPane(ParentController.Type.MAIN, "Header");
+    @FXML
+    public void next(ActionEvent actionEvent) {
+        if (next.getText().equals("Done")) {
+
+            Media.cancel();
+            _mediator.setPracticeMainList(_challengeList);
+            //_mediator.loadPane(ParentController.Type.HEADER, "PracticeMain");
+            _mediator.loadPane(ParentController.Type.MAIN, "Header");
             _mediator.loadPane(ParentController.Type.HEADER, "ChallengeMain");
-		} else {
-			nextName();
-		}
-	}
+        } else {
+            nextName();
+        }
+    }
 
-	private void timer() {
-		timer.setProgress(0.0);
-		if (_timeLine.getStatus().equals(Animation.Status.RUNNING)) {
-			_timeLine.stop();
-		}
-		_timeLine.play();
-	}
+    private void timer() {
+        timer.setProgress(0.0);
+        if (_timeLine.getStatus().equals(Animation.Status.RUNNING)) {
+            _timeLine.stop();
+        }
+        _timeLine.play();
+    }
 
-	private void record() {
-		Thread thread = new Thread(new Task<Void>() {
-			@Override
-			protected Void call() throws Exception {
+    private void record() {
+        Thread thread = new Thread(new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
 
-				String name = _challengeList.get(_iteration - 1);
-				System.out.println(name);
-				String fileName = Challenges.getInstance().addNewChallenge(name);
-				_session.addChallengeFile(fileName);
-                     System.out.println(fileName);
-				return null;
-			}
-		});
-		thread.setDaemon(true);
-		thread.start();
-	}
+                String name = _challengeList.get(_iteration - 1);
+                System.out.println(name);
+                String fileName = Challenges.getInstance().addNewChallenge(name);
+                _session.addChallengeFile(fileName);
+                System.out.println(fileName);
+                return null;
+            }
+        });
+        thread.setDaemon(true);
+        thread.start();
+    }
 
-	private void loadName() {
-		String currentName = _challengeList.get(_iteration);
-		nameLabel.setText(currentName);
-		_iteration++;
-	}
+    private void loadName() {
+        String currentName = _challengeList.get(_iteration);
+        nameLabel.setText(currentName);
+        _iteration++;
+    }
 
-	private void nextName() {
-		if (_iteration == _challengeList.size()) {
-			next.setText("Done");
-			_timeLine.stop();
-			timer.setProgress(1.0);
-		} else {
-			Media.cancel();
-			timer();
-			record();
-			loadName();
-		}
-	}
+    private void nextName() {
+        if (_iteration == _challengeList.size()) {
+            Media.cancel();
+            next.setText("Done");
+            _timeLine.stop();
+            timer.setProgress(1.0);
+        } else {
+            Media.cancel();
+            timer();
+            record();
+            loadName();
+        }
+    }
 }
