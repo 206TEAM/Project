@@ -4,9 +4,13 @@ import Model.Media;
 import Model.Mediator;
 import Model.Original;
 import Model.Originals;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,9 +19,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,14 +83,19 @@ abstract class Controller implements Initializable {
 			progressText.setText("Done");
 			playButton.setDisable(false);
 		};
-		_mediator.showProgress(progressBar, dir, doAfter);
 		progressText.setText("Playing...");
 		playButton.setDisable(true);
-		_mediator.fireDisableTable(PracticeMainController.TableType.PRACTICE, PracticeMainController.TableType.VERSION, true);
+		if (_mediator.praticeNotNull()) {
+			_mediator.fireDisableTable(PracticeMainController.TableType.PRACTICE, PracticeMainController.TableType.VERSION, true);
+		}
 
-		Thread thread = new Thread(media::play);
-		thread.setDaemon(true);
-		thread.start();
+		Thread thread1 = new Thread(media::play);
+		Thread thread2 = new Thread(() -> showProgress(progressBar, dir, doAfter));
+
+		thread1.setDaemon(true);
+		thread2.setDaemon(true);
+		thread1.start();
+		thread2.start();
 	}
 
 	public void playFile(Text progressText, Button playButton, ProgressBar progressBar, String fileName, String name,
@@ -154,4 +170,32 @@ abstract class Controller implements Initializable {
 		listView.setItems(filteredList);
 	}
 
+	/**
+	 * Sets the duration of which the progress bar goes from
+	 * 0 to 100 to be the length that the audio file it is
+	 * playing plays for.
+	 *
+	 * @param progress the {@code ProgressIndicator} being displayed
+	 * @param dir whether it is an {@code Original} or a {@code Practice}
+	 */
+	public void showProgress(ProgressIndicator progress, String dir, EventHandler<ActionEvent> event) {
+		double duration = 0;
+		try {
+			File file = new File(dir);
+			AudioInputStream ais = AudioSystem.getAudioInputStream(file);
+			AudioFormat format = ais.getFormat();
+
+			long frames = ais.getFrameLength();
+			duration = (frames+0.0) / format.getFrameRate();
+		} catch (UnsupportedAudioFileException | IOException e) {
+			e.printStackTrace();
+		}
+
+		Timeline timeLine = new Timeline(
+				new KeyFrame(Duration.ZERO, new KeyValue(progress.progressProperty(), 0)),
+				new KeyFrame(Duration.seconds(duration), event,
+						new KeyValue(progress.progressProperty(), 1)));
+		timeLine.setCycleCount(1);
+		timeLine.play();
+	}
 }
