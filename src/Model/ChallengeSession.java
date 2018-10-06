@@ -20,13 +20,13 @@ public class ChallengeSession {
     private List<String> _badList;
 
 
-    public ChallengeSession(int number, double difficulty){
+    public ChallengeSession(int number, double difficulty) {
         _numberOfNames = number;
         _difficulty = difficulty;
         generateNames();
     }
 
-    private void generateNames(){
+    private void generateNames() {
         List<String> challengeList = Originals.getInstance().listNames();
         Collections.shuffle(challengeList);
         setChallengeList(challengeList.subList(0, _numberOfNames));
@@ -70,10 +70,10 @@ public class ChallengeSession {
         _currentName = name;
     }
 
-    public String getChallengeFile(String name){
+    public String getChallengeFile(String name) {
         int index = 0;
-        for (int i=0;i<_challengeList.size();i++){
-            if (_challengeList.get(i).equals(name)){
+        for (int i = 0; i < _challengeList.size(); i++) {
+            if (_challengeList.get(i).equals(name)) {
                 index = i;
             }
         }
@@ -83,23 +83,29 @@ public class ChallengeSession {
     /**
      * this gets rid of all the challenge files
      */
-    public void abortSession(){
-        for (int i=0; i<_challengeList.size();i++) {
-            String name = _challengeList.get(i);
-            if (name != null) {
-                Challenges.getInstance().deleteChallenge(name, _challengeFileList.get(i));
+    public void abortSession() {
+       //todo: kill processes
+        if (_challengeFileList != null && !_challengeFileList.isEmpty()) {
+            for (int i = 0; i < _challengeFileList.size(); i++) {
+                String name = _challengeList.get(i);
+                if (name != null) {
+
+                    System.out.println("to be deleted: " + _challengeFileList.get(i));
+                    Challenges.getInstance().deleteChallenge(name, _challengeFileList.get(i));
+
+                }
             }
         }
     }
 
-    public void getLists(){
+    public void getLists() {
         _goodList = new ArrayList<String>();
         _badList = new ArrayList<String>();
-        for (int i = 0; i<_challengeList.size();i++){
+        for (int i = 0; i < _challengeList.size(); i++) {
             String name = _challengeList.get(i);
             String fileName = _challengeFileList.get(i);
 
-            if (ChallengeRatings.getInstance().getRating(name, fileName)){
+            if (ChallengeRatings.getInstance().getRating(name, fileName)) {
                 _goodList.add(name);
             } else {
                 _badList.add(name);

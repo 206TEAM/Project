@@ -53,7 +53,7 @@ public class SelectPracticeController extends Controller {
 		} else {
 			selectListView.setVisible(true);
 
-			List<String> previouslySelected = Mediator.getInstance().getPracticeMainList();
+			List<String> previouslySelected = _mediator.getPracticeMainList();
 			if (previouslySelected != null) {
 				names.removeAll(previouslySelected);
 				ObservableList<String> previewNames = FXCollections.observableArrayList(previouslySelected);
@@ -68,13 +68,7 @@ public class SelectPracticeController extends Controller {
 			selectListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
 			search.textProperty().addListener(((observable, oldValue, newValue) -> {
-				filteredList.setPredicate(string -> {
-					if (newValue==null || newValue.isEmpty()) {
-						return true;
-					}
-					return string.toUpperCase().contains(newValue.toUpperCase());
-				});
-				selectListView.setItems(filteredList);
+				searchListener(filteredList, newValue, selectListView);
 			}));
 		}
 	}
@@ -152,16 +146,7 @@ public class SelectPracticeController extends Controller {
 //	}
 
 	private void combine() {
-		Parent root;
-		try {
-			root = FXMLLoader.load(getClass().getResource("/ConcatenateNames.fxml"));
-			Stage stage = new Stage();
-			stage.setTitle("Combine Names");
-			stage.setScene(new Scene(root, 450, 259));
-			stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		createPopUp("ConcatenateNames", "Create Name", 450, 259);
 	}
 
 	private void upload() {
@@ -204,7 +189,7 @@ public class SelectPracticeController extends Controller {
 		disableButtons(false);
 	}
 
-	protected SelectPracticeController getInstance() {
+	protected static SelectPracticeController getInstance() {
 		return _INSTANCE;
 	}
 }

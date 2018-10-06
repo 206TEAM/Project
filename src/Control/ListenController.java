@@ -4,6 +4,7 @@ import Model.*;
 import com.sun.org.apache.xpath.internal.operations.Or;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
@@ -18,15 +19,13 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ListenController implements Initializable {
+public class ListenController extends Controller {
     @FXML
     public TextField search;
     @FXML
     public ListView<String> listView, challengeListView, originalListView;
     @FXML
     public Text nameLabel, fileLabel;
-    @FXML
-    public ComboBox rating;
     @FXML
     public ImageView difficultyStar;
     @FXML
@@ -45,16 +44,17 @@ public class ListenController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         //todo add listeners to each table and adjust progressText text accordingly
 
-        List<String> names = Originals.getInstance().listNames();
+        List<String> names = _originals.listNames();
 
-        if (names.size() == 0) {
-            //todo when no names
-        } else {
-            java.util.Collections.sort(names);
-            ObservableList<String> challengeNames = FXCollections.observableArrayList(names);
-            listView.setItems(challengeNames);
-            listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        }
+        java.util.Collections.sort(names);
+        ObservableList<String> challengeNames = FXCollections.observableArrayList(names);
+
+        FilteredList<String> filteredList = new FilteredList<>(challengeNames, s -> true);
+        listView.setItems(filteredList);listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        search.textProperty().addListener(((observable, oldValue, newValue) -> {
+        	searchListener(filteredList, newValue, listView);
+        }));
     }
 
     @FXML
@@ -62,7 +62,7 @@ public class ListenController implements Initializable {
         //todo rating show
         String name = listView.getSelectionModel().getSelectedItem();
         nameLabel.setText(name);
-        Mediator.getInstance().setCurrentName(name);
+        _mediator.setCurrentName(name);
         disableButtons();
 
         //todo populate sublists
@@ -74,9 +74,9 @@ public class ListenController implements Initializable {
      */
     public void populateSubLists() {
 
-        String name = Mediator.getInstance().getCurrentName();
+        String name = _mediator.getCurrentName();
 
-        ObservableList<String> originals = FXCollections.observableArrayList(Originals.getInstance().getFileName(name));
+        ObservableList<String> originals = FXCollections.observableArrayList(_originals.getFileName(name));
         originalListView.setItems(originals); //todo
         originalListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
@@ -136,19 +136,14 @@ public class ListenController implements Initializable {
 
         //clearRatings();
 
-        Original original;
-        if (Originals.getInstance().getFileName(name).size() > 1) {
-            original = Originals.getInstance().getOriginalWithVersions(fileName, name);
-        } else {
-            original = Originals.getInstance().getOriginal(fileName);
-        }
+        Original original = getOriginal(fileName, name, _originals.getFileName(name).size());
         loadRating(original);
     }
 
     @FXML
     public void play(ActionEvent event) {
         System.out.println("play");
-        String name = Mediator.getInstance().getCurrentName(); //getting the name
+        String name = _mediator.getCurrentName(); //getting the name
         System.out.println(name);
         System.out.println(_selected);
 
@@ -159,13 +154,7 @@ public class ListenController implements Initializable {
                 Media media;
                 if (_type.equals("original")) { //if type is original
 
-                    Original original;
-
-                    if (Originals.getInstance().getFileName(name).size() > 1) {
-                        original = Originals.getInstance().getOriginalWithVersions(_selected, name);
-                    } else {
-                        original = Originals.getInstance().getOriginal(_selected);
-                    }
+                    Original original = getOriginal(_selected, name, _originals.getFileName(name).size());
 
                     media = new Media(original);
                 } else { //type is challenge
@@ -192,7 +181,7 @@ public class ListenController implements Initializable {
     public void delete(ActionEvent actionEvent) {
         //todo popup "Are you sure?", then delete challenge recording
         if (_type.equals("challenge")) {
-            String name = Mediator.getInstance().getCurrentName();
+            String name = _mediator.getCurrentName();
             if (name != null) {
                 Challenges.getInstance().deleteChallenge(name, _selected);
                 challengeListView.getItems().remove(_selected);
@@ -207,25 +196,20 @@ public class ListenController implements Initializable {
     private void ratingHandler() {
         String fileName = originalListView.getSelectionModel().getSelectedItem();
         String name = listView.getSelectionModel().getSelectedItem();
-        Original original;
+
 
         System.out.println(_good);
         System.out.println(fileName);
 
         if (fileName != null) {
-            if (Originals.getInstance().getFileName(name).size() > 1) {
-                original = Originals.getInstance().getOriginalWithVersions(fileName, name);
-            } else {
-                original = Originals.getInstance().getOriginal(fileName);
-            }
-
+	        Original original = getOriginal(fileName, name, _originals.getFileName(name).size());
 
             System.out.println(_good);
             if (_good == false) {
                 System.out.println("good is false!!! :D");
-                Originals.getInstance().setRating(original, "&bad&");
+                _originals.setRating(original, "&bad&");
             } else {
-                Originals.getInstance().setRating(original, "&good&");
+                _originals.setRating(original, "&good&");
             }
             loadRating(original);
         }
@@ -233,7 +217,7 @@ public class ListenController implements Initializable {
 
     @FXML
     private void loadRating(Original original) {
-        String rating = Originals.getInstance().getRating(original);
+        String rating = _originals.getRating(original);
         if (rating.equals("&bad&")){
             badButton.setStyle("-fx-background-color: #FF0000; ");
             goodButton.setStyle("-fx-background-color: #8FBC8F; ");

@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 
 import java.net.URL;
@@ -17,21 +19,17 @@ public class HeaderController extends ParentController {
 
 	@FXML public Text home;
 	@FXML public Button micTest;
-	@FXML public Button help;
 	@FXML public Pane headerPane;
 	@FXML public Text menuLabel;
 
-	private Mediator _mediator;
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		_mediator = Mediator.getInstance();
 		_mediator.setParent(this);
 	}
 
 	@FXML
 	public void home(MouseEvent mouseEvent) {
-		Boolean inSession = Mediator.getInstance().getChallengeStatus();
+		Boolean inSession = _mediator.getChallengeStatus();
 
 		if (inSession) {
 			boolean confirmAction = false;
@@ -39,9 +37,9 @@ public class HeaderController extends ParentController {
 
 			// If the user confirms, delete it
 			if (confirmAction) {
-				ChallengeSession _session = Mediator.getInstance().getChallengeSession();
+				ChallengeSession _session =_mediator.getChallengeSession();
 				_session.abortSession(); //gets rid of challenges
-				Mediator.getInstance().removeInChallengeSession();
+				_mediator.removeInChallengeSession();
 				_mediator.loadPane(Type.MAIN, "MainMenu");
 			}
 		} else {
@@ -76,10 +74,25 @@ public class HeaderController extends ParentController {
 
 	@FXML
 	public void micTest(ActionEvent actionEvent) { //todo MIC TEST POPUP
+		createPopUp("MicTest", "Microphone Test", 450, 259);
 	}
 
 	@FXML
 	public void help(ActionEvent actionEvent) {//todo HELP POPUP
+	}
+
+	public void setPage(PageType pageType) {
+		String text;
+		if (pageType == PageType.PRACTICE) {
+			text = "Practice";
+		} else if (pageType == PageType.CHALLENGE) {
+			text = "Challenge";
+		} else if (pageType == PageType.LISTEN) {
+			text = "Listen";
+		} else {
+			text = "Stats";
+		}
+		menuLabel.setText(text);
 	}
 
 	/**
@@ -90,5 +103,13 @@ public class HeaderController extends ParentController {
 	@Override
 	public void loadPane(String page) {
 		super.loadPane(page, headerPane);
+	}
+
+	public void homeHovered(MouseEvent mouseEvent) {
+		home.setFill(Paint.valueOf("#ff9900"));
+	}
+
+	public void homeExited(MouseEvent mouseEvent) {
+		home.setFill(Color.WHITE);
 	}
 }

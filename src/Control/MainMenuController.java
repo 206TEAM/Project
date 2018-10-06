@@ -1,15 +1,21 @@
 package Control;
 
-import Model.Mediator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainMenuController extends ParentController{
+public class MainMenuController extends ParentController {
 	@FXML public Button practice;
 	@FXML public Button challenge;
 	@FXML public Button create;
@@ -18,38 +24,38 @@ public class MainMenuController extends ParentController{
 	@FXML public Button help;
 	@FXML public Button micTest;
 	@FXML public AnchorPane mainPane;
-
-	private Mediator _mediator;
+	@FXML public Text micTestLabel;
+	@FXML public Text helpLabel;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		Mediator.getInstance().setParent(this);
-		_mediator = Mediator.getInstance();
+		_mediator.setParent(this);
 	}
 
 	@FXML
 	public void practice(ActionEvent actionEvent) {
-		loadNextPane("Practice1");
+		loadNextPane("Practice1", PageType.PRACTICE);
 	}
 
 	@FXML
 	public void challenge(ActionEvent actionEvent) {
-		loadNextPane("Challenge1");
+		loadNextPane("Challenge1", PageType.CHALLENGE);
 	}
 
 	@FXML
-	public void create(ActionEvent actionEvent) { //todo CREATE POPUP
+	public void create(ActionEvent actionEvent) {
+		createPopUp("ConcatenateNames", "Create Name", 450, 259);
 	}
 
 	@FXML
 	public void listen(ActionEvent actionEvent) {
-		loadNextPane("Listen");
+		loadNextPane("Listen", PageType.LISTEN);
 	}
 
 	@FXML
 	public void stats(ActionEvent actionEvent) {
 		// if (notAttemptedTable.size() > 0)
-		loadNextPane("Stats");
+		loadNextPane("Stats", PageType.STATS);
 		// else loadPane("StatsAllAttempted") // todo NOT SURE IF I WANT TO DO 2 DIFFERENT STATS PAGES
 	}
 
@@ -59,6 +65,7 @@ public class MainMenuController extends ParentController{
 
 	@FXML
 	public void micTest(ActionEvent actionEvent) { //todo MIC TEST POPUP
+		createPopUp("MicTest", "Microphone Test", 450, 259);
 	}
 
 	/**
@@ -78,9 +85,27 @@ public class MainMenuController extends ParentController{
 	 * on which button was pressed.
 	 *
 	 * @param page scene to load under a Header.
+	 * @param type indicates what type of page it is switching to.
 	 */
-	private void loadNextPane(String page) {
+	private void loadNextPane(String page, PageType type) {
 		super.loadPane("Header", mainPane);
+		_mediator.setPageType(type);
 		_mediator.loadPane(Type.HEADER, page);
+	}
+
+	public void micTestHovered(MouseEvent mouseEvent) {
+		micTestLabel.setVisible(true);
+	}
+
+	public void micTestExited(MouseEvent mouseEvent) {
+		micTestLabel.setVisible(false);
+	}
+
+	public void helpHovered(MouseEvent mouseEvent) {
+		helpLabel.setVisible(true);
+	}
+
+	public void helpExited(MouseEvent mouseEvent) {
+		helpLabel.setVisible(false);
 	}
 }

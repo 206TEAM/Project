@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ConcatenateNamesController extends SelectPracticeController {
+public class ConcatenateNamesController extends PopUpController {
 	@FXML
 	public Text nameText;
 	@FXML
@@ -38,7 +38,7 @@ public class ConcatenateNamesController extends SelectPracticeController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		List<String> allNames = Originals.getInstance().listNames();
+		List<String> allNames = _originals.listNames();
 
 		newName.textProperty().addListener((observable, oldValue, newValue) -> {
 			String[] names = newValue.split("[ -]");
@@ -95,18 +95,14 @@ public class ConcatenateNamesController extends SelectPracticeController {
 		Media.concatNames(newName);
 		_originals.addConcat(new Original(_newName, newName + ".wav"));
 
-		super.getInstance().addValue(_newName);
+		SelectPracticeController.getInstance().addValue(_newName);
 		exit();
 	}
 
 	@FXML
 	public void cancel(ActionEvent actionEvent) {
+		_stage = (Stage) cancel.getScene().getWindow();
 		exit();
-	}
-
-	private void exit() {
-		Stage stage = (Stage) cancel.getScene().getWindow();
-		stage.close();
 	}
 
 	private void setNameText(String text, Paint paint, boolean disableAdd) {

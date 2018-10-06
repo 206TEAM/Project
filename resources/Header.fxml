@@ -2,6 +2,12 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
@@ -12,7 +18,7 @@
    <children>
       <Pane prefHeight="80.0" prefWidth="600.0" style="-fx-background-color: #1e1e1e;">
          <children>
-            <Text fx:id="home" fill="WHITE" layoutX="218.0" layoutY="36.0" onMouseClicked="#home" strokeType="OUTSIDE" strokeWidth="0.0" text="Name Sayer">
+            <Text fx:id="home" fill="WHITE" layoutX="218.0" layoutY="36.0" onMouseClicked="#home" onMouseEntered="#homeHovered" onMouseExited="#homeExited" strokeType="OUTSIDE" strokeWidth="0.0" text="Name Sayer">
                <font>
                   <Font name="DejaVu Sans Bold" size="24.0" />
                </font>
@@ -21,14 +27,45 @@
                </cursor>
             </Text>
             <Line endX="36.0" layoutX="332.0" layoutY="45.0" startX="-100.0" stroke="WHITE" strokeWidth="2.0" />
-            <Text fx:id="menuLabel" fill="#ff9900" layoutX="274.0" layoutY="50.0" nodeOrientation="LEFT_TO_RIGHT" strokeType="OUTSIDE" strokeWidth="0.0" text="Stats" textAlignment="CENTER" textOrigin="TOP">
+            <Text fx:id="menuLabel" fill="#ff9900" layoutX="191.0" layoutY="49.0" nodeOrientation="LEFT_TO_RIGHT" strokeType="OUTSIDE" strokeWidth="0.0" text="Stats" textAlignment="CENTER" textOrigin="TOP" wrappingWidth="218.0869140625">
                <font>
                   <Font name="DejaVu Sans Bold" size="17.0" />
                </font>
             </Text>
-            <Button fx:id="micTest" layoutX="507.0" layoutY="27.0" mnemonicParsing="false" onAction="#micTest" text="Mic temp" />
-            <Button fx:id="help" layoutX="14.0" layoutY="29.0" mnemonicParsing="false" onAction="#help" text="Help temp" />
             <Line endX="268.0" layoutX="332.0" layoutY="80.0" startX="-332.0" stroke="WHITE" strokeWidth="4.0" />
+            <Button fx:id="micTest" layoutX="543.0" layoutY="24.0" mnemonicParsing="false" onAction="#micTest" prefHeight="32.0" prefWidth="15.0" style="-fx-background-color: #1e1e1e;">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="25.0" preserveRatio="true">
+                     <image>
+                        <Image url="@microphone.png" />
+                     </image>
+                     <effect>
+                        <ColorAdjust hue="0.2" saturation="1.0" />
+                     </effect>
+                  </ImageView>
+               </graphic>
+               <effect>
+                  <ColorAdjust />
+               </effect>
+            </Button>
+            <MenuButton layoutX="14.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #1e1e1e;">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Save session" />
+                <MenuItem mnemonicParsing="false" text="Reset progress" />
+                  <SeparatorMenuItem mnemonicParsing="false" text="Help" />
+                  <MenuItem mnemonicParsing="false" text="Help" />
+              </items>
+               <graphic>
+                  <ImageView fitHeight="27.0" fitWidth="31.0" preserveRatio="true">
+                     <image>
+                        <Image url="@settings.png" />
+                     </image>
+                     <effect>
+                        <ColorAdjust hue="0.2" saturation="1.0" />
+                     </effect>
+                  </ImageView>
+               </graphic>
+            </MenuButton>
          </children>
       </Pane>
       <Pane fx:id="headerPane" layoutY="80.0" prefHeight="320.0" prefWidth="600.0" />

@@ -33,7 +33,7 @@ public class Mediator {
     /********fields are for challenges********/
     private ChallengeSession _session;
 
-
+	private ParentController.PageType _currentPage;
     //private ArrayList<String> _challengeNames;
     private String _currentName;
     private String _currentFileName;
@@ -166,9 +166,14 @@ public class Mediator {
     	_practiceMain = parent;
     }
 
+    public void setPageType(ParentController.PageType type) {
+    	_currentPage = type;
+    }
+
     public void loadPane(ParentController.Type parent, String page) {
         if (parent == ParentController.Type.HEADER) {
             _header.loadPane(page);
+            _header.setPage(_currentPage);
         } else if (parent == ParentController.Type.MAIN) {
             _main.loadPane(page);
         } else if (parent == ParentController.Type.SUB_MAIN) {
@@ -190,45 +195,6 @@ public class Mediator {
         return SINGLETON;
     }
 
-	/**
-	 * Sets the duration of which the progress bar goes from
-	 * 0 to 100 to be the length that the audio file it is
-	 * playing plays for.
-	 *
-	 * @param progress the {@code ProgressIndicator} being displayed
-	 * @param dir whether it is an {@code Original} or a {@code Practice}
-	 */
-	public void showProgress(ProgressIndicator progress, String dir, EventHandler<ActionEvent> event) {
-		double duration = 0;
-		try {
-			File file = new File(dir);
-			AudioInputStream ais = AudioSystem.getAudioInputStream(file);
-			AudioFormat format = ais.getFormat();
-
-			long frames = ais.getFrameLength();
-			duration = (frames+0.0) / format.getFrameRate();
-		} catch (UnsupportedAudioFileException | IOException e) {
-			e.printStackTrace();
-		}
-
-		Timeline timeLine = new Timeline(
-				new KeyFrame(Duration.ZERO, new KeyValue(progress.progressProperty(), 0)),
-				new KeyFrame(Duration.seconds(duration), event,
-						new KeyValue(progress.progressProperty(), 1)));
-		timeLine.setCycleCount(1);
-		timeLine.play();
-	}
-
-	/**
-	 * Shows progress without triggering an event occurring after it is finished.
-	 *
-	 * @see #showProgress(ProgressIndicator, String, EventHandler)
-	 */
-	public void showProgress(ProgressIndicator progress, String dir, String fileName) {
-		EventHandler<ActionEvent> event = Event::consume; //do nothing
-		showProgress(progress,dir,event);
-	}
-
 	public void fireDisableTable(PracticeMainController.TableType type1, PracticeMainController.TableType type2, boolean disable) {
 		fireDisableTable(type1, disable);
 		fireDisableTable(type2, disable);
@@ -248,6 +214,10 @@ public class Mediator {
 
 	public void fireTableValues(List<String> newTable) {
 		_practiceMain.setTableValues(newTable);
+	}
+
+	public boolean praticeNotNull() {
+		return _practiceMain != null;
 	}
 
 }

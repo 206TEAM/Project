@@ -1,10 +1,10 @@
 package Control;
 
+import Main.Main;
 import Model.*;
-import Ratings.*;
+import Ratings.ChallengeRatings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import Main.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,8 +39,6 @@ public class ChallengeCompareController extends ParentController {
     @FXML
     public Text originalProgressText;
     @FXML
-    public Text practiceProgressText;
-    @FXML
     public Button correct;
     @FXML
     public Button wrong;
@@ -59,9 +57,10 @@ public class ChallengeCompareController extends ParentController {
     public ImageView difficultyStar; // set to visible if the name has been flagged difficult
     @FXML
     public Pane subPane;
+	@FXML
+    public Text challengeProgressText;
 
-    private Mediator _mediator;
-    private Main main;
+	private Main main;
 
     /***********fields****************/
     private ChallengeSession _session;
@@ -69,9 +68,8 @@ public class ChallengeCompareController extends ParentController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        _mediator = Mediator.getInstance();
         _mediator.setParent(this);
-        _session = Mediator.getInstance().getChallengeSession();
+        _session = _mediator.getChallengeSession();
         List<String> list = _mediator.getPracticeMainList();
         ObservableList<String> practiceList = FXCollections.observableArrayList(list);
         challengeListView.setItems(practiceList);
@@ -79,67 +77,33 @@ public class ChallengeCompareController extends ParentController {
 
     @FXML
     public void playOriginal(ActionEvent actionEvent) {
-        //todo play original audio
-        //todo progress bar ting
-        originalProgressText.setText("Playing...");
+	    String name = _session.getCurrentName();
+	    String fileName = _mediator.getOriginalFilename();
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-	            Media media;
-
-	            String name = _session.getCurrentName();
-	            String fileName = Mediator.getInstance().getOriginalFilename();
-
-	            Original original;
-	            if (Originals.getInstance().getFileName(name).size() > 1) {
-		            original = Originals.getInstance().getOriginalWithVersions(fileName, name);
-		            // System.out.println(original.getFileName());
-	            } else {
-		            original = Originals.getInstance().getOriginal(fileName);
-		            //System.out.println(original.getFileName());
-	            }
-
-	            media = new Media(original);
-	            media.play();
-            }
-        });
-        thread.setDaemon(true);
-        thread.start();
+	    super.playFile(originalProgressText, playOriginal, originalProgressBar, fileName, name, _originals.getFileName(name).size());
     }
 
     @FXML
     public void playChallenge(ActionEvent actionEvent) {
         correct.setDisable(false);
         wrong.setDisable(false);
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Media media;
 
-                String name = _session.getCurrentName();
-                String fileName = _session.getChallengeFile(name);
+	    String name = _session.getCurrentName();
+	    String fileName = _session.getChallengeFile(name);
+	    String dir = "Names/" + name + "/Challenge/" + _session.getChallengeFile(name) + ".wav";
+	    Media media = new Media(Challenges.getInstance().getChallenge(name,fileName ));
 
-                media = new Media(Challenges.getInstance().getChallenge(name, fileName));
-
-                media.play();
-            }
-        });
-        thread.setDaemon(true);
-        thread.start();
-
+	    super.playFile(challengeProgressText, playChallenge, practiceProgressBar, dir, media);
     }
 
 
     @FXML
     public void correct(ActionEvent actionEvent) {
-        //todo mark this name (and this challenge recording) to be a success (Add it to stats)
         processRating(true);
     }
 
     @FXML
     public void wrong(ActionEvent actionEvent) {
-        //todo mark this name (and this challenge Recording) to be a failure
         processRating(false);
     }
 
@@ -150,12 +114,18 @@ public class ChallengeCompareController extends ParentController {
 
         challengeListView.getItems().remove(name);
         if (challengeListView.getItems().size()==0){
-            Mediator.getInstance().removeInChallengeSession();
+            _mediator.removeInChallengeSession();
             popup();
         } else {
             wrong.setDisable(true);
             correct.setDisable(true);
-            nameLabel.setText("--");
+            originalProgressBar.setProgress(0);
+            practiceProgressBar.setProgress(0);
+            challengeProgressText.setText("Play Your Attempt");
+            challengeListView.getSelectionModel().selectFirst();
+
+            String originalFileName = nameSelected(challengeListView.getSelectionModel().getSelectedItem());
+            _mediator.setOriginalFilename(originalFileName);
         }
     }
 
@@ -168,14 +138,9 @@ public class ChallengeCompareController extends ParentController {
     @FXML
     public void nameSelected(MouseEvent mouseEvent) {
         String name = challengeListView.getSelectionModel().getSelectedItem();
-        _session.setCurrentName(name);
         if (name != null) {
-            List<String> versions = Originals.getInstance().getFileName(name);
-            ObservableList<String> versionsToDisplay = FXCollections.observableArrayList(versions);
-            versionListView.setItems(versionsToDisplay);
-            nameLabel.setText(name);
-            playChallenge.setDisable(false);
-
+	        String fileName = nameSelected(name);
+	        _mediator.setOriginalFilename(fileName);
         }
     }
 
@@ -184,9 +149,8 @@ public class ChallengeCompareController extends ParentController {
         String fileName = versionListView.getSelectionModel().getSelectedItem();
         System.out.println(fileName);
 
-
         if (fileName != null) {
-           Mediator.getInstance().setOriginalFilename(fileName);
+           _mediator.setOriginalFilename(fileName);
             playOriginal.setDisable(false);
         } else {
             playOriginal.setDisable(true);
@@ -225,5 +189,34 @@ public class ChallengeCompareController extends ParentController {
         } catch (IOException error) {
             error.printStackTrace();
         }
+    }
+
+    private String nameSelected(String name) {
+	    _session.setCurrentName(name);
+	    originalProgressText.setText("Play Original");
+	    playOriginal.setDisable(false);
+
+	    List<String> versions = _originals.getFileName(name);
+	    ObservableList<String> versionsToDisplay;
+
+	    versionsToDisplay = FXCollections.observableArrayList(versions);
+	    versionListView.setItems(versionsToDisplay);
+	    nameLabel.setText(name);
+
+	    String fileName;
+
+	    if (versionsToDisplay.size() == 1) {
+		    versionListView.getSelectionModel().selectFirst();
+		    fileName = versionListView.getSelectionModel().getSelectedItem();
+	    } else {
+		    fileName = pickBestOriginal(name);
+		    for (int i = 0; i < versions.size(); i++) {
+			    if (versions.get(i).equals(fileName)) {
+				    versionListView.getSelectionModel().select(i);
+				    break;
+			    }
+		    }
+	    }
+	    return fileName;
     }
 }
