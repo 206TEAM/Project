@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * This class represents a list of challenges for each Name
  * _challenges is a hashmap that contains the Name as the key value, and challenge list for each name as the value.
- *
  */
 public class Challenges {
 
@@ -74,8 +73,8 @@ public class Challenges {
         }
     }
 
-    public int getChallengeSize(String nameKey){
-        if(_challenges.get(nameKey)!=null){
+    public int getChallengeSize(String nameKey) {
+        if (_challenges.get(nameKey) != null) {
             return _challenges.get(nameKey).size();
         } else {
             return 0;
@@ -107,9 +106,13 @@ public class Challenges {
      * @param fileName
      */
     public void deleteChallenge(String nameKey, String fileName) {
-        Challenge challengeDelete = getChallenge(nameKey, fileName);
-        challengeDelete.delete(); // delete the challenge
-        _challenges.get(nameKey).remove(challengeDelete); //not sure if this works yet (needs testing)
+        Boolean hi = challengeExists(nameKey, fileName);
+        System.out.println(hi);
+        if (hi) {
+            Challenge challengeDelete = getChallenge(nameKey, fileName);
+            challengeDelete.delete(); // delete the challenge
+            _challenges.get(nameKey).remove(challengeDelete); //not sure if this works yet (needs testing)
+        }
     }
 
     /**
@@ -144,6 +147,13 @@ public class Challenges {
         challenge.create();
         addChallenge(nameKey, challenge);
         return challenge.getFileName();
+    }
+
+    private Boolean challengeExists(String nameKey, String fileName) {
+
+        File file = new File("Names/" + nameKey + "/Challenge/" + fileName + ".wav");
+        return file.exists();
+
     }
 
 }

@@ -42,7 +42,6 @@ public class ChallengeCompareController extends ParentController {
     public Button correct;
     @FXML
     public Button wrong;
-
     @FXML
     public ListView<String> challengeListView;
     @FXML
@@ -85,27 +84,24 @@ public class ChallengeCompareController extends ParentController {
 
     @FXML
     public void playChallenge(ActionEvent actionEvent) {
-        correct.setDisable(false);
-        wrong.setDisable(false);
 
 	    String name = _session.getCurrentName();
 	    String fileName = _session.getChallengeFile(name);
 	    String dir = "Names/" + name + "/Challenge/" + _session.getChallengeFile(name) + ".wav";
 	    Media media = new Media(Challenges.getInstance().getChallenge(name,fileName ));
-
 	    super.playFile(challengeProgressText, playChallenge, practiceProgressBar, dir, media);
+        correct.setDisable(false);
+        wrong.setDisable(false);
     }
 
 
     @FXML
     public void correct(ActionEvent actionEvent) {
-        //todo mark this name (and this challenge recording) to be a success (Add it to stats)
         processRating(true);
     }
 
     @FXML
     public void wrong(ActionEvent actionEvent) {
-        //todo mark this name (and this challenge Recording) to be a failure
         processRating(false);
     }
 
@@ -116,8 +112,8 @@ public class ChallengeCompareController extends ParentController {
 
         challengeListView.getItems().remove(name);
         if (challengeListView.getItems().size()==0){
+            _mediator.removeInChallengeSession();
             popup();
-            //Mediator.getInstance().loadPane(ParentController.Type.MAIN, "MainMenu");
         } else {
             wrong.setDisable(true);
             correct.setDisable(true);
@@ -130,7 +126,6 @@ public class ChallengeCompareController extends ParentController {
             _mediator.setOriginalFilename(originalFileName);
         }
     }
-
 
     @FXML
     public void add(ActionEvent actionEvent) {

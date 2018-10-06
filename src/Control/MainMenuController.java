@@ -1,17 +1,13 @@
 package Control;
 
+import Ratings.ChallengeRatings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -26,10 +22,15 @@ public class MainMenuController extends ParentController {
 	@FXML public AnchorPane mainPane;
 	@FXML public Text micTestLabel;
 	@FXML public Text helpLabel;
+	@FXML public Label averageSuccessLabel, progressLabel;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		_mediator.setParent(this);
+		String score = Integer.toString(ChallengeRatings.getInstance().getOverallScore());
+		averageSuccessLabel.setText("Average success: " + score + "%");
+		String progress = Integer.toString(ChallengeRatings.getInstance().getProgress());
+		progressLabel.setText("Progress is: "+progress+"%");
 	}
 
 	@FXML
@@ -54,9 +55,7 @@ public class MainMenuController extends ParentController {
 
 	@FXML
 	public void stats(ActionEvent actionEvent) {
-		// if (notAttemptedTable.size() > 0)
 		loadNextPane("Stats", PageType.STATS);
-		// else loadPane("StatsAllAttempted") // todo NOT SURE IF I WANT TO DO 2 DIFFERENT STATS PAGES
 	}
 
 	@FXML

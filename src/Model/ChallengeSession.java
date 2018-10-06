@@ -9,24 +9,29 @@ import java.util.List;
 public class ChallengeSession {
     private double _difficulty;
     private int _numberOfNames;
-
-    //private ArrayList<String> _challengeNames;
     private String _currentName;
-    private String _currentFileName;
-    private String _originalFileName;
     private List<String> _challengeList;
     private List<String> _challengeFileList;
     private List<String> _goodList;
     private List<String> _badList;
 
+    //todo temp messages
+    public static final String GOODMESSAGE = "Good job!";
+    public static final String BADMESSAGE = "Keep trying. You're almost there.";
 
-    public ChallengeSession(int number, double difficulty){
+    public ChallengeSession(int number, double difficulty) {
         _numberOfNames = number;
         _difficulty = difficulty;
         generateNames();
     }
 
-    private void generateNames(){
+    public ChallengeSession(List<String> oldList) { //constructor for redoing
+        _numberOfNames = oldList.size();
+        _difficulty = 0.0; //todo hmm
+        setChallengeList(oldList);
+    }
+
+    private void generateNames() {
         List<String> challengeList = Originals.getInstance().listNames();
         Collections.shuffle(challengeList);
         setChallengeList(challengeList.subList(0, _numberOfNames));
@@ -62,6 +67,19 @@ public class ChallengeSession {
         return _badList;
     }
 
+    /**
+     * this session returns the score
+     */
+    public int getSessionScore(){
+        System.out.println("no of names" + _numberOfNames);
+        System.out.println("goodsize :"+_goodList.size());
+        double ratio = (_goodList.size() / (double) _numberOfNames)*100;
+        System.out.println(ratio);
+            System.out.println( ratio*100);
+        return (int) ratio;
+
+    }
+
     public String getCurrentName() {
         return _currentName;
     }
@@ -70,28 +88,54 @@ public class ChallengeSession {
         _currentName = name;
     }
 
-    public String getChallengeFile(String name){
+    public String getChallengeFile(String name) {
         int index = 0;
-        for (int i=0;i<_challengeList.size();i++){
-            if (_challengeList.get(i).equals(name)){
+        for (int i = 0; i < _challengeList.size(); i++) {
+            if (_challengeList.get(i).equals(name)) {
                 index = i;
             }
         }
         return _challengeFileList.get(index);
     }
 
-    public void getLists(){
+    /**
+     * this gets rid of all the challenge files
+     */
+    public void abortSession() {
+       //todo: kill processes
+        if (_challengeFileList != null && !_challengeFileList.isEmpty()) {
+            for (int i = 0; i < _challengeFileList.size(); i++) {
+                String name = _challengeList.get(i);
+                if (name != null) {
+
+                    System.out.println("to be deleted: " + _challengeFileList.get(i));
+                    Challenges.getInstance().deleteChallenge(name, _challengeFileList.get(i));
+                }
+            }
+        }
+    }
+
+    public void getLists() {
         _goodList = new ArrayList<String>();
         _badList = new ArrayList<String>();
-        for (int i = 0; i<_challengeList.size();i++){
+        for (int i = 0; i < _challengeList.size(); i++) {
             String name = _challengeList.get(i);
             String fileName = _challengeFileList.get(i);
 
-            if (ChallengeRatings.getInstance().getRating(name, fileName)){
+            if (ChallengeRatings.getInstance().getRating(name, fileName)) {
                 _goodList.add(name);
             } else {
                 _badList.add(name);
             }
+        }
+    }
+
+    public String getScoreMessage(){
+        int score =  getSessionScore();
+        if (score>=ChallengeRatings.SCORELIMIT){ //currently 60% is good
+            return GOODMESSAGE;
+        } else {
+            return BADMESSAGE;
         }
     }
 }
