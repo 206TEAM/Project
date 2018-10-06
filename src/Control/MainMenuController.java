@@ -6,7 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -22,6 +24,8 @@ public class MainMenuController extends ParentController {
 	@FXML public Button help;
 	@FXML public Button micTest;
 	@FXML public AnchorPane mainPane;
+	@FXML public Text micTestLabel;
+	@FXML public Text helpLabel;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -87,5 +91,21 @@ public class MainMenuController extends ParentController {
 		super.loadPane("Header", mainPane);
 		_mediator.setPageType(type);
 		_mediator.loadPane(Type.HEADER, page);
+	}
+
+	public void micTestHovered(MouseEvent mouseEvent) {
+		micTestLabel.setVisible(true);
+	}
+
+	public void micTestExited(MouseEvent mouseEvent) {
+		micTestLabel.setVisible(false);
+	}
+
+	public void helpHovered(MouseEvent mouseEvent) {
+		helpLabel.setVisible(true);
+	}
+
+	public void helpExited(MouseEvent mouseEvent) {
+		helpLabel.setVisible(false);
 	}
 }

@@ -1,11 +1,12 @@
 package Control;
 
-import Model.Mediator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 
 import java.net.URL;
@@ -15,7 +16,6 @@ public class HeaderController extends ParentController {
 
 	@FXML public Text home;
 	@FXML public Button micTest;
-	@FXML public Button help;
 	@FXML public Pane headerPane;
 	@FXML public Text menuLabel;
 
@@ -60,5 +60,13 @@ public class HeaderController extends ParentController {
 	@Override
 	public void loadPane(String page) {
 		super.loadPane(page, headerPane);
+	}
+
+	public void homeHovered(MouseEvent mouseEvent) {
+		home.setFill(Paint.valueOf("#ff9900"));
+	}
+
+	public void homeExited(MouseEvent mouseEvent) {
+		home.setFill(Color.WHITE);
 	}
 }
