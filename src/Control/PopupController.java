@@ -1,13 +1,17 @@
 package Control;
 
 import Model.ChallengeSession;
+import Model.Media;
 import Model.Mediator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -17,9 +21,13 @@ import java.util.ResourceBundle;
 public class PopupController implements Initializable {
     private Stage stage = null;
     private ChallengeSession _session;
+    private Mediator _mediator;
 
     @FXML
     public ListView<String> correctListView, wrongListView;
+
+    @FXML
+    public Text scoreLabel, conditionsText;
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -31,44 +39,57 @@ public class PopupController implements Initializable {
     private void closeStage() {
         if (stage != null) {
             Mediator.getInstance().loadPane(ParentController.Type.MAIN, "MainMenu");
+            stage.close();
         }
     }
 
     @FXML
-    private void selectNameOriginal(ActionEvent event){
-
+    private void add(ActionEvent event) { //todo make it so that it redos the stuff the user has selected
+        ChallengeSession newSession = new ChallengeSession(_session.getChallengeList());
+        _mediator.setChallengeSession(newSession);
+        _mediator.loadPane(ParentController.Type.MAIN, "Header");
+        _mediator.loadPane(ParentController.Type.HEADER, "Challenge2");
+        stage.close();
     }
-    @FXML
-    private void selectNameChallenge(ActionEvent event){
 
+    @FXML
+    private void cancel(ActionEvent event) {
+        closeStage();
     }
-    @FXML
-    private void add(ActionEvent event){
 
-    }
     @FXML
-    private void cancel(ActionEvent event){
-
+    private void challenge(ActionEvent event){
+        _mediator.loadPane(ParentController.Type.MAIN, "Header");
+        _mediator.loadPane(ParentController.Type.HEADER, "Challenge1");
+        stage.close();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         _session = Mediator.getInstance().getChallengeSession();
+        _mediator = Mediator.getInstance();
         _session.getLists();
+        conditionsText.setText(_session.getScoreMessage());
         List<String> goodList = _session.getGoodList();
         List<String> badList = _session.getBadList();
         System.out.println(goodList);
         System.out.println("wrong list is " + badList);
         ObservableList<String> correctList = FXCollections.observableArrayList(goodList);
         ObservableList<String> wrongList = FXCollections.observableArrayList(badList);
+        String score = Integer.toString(_session.getSessionScore());
+        System.out.println("score is " + score);
+        scoreLabel.setText(score);
+        //scoreLabel.setText(score);
 
-        if (correctList.size()>0){
+        if (correctList.size() > 0) {
             correctListView.setItems(correctList);
         }
 
-        if (wrongList.size()>0){
+        if (wrongList.size() > 0) {
             System.out.println("wrong");
             wrongListView.setItems(wrongList);
         }
+
+
     }
 }

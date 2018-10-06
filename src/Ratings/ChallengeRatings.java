@@ -11,7 +11,6 @@ import java.util.List;
 /**
  * This class represents a list of challenges for each Name
  * _challengesRating is a hashmap that contains the Name as the key value, and challenge list for each name as the value.
- *
  */
 
 /**
@@ -25,6 +24,9 @@ public class ChallengeRatings {
     private List<String> _goodNames;
     private List<String> _badNames;
     private List<String> _notAttemptedNames;
+    private int _noOfSessions;
+    private int _overallScore;
+    public static final int SCORELIMIT = 60;
 
     private final static ChallengeRatings instance = new ChallengeRatings();
 
@@ -33,10 +35,12 @@ public class ChallengeRatings {
         _goodNames = new ArrayList<String>();
         _notAttemptedNames = new ArrayList<String>();
         _badNames = new ArrayList<String>();
+        _noOfSessions = 0;
+        _overallScore = 0;
         List<String> names = Originals.getInstance().listNames();
 
-        for (String name : names){
-            _challengesRating.put(name,-1); //adding names
+        for (String name : names) {
+            _challengesRating.put(name, -1); //adding names
             _notAttemptedNames.add(name);
 
         }
@@ -62,13 +66,13 @@ public class ChallengeRatings {
     /**
      * sets the rating for specific challenge AS WELL AS updating the average of the name.
      */
-    public void setRating(String nameKey, String fileName, Boolean rating){
+    public void setRating(String nameKey, String fileName, Boolean rating) {
         Challenge challenge = Challenges.getInstance().getChallenge(nameKey, fileName);
         challenge.setRating(rating);
         updateAverage(nameKey, rating);
     }
 
-    public Boolean getRating(String nameKey, String fileName){
+    public Boolean getRating(String nameKey, String fileName) {
         Challenge challenge = Challenges.getInstance().getChallenge(nameKey, fileName);
         return challenge.getRating();
     }
@@ -78,10 +82,10 @@ public class ChallengeRatings {
      * calculates the score for the particular namekey, adds value to hashmap
      * and puts the name into the correct list through helper methods.
      */
-    private void updateAverage(String nameKey, Boolean rating){
+    private void updateAverage(String nameKey, Boolean rating) {
         //todo make rating more distinguashable e.g 0 and 100?
         int number;
-        if (rating){
+        if (rating) {
             number = 100;
         } else {
             number = 0;
@@ -89,23 +93,20 @@ public class ChallengeRatings {
 
         int currentAvg, newAvg;
 
-        if (_challengesRating.get(nameKey)==-1){ //todo find etter way to distinguish between NA and bad
+        if (_challengesRating.get(nameKey) == -1) { //todo find etter way to distinguish between NA and bad
             newAvg = number;
             currentAvg = -1;
         } else {
             currentAvg = _challengesRating.get(nameKey);
-           int challengeSize = Challenges.getInstance().getChallengeSize(nameKey);
-           newAvg = currentAvg + (number - currentAvg)/challengeSize;
+            int challengeSize = Challenges.getInstance().getChallengeSize(nameKey);
+            newAvg = currentAvg + (number - currentAvg) / challengeSize;
         }
-        _challengesRating.put(nameKey,newAvg); //puts new average into hashmap
+        _challengesRating.put(nameKey, newAvg); //puts new average into hashmap
         handleList(currentAvg, newAvg, nameKey); //updates the list
-        System.out.println("name is "+nameKey);
-        System.out.println("currentAvg is "+currentAvg);
-        System.out.println("newAvg is " + newAvg);
     }
 
-    private void handleList(int oldScore, int newScore, String nameKey){
-        if (getList(newScore) != getList(oldScore)){
+    private void handleList(int oldScore, int newScore, String nameKey) {
+        if (getList(newScore) != getList(oldScore)) {
             if (getList(oldScore) != null) {
                 getList(oldScore).remove(nameKey);
             } else {
@@ -115,16 +116,26 @@ public class ChallengeRatings {
         }
     }
 
-    private List<String> getList(int average){
-        if (average == -1){
+    private List<String> getList(int average) {
+        if (average == -1) {
             return null;
-        } else if (average < 60){
+        } else if (average < SCORELIMIT) {
             return _badNames;
         } else {
             return _goodNames;
         }
     }
 
+    public void newSession(int score) {
+        _noOfSessions++;
+        int newAvg = _overallScore + (score - _overallScore) / _noOfSessions;
+        _overallScore = newAvg;
+
+    }
+
+    /**
+     * score of a particular name.
+     */
     public int getScore(String nameKey) {
         return _challengesRating.get(nameKey);
     }
@@ -133,7 +144,7 @@ public class ChallengeRatings {
      * This method reads from saved session text file and updates the hashmap
      * AND the lists
      */
-    private void updateModel(){
+    private void updateModel() {
     }
 
 }

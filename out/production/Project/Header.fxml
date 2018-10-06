@@ -33,9 +33,9 @@
                </font>
             </Text>
             <Line endX="268.0" layoutX="332.0" layoutY="80.0" startX="-332.0" stroke="WHITE" strokeWidth="4.0" />
-            <Button fx:id="micTest" layoutX="543.0" layoutY="24.0" mnemonicParsing="false" onAction="#micTest" prefHeight="32.0" prefWidth="15.0" style="-fx-background-color: #1e1e1e;">
+            <Button fx:id="micTest" layoutX="543.0" layoutY="24.0" mnemonicParsing="false" onAction="#micTest" onMouseEntered="#micHovered" onMouseExited="#micExited" prefHeight="32.0" prefWidth="15.0" style="-fx-background-color: #1e1e1e;">
                <graphic>
-                  <ImageView fitHeight="26.0" fitWidth="25.0" preserveRatio="true">
+                  <ImageView fx:id="micImage" fitHeight="26.0" fitWidth="25.0" preserveRatio="true">
                      <image>
                         <Image url="@microphone.png" />
                      </image>
@@ -48,12 +48,14 @@
                   <ColorAdjust />
                </effect>
             </Button>
-            <MenuButton layoutX="14.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #1e1e1e;">
+            <MenuButton fx:id="settings" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #1e1e1e;">
               <items>
-                <MenuItem mnemonicParsing="false" text="Save session" />
-                <MenuItem mnemonicParsing="false" text="Reset progress" />
-                  <SeparatorMenuItem mnemonicParsing="false" text="Help" />
-                  <MenuItem mnemonicParsing="false" text="Help" />
+                <MenuItem fx:id="save" mnemonicParsing="false" text="Save session" />
+                <MenuItem fx:id="reset" mnemonicParsing="false" text="Reset progress" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="help" mnemonicParsing="false" text="Help" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="quit" mnemonicParsing="false" text="Quit" onAction="#quit" />
               </items>
                <graphic>
                   <ImageView fitHeight="27.0" fitWidth="31.0" preserveRatio="true">

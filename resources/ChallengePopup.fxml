@@ -32,7 +32,7 @@
             <Font size="15.0" />
          </font>
       </Button>
-      <Text fx:id="nameLabel1" layoutX="192.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="121.58203125">
+      <Text fx:id="scoreLabel" layoutX="192.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="121.58203125">
          <font>
             <Font name="DejaVu Sans Bold" size="26.0" />
          </font>
@@ -40,7 +40,7 @@
       <ListView fx:id="correctListView" layoutX="329.0" layoutY="127.0" prefHeight="155.0" prefWidth="160.0" />
       <Rectangle fill="#ff9900" height="19.0" layoutX="329.0" layoutY="109.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="160.0" />
       <Text fill="#1e1e1e" layoutX="374.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correct" />
-      <Button fx:id="challengeButton" layoutX="212.0" layoutY="231.0" mnemonicParsing="false" onAction="#cancel" prefHeight="29.0" prefWidth="98.0" text="Challenge">
+      <Button fx:id="challengeButton" layoutX="212.0" layoutY="231.0" mnemonicParsing="false" onAction="#challenge" prefHeight="29.0" prefWidth="98.0" text="Challenge">
          <font>
             <Font size="15.0" />
          </font>

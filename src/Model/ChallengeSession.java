@@ -9,21 +9,26 @@ import java.util.List;
 public class ChallengeSession {
     private double _difficulty;
     private int _numberOfNames;
-
-    //private ArrayList<String> _challengeNames;
     private String _currentName;
-    private String _currentFileName;
-    private String _originalFileName;
     private List<String> _challengeList;
     private List<String> _challengeFileList;
     private List<String> _goodList;
     private List<String> _badList;
 
+    //todo temp messages
+    public static final String GOODMESSAGE = "Good job!";
+    public static final String BADMESSAGE = "Keep trying. You're almost there.";
 
     public ChallengeSession(int number, double difficulty) {
         _numberOfNames = number;
         _difficulty = difficulty;
         generateNames();
+    }
+
+    public ChallengeSession(List<String> oldList) { //constructor for redoing
+        _numberOfNames = oldList.size();
+        _difficulty = 0.0; //todo hmm
+        setChallengeList(oldList);
     }
 
     private void generateNames() {
@@ -62,6 +67,19 @@ public class ChallengeSession {
         return _badList;
     }
 
+    /**
+     * this session returns the score
+     */
+    public int getSessionScore(){
+        System.out.println("no of names" + _numberOfNames);
+        System.out.println("goodsize :"+_goodList.size());
+        double ratio = (_goodList.size() / (double) _numberOfNames)*100;
+        System.out.println(ratio);
+            System.out.println( ratio*100);
+        return (int) ratio;
+
+    }
+
     public String getCurrentName() {
         return _currentName;
     }
@@ -92,7 +110,6 @@ public class ChallengeSession {
 
                     System.out.println("to be deleted: " + _challengeFileList.get(i));
                     Challenges.getInstance().deleteChallenge(name, _challengeFileList.get(i));
-
                 }
             }
         }
@@ -110,6 +127,15 @@ public class ChallengeSession {
             } else {
                 _badList.add(name);
             }
+        }
+    }
+
+    public String getScoreMessage(){
+        int score =  getSessionScore();
+        if (score>=ChallengeRatings.SCORELIMIT){ //currently 60% is good
+            return GOODMESSAGE;
+        } else {
+            return BADMESSAGE;
         }
     }
 }
