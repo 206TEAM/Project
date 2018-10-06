@@ -77,7 +77,8 @@ abstract class Controller implements Initializable {
 	 * Plays the {@code Media} provided.
 	 *
 	 * <p> Also changes the {@code progressText} to become <q>Playing...</q> when playing,
-	 * and <q>Done</q> when finished. </p>
+	 * and <q>Done</q> when finished while displaying the current duration of a file in
+	 * real-time. </p>
 	 *
 	 * @param progressText the JavaFX component to change text of.
 	 * @param playButton the JavaFX button to disable and enable when playing.
@@ -143,7 +144,7 @@ abstract class Controller implements Initializable {
 			goodFiles.add(_originals.getFileName(name).get(0));
 		} else {
 			for (Original original : allVersions) {
-				if (Originals.getInstance().getRating(original).equals("&good&")) {
+				if (_originals.getRating(original).equals("&good&")) {
 					goodFiles.add(original.getFileNameWithVersion());
 				}
 			}
@@ -230,7 +231,8 @@ abstract class Controller implements Initializable {
 	 * playing plays for.
 	 *
 	 * @param progress the {@code ProgressIndicator} being displayed
-	 * @param dir whether it is an {@code Original} or a {@code Practice}
+	 * @param dir whether it is an {@code Original} or a {@code Challenge}
+	 *            (e.g "Original").
 	 */
 	public void showProgress(ProgressIndicator progress, String dir, EventHandler<ActionEvent> event) {
 		double duration = 0;
