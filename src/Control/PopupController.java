@@ -3,6 +3,7 @@ package Control;
 import Model.ChallengeSession;
 import Model.Media;
 import Model.Mediator;
+import Ratings.ChallengeRatings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -72,14 +73,11 @@ public class PopupController implements Initializable {
         conditionsText.setText(_session.getScoreMessage());
         List<String> goodList = _session.getGoodList();
         List<String> badList = _session.getBadList();
-        System.out.println(goodList);
-        System.out.println("wrong list is " + badList);
         ObservableList<String> correctList = FXCollections.observableArrayList(goodList);
         ObservableList<String> wrongList = FXCollections.observableArrayList(badList);
         String score = Integer.toString(_session.getSessionScore());
-        System.out.println("score is " + score);
-        scoreLabel.setText(score);
-        //scoreLabel.setText(score);
+        scoreLabel.setText(score); //todo refactor
+        ChallengeRatings.getInstance().newSession(_session.getSessionScore());
 
         if (correctList.size() > 0) {
             correctListView.setItems(correctList);

@@ -26,6 +26,7 @@ public class ChallengeRatings {
     private List<String> _notAttemptedNames;
     private int _noOfSessions;
     private int _overallScore;
+    private int _progress;
     public static final int SCORELIMIT = 60;
 
     private final static ChallengeRatings instance = new ChallengeRatings();
@@ -37,6 +38,7 @@ public class ChallengeRatings {
         _badNames = new ArrayList<String>();
         _noOfSessions = 0;
         _overallScore = 0;
+        _progress = 0;
         List<String> names = Originals.getInstance().listNames();
 
         for (String name : names) {
@@ -49,6 +51,10 @@ public class ChallengeRatings {
 
     public static ChallengeRatings getInstance() {
         return instance;
+    }
+
+    public int getOverallScore() {
+        return _overallScore;
     }
 
     public List<String> get_badNames() {
@@ -126,11 +132,19 @@ public class ChallengeRatings {
         }
     }
 
+    /**
+     * updates progress and average score each time after a session has finished
+     */
     public void newSession(int score) {
         _noOfSessions++;
         int newAvg = _overallScore + (score - _overallScore) / _noOfSessions;
+        double newProgress = 100 - ((_notAttemptedNames.size() / (double) Originals.getInstance().listNames().size()) * 100); //todo make better
+        _progress = (int) newProgress;
         _overallScore = newAvg;
+    }
 
+    public int getProgress() {
+        return _progress;
     }
 
     /**
