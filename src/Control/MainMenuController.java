@@ -2,10 +2,14 @@ package Control;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -36,7 +40,7 @@ public class MainMenuController extends ParentController {
 
 	@FXML
 	public void create(ActionEvent actionEvent) {
-		createPopUp();
+		createPopUp("ConcatenateNames", "Create Name", 450, 259);
 	}
 
 	@FXML
@@ -57,6 +61,7 @@ public class MainMenuController extends ParentController {
 
 	@FXML
 	public void micTest(ActionEvent actionEvent) { //todo MIC TEST POPUP
+		createPopUp("MicTest", "Microphone Test", 450, 259);
 	}
 
 	/**

@@ -146,7 +146,7 @@ public class SelectPracticeController extends Controller {
 //	}
 
 	private void combine() {
-		createPopUp();
+		createPopUp("ConcatenateNames", "Create Name", 450, 259);
 	}
 
 	private void upload() {
@@ -189,7 +189,7 @@ public class SelectPracticeController extends Controller {
 		disableButtons(false);
 	}
 
-	protected SelectPracticeController getInstance() {
+	protected static SelectPracticeController getInstance() {
 		return _INSTANCE;
 	}
 }

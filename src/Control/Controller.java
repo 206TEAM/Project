@@ -131,13 +131,13 @@ abstract class Controller implements Initializable {
 		return fileName;
 	}
 
-	protected void createPopUp() {
+	protected void createPopUp(String scene, String title, int width, int height) {
 		Parent root;
 		try {
-			root = FXMLLoader.load(getClass().getResource("/ConcatenateNames.fxml"));
+			root = FXMLLoader.load(getClass().getResource("/" + scene + ".fxml"));
 			Stage stage = new Stage();
-			stage.setTitle("Combine Names");
-			stage.setScene(new Scene(root, 450, 259));
+			stage.setTitle(title);
+			stage.setScene(new Scene(root, width, height));
 			stage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
