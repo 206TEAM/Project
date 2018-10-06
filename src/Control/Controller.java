@@ -7,19 +7,15 @@ import Model.Originals;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -41,7 +37,7 @@ import java.util.List;
  */
 abstract class Controller implements Initializable {
 	public Mediator _mediator = Mediator.getInstance();
-	public Originals _originals = Originals.getInstance();
+	protected Originals _originals = Originals.getInstance();
 
 	/**
 	 * Same as {@link List#contains(Object)} method, except
@@ -77,7 +73,18 @@ abstract class Controller implements Initializable {
 		return original;
 	}
 
-
+	/**
+	 * Plays the {@code Media} provided.
+	 *
+	 * <p> Also changes the {@code progressText} to become <q>Playing...</q> when playing,
+	 * and <q>Done</q> when finished. </p>
+	 *
+	 * @param progressText the JavaFX component to change text of.
+	 * @param playButton the JavaFX button to disable and enable when playing.
+	 * @param progressBar the progress bar being displayed.
+	 * @param dir the directory of file (e.g Names/Ahn/Challenge/AhnChallenge1.wav).
+	 * @param media the {@code Media} to play.
+	 */
 	public void playFile(Text progressText, Button playButton, ProgressBar progressBar, String dir, Media media) {
 		EventHandler<ActionEvent> doAfter = event -> {
 			progressText.setText("Done");
@@ -98,6 +105,13 @@ abstract class Controller implements Initializable {
 		thread2.start();
 	}
 
+	/**
+	 * Plays the {@code Original} corresponding to the parameters entered.
+	 *
+	 * @param fileName the fileName of the {@code Original}.
+	 * @param name the name of the {@code Original}.
+	 * @param numVersions the number of versions the {@code Original} has.
+	 */
 	public void playFile(Text progressText, Button playButton, ProgressBar progressBar, String fileName, String name,
 	                     int numVersions) {
 		Original original;
@@ -147,6 +161,14 @@ abstract class Controller implements Initializable {
 		return fileName;
 	}
 
+	/**
+	 * Loads a <q>.fxml</q> file into a new window.
+	 *
+	 * @param scene the name of the <q>.fxml</q> (e.g "MicTest").
+	 * @param title the title of the window.
+	 * @param width width of the window.
+	 * @param height height of the window.
+	 */
 	protected void createPopUp(String scene, String title, int width, int height) {
 		Parent root;
 		try {
@@ -160,6 +182,38 @@ abstract class Controller implements Initializable {
 		}
 	}
 
+	/**
+	 * Creates an {@code Alert} pop-up with specified variables.
+	 * Important to note that this method does not handle the interactions
+	 * of the buttons and that those should be handled separately.
+	 *
+	 * @param type type of the {@code Alert}.
+	 * @param title title of the window.
+	 * @param headerText main text shown in pop-up window.
+	 * @param contentText smaller text shown in pop-up window.
+	 * @param buttons buttons that are shown.
+	 * @return a custom {@code Alert} pop-up.
+	 */
+	protected Alert createAlert(Alert.AlertType type, String title, String headerText, String contentText, ButtonType[] buttons) {
+		Alert alert = new Alert(type);
+		alert.setTitle(title);
+		alert.setHeaderText(headerText);
+		alert.setContentText(contentText);
+
+		alert.getButtonTypes().setAll(buttons);
+
+		return alert;
+	}
+
+	/**
+	 * Sets the items of a {@code ListView} to be only those that
+	 * are matching {@code String}'s or sub-strings of the entered
+	 * text.
+	 *
+	 * @param filteredList list containing data to filter from.
+	 * @param newValue text to find in filtered list.
+	 * @param listView JavaFX component to set the items to.
+	 */
 	protected void searchListener(FilteredList<String> filteredList, String newValue, ListView<String> listView) {
 		filteredList.setPredicate(string -> {
 			if (newValue==null || newValue.isEmpty()) {
@@ -197,5 +251,14 @@ abstract class Controller implements Initializable {
 						new KeyValue(progress.progressProperty(), 1)));
 		timeLine.setCycleCount(1);
 		timeLine.play();
+	}
+
+	/**
+	 * Closes the window of the {@code Stage} which the given {@code Pane}
+	 * is in.
+	 */
+	protected void exit(Pane pane) {
+		Stage stage = (Stage) pane.getScene().getWindow();
+		stage.close();
 	}
 }

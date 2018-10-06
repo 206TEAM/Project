@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
@@ -21,17 +22,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ConcatenateNamesController extends PopUpController {
-	@FXML
-	public Text nameText;
-	@FXML
-	public Button addButton;
-	@FXML
-	public Text conditionsText;
-	@FXML
-	public TextField newName;
-	@FXML
-	public Button cancel;
+public class ConcatenateNamesController extends Controller {
+	@FXML public Text nameText;
+	@FXML public Button addButton;
+	@FXML public Text conditionsText;
+	@FXML public TextField newName;
+	@FXML public Button cancel;
+	@FXML public AnchorPane pane;
 
 	private List<String> _names;
 	private String _newName;
@@ -96,13 +93,12 @@ public class ConcatenateNamesController extends PopUpController {
 		_originals.addConcat(new Original(_newName, newName + ".wav"));
 
 		SelectPracticeController.getInstance().addValue(_newName);
-		exit();
+		exit(pane);
 	}
 
 	@FXML
 	public void cancel(ActionEvent actionEvent) {
-		_stage = (Stage) cancel.getScene().getWindow();
-		exit();
+		exit(pane);
 	}
 
 	private void setNameText(String text, Paint paint, boolean disableAdd) {
