@@ -40,19 +40,25 @@ public class StatsController implements Initializable {
 
     @FXML
     public void selectNameGood(MouseEvent event) { //todo get name for any item from each list selected
-        String name = goodListView.getSelectionModel().getSelectedItem();
-        updateText(name);
+        if (goodListView.getItems().size()>0) {
+            String name = goodListView.getSelectionModel().getSelectedItem();
+            updateText(name);
+        }
     }
 
     @FXML
     public void selectNamePoor(MouseEvent event) { //todo get name for any item from each list selected
-        String name = poorListView.getSelectionModel().getSelectedItem();
-        updateText(name);
+        if (poorListView.getItems().size()>0) {
+            String name = poorListView.getSelectionModel().getSelectedItem();
+            updateText(name);
+        }
     }
     @FXML
     public void selectNameNa(MouseEvent event) { //todo get name for any item from each list selected
-        String name = naListView.getSelectionModel().getSelectedItem();
-        updateText(name);
+        if (naListView.getItems().size()>0) {
+            String name = naListView.getSelectionModel().getSelectedItem();
+            updateText(name);
+        }
     }
 
     private void updateText(String name) {
