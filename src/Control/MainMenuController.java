@@ -60,6 +60,7 @@ public class MainMenuController extends ParentController {
 
 	@FXML
 	public void help(ActionEvent actionEvent) { //todo HELP POPUP
+		createPopUp("HelperPopup", "Help", 500, 350);
 	}
 
 	@FXML

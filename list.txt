@@ -1,2 +1,0 @@
-file 'Names/Li/Original/se206_17-5-2018_12-7-35_Li2.wav'
-file 'Names/Li/Original/se206_17-5-2018_12-3-36_Li1.wav'
