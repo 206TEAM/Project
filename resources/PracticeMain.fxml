@@ -36,7 +36,7 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Text>
-            <ImageView fx:id="difficultyStar" fitHeight="19.0" fitWidth="20.0" layoutX="14.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="difficultyStar" onMouseClicked="#difficult" fitHeight="19.0" fitWidth="20.0" layoutX="14.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@star.png" />
                </image>

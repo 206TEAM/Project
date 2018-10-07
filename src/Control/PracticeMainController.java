@@ -1,8 +1,6 @@
 package Control;
 
-import Model.Mediator;
 import Model.Original;
-import Model.Originals;
 import Model.Practice;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,10 +8,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.net.URL;
@@ -38,10 +36,10 @@ public class PracticeMainController extends ParentController {
 
 	private Observer _observer;
 	private boolean _good;
+	private boolean _difficult;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		_mediator = Mediator.getInstance();
 		_mediator.setParent(this);
 		setTableValues(_mediator.getPracticeMainList());
 	}
@@ -68,7 +66,6 @@ public class PracticeMainController extends ParentController {
 			versionListView.setItems(versionsToDisplay);
 			nameLabel.setText(name);
 			textSizeHandler(nameLabel, name);
-
 			String fileName;
 
 			if (versionsToDisplay.size() == 1) {
@@ -108,6 +105,19 @@ public class PracticeMainController extends ParentController {
 	public void badAction(ActionEvent actionEvent) {
 		_good = false;
 		setRating();
+	}
+
+	@FXML
+	public void difficult(MouseEvent mouseEvent) {
+		if (_mediator.getCurrentName() != null) {
+			if (_difficult) {
+				starOn(difficultyStar,false);
+				_difficult = false;
+			} else {
+				starOn(difficultyStar,true);
+				_difficult = true;
+			}
+		}
 	}
 
 	private void setRating() {

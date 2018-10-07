@@ -15,6 +15,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -25,7 +27,9 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -282,4 +286,26 @@ abstract class Controller implements Initializable {
 		}
 		nameLabel.setFont(new Font("DejaVu Sans Bold", fontSize));
 	}
+
+	protected void starOn(ImageView star, boolean on) {
+		ColorAdjust color = new ColorAdjust(0, 0, 0, 0);
+		if (!on) {
+			color.setSaturation(-1);
+			color.setContrast(-1);
+		}
+		star.setEffect(color);
+	}
+
+//	protected List<String> getDifficultNames() throws IOException {
+//		List<String> difficultNames = new ArrayList<>();
+//
+//		BufferedReader br = new BufferedReader(new FileReader("Difficult_Names.txt"));
+//		String line;
+//
+//		while ((line = br.readLine()) != null) {
+//			difficultNames.add(line);
+//		}
+//
+//		return difficultNames;
+//	}
 }

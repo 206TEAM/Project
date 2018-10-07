@@ -39,6 +39,7 @@ public class ListenController extends Controller {
     private String _selected;
     private String _type;
     private boolean _good;
+    private boolean _difficult;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -138,6 +139,19 @@ public class ListenController extends Controller {
         Original original = getOriginal(fileName, name, _originals.getFileName(name).size());
         loadRating(original);
     }
+
+	@FXML
+	public void difficult(MouseEvent mouseEvent) {
+		if (_mediator.getCurrentName() != null) {
+			if (_difficult) {
+				starOn(difficultyStar, false);
+				_difficult = false;
+			} else {
+				starOn(difficultyStar,true);
+				_difficult = true;
+			}
+		}
+	}
 
     @FXML
     public void play(ActionEvent event) {
