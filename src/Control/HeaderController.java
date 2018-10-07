@@ -161,7 +161,6 @@ public class HeaderController extends ParentController {
 		Optional<ButtonType> result = confirm.showAndWait();
 		if (result.get() == saveQuit) {
 			//todo "save" the work
-			System.out.println("Saved!");
 			exit(headerPane);
 		} else if (result.get() == quit) {
 			exit(headerPane);

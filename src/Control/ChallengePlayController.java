@@ -112,10 +112,8 @@ public class ChallengePlayController implements Initializable{
             protected Void call() throws Exception {
 
                 String name = _challengeList.get(_iteration - 1);
-                System.out.println(name);
                 String fileName = Challenges.getInstance().addNewChallenge(name);
                 _session.addChallengeFile(fileName);
-                System.out.println(fileName);
                 return null;
             }
         });

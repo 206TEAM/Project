@@ -84,7 +84,6 @@ public class PopupController implements Initializable {
         }
 
         if (wrongList.size() > 0) {
-            System.out.println("wrong");
             wrongListView.setItems(wrongList);
         }
 

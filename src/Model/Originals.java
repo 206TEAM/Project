@@ -327,7 +327,6 @@ public class Originals {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("from .txt file " + output);
 		return output;
 	}
 

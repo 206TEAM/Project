@@ -1,7 +1,6 @@
 package Control;
 
 import Model.Challenges;
-import Model.Mediator;
 import Ratings.ChallengeRatings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
@@ -64,10 +62,8 @@ public class StatsController implements Initializable {
     private void updateText(String name) {
         nameLabel.setText(name);
         String attempts = Integer.toString(Challenges.getInstance().getChallengeSize(name));
-        System.out.println("attempt is " + attempts);
         attemptLabel.setText(attempts);
         String score = Integer.toString(ChallengeRatings.getInstance().getScore(name));
-        System.out.println(score);
         scoreLabel.setText(score);
     }
 

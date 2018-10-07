@@ -144,7 +144,6 @@ public class ChallengeCompareController extends ParentController {
     @FXML
     public void selectNameOriginal(MouseEvent event) {
         String fileName = versionListView.getSelectionModel().getSelectedItem();
-        System.out.println(fileName);
 
         if (fileName != null) {
            _mediator.setOriginalFilename(fileName);

@@ -34,7 +34,6 @@ public class Media {
 
 	public Media(Original original) {
 		String fileName = original.getFileName();
-		System.out.println(fileName);
 		_fileName = fileName.substring(0, fileName.lastIndexOf('.')) + original.getVersion() + ".wav";
 		_originalName = original.getName();
 		if (_originalName.contains(" ")) {

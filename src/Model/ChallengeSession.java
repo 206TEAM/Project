@@ -72,11 +72,7 @@ public class ChallengeSession {
      * this session returns the score
      */
     public int getSessionScore() {
-        System.out.println("no of names" + _numberOfNames);
-        System.out.println("goodsize :" + _goodList.size());
         double ratio = (_goodList.size() / (double) _numberOfNames) * 100;
-        System.out.println(ratio);
-        System.out.println(ratio * 100);
         return (int) ratio;
 
     }
