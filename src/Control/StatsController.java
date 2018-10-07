@@ -1,7 +1,6 @@
 package Control;
 
 import Model.Challenges;
-import Model.Mediator;
 import Ratings.ChallengeRatings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
@@ -40,28 +38,32 @@ public class StatsController implements Initializable {
 
     @FXML
     public void selectNameGood(MouseEvent event) { //todo get name for any item from each list selected
-        String name = goodListView.getSelectionModel().getSelectedItem();
-        updateText(name);
+        if (goodListView.getItems().size()>0) {
+            String name = goodListView.getSelectionModel().getSelectedItem();
+            updateText(name);
+        }
     }
 
     @FXML
     public void selectNamePoor(MouseEvent event) { //todo get name for any item from each list selected
-        String name = poorListView.getSelectionModel().getSelectedItem();
-        updateText(name);
+        if (poorListView.getItems().size()>0) {
+            String name = poorListView.getSelectionModel().getSelectedItem();
+            updateText(name);
+        }
     }
     @FXML
     public void selectNameNa(MouseEvent event) { //todo get name for any item from each list selected
-        String name = naListView.getSelectionModel().getSelectedItem();
-        updateText(name);
+        if (naListView.getItems().size()>0) {
+            String name = naListView.getSelectionModel().getSelectedItem();
+            updateText(name);
+        }
     }
 
     private void updateText(String name) {
         nameLabel.setText(name);
         String attempts = Integer.toString(Challenges.getInstance().getChallengeSize(name));
-        System.out.println("attempt is " + attempts);
         attemptLabel.setText(attempts);
         String score = Integer.toString(ChallengeRatings.getInstance().getScore(name));
-        System.out.println(score);
         scoreLabel.setText(score);
     }
 

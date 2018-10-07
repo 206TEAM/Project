@@ -118,8 +118,6 @@ public class ListenController extends Controller {
     public void selectNameOriginal(MouseEvent event) {
         String fileName = originalListView.getSelectionModel().getSelectedItem();
         String name = listView.getSelectionModel().getSelectedItem();
-        System.out.println(fileName);
-
 
         if (fileName != null) {
             fileLabel.setText(fileName);
@@ -142,10 +140,7 @@ public class ListenController extends Controller {
 
     @FXML
     public void play(ActionEvent event) {
-        System.out.println("play");
         String name = _mediator.getCurrentName(); //getting the name
-        System.out.println(name);
-        System.out.println(_selected);
 
         Task<Void> task = new Task<Void>() {
             @Override
@@ -197,16 +192,9 @@ public class ListenController extends Controller {
         String fileName = originalListView.getSelectionModel().getSelectedItem();
         String name = listView.getSelectionModel().getSelectedItem();
 
-
-        System.out.println(_good);
-        System.out.println(fileName);
-
         if (fileName != null) {
 	        Original original = getOriginal(fileName, name, _originals.getFileName(name).size());
-
-            System.out.println(_good);
-            if (_good == false) {
-                System.out.println("good is false!!! :D");
+            if (_good == false) { ;
                 _originals.setRating(original, "&bad&");
             } else {
                 _originals.setRating(original, "&good&");
@@ -226,7 +214,6 @@ public class ListenController extends Controller {
         } else {
             goodButton.setStyle("-fx-background-color: #228B22; ");
             badButton.setStyle("-fx-background-color: #FF9999; ");
-            System.out.println("goodbutton");
         }
     }
 
@@ -240,7 +227,6 @@ public class ListenController extends Controller {
 
     @FXML
     public void badAction(ActionEvent actionEvent) {
-        System.out.println("bad button");
         //todo same as correct()
         _good = false;
         ratingHandler();

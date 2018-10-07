@@ -17,6 +17,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ArrayList;
@@ -58,7 +59,9 @@ public class HeaderController extends ParentController {
             // If the user confirms, delete it
             if (confirmAction) {
                 ChallengeSession _session =_mediator.getChallengeSession();
-                _session.abortSession(); //gets rid of challenges
+                if (_session!=null) {
+					_session.abortSession(); //gets rid of challenges
+				}
                 _mediator.removeInChallengeSession();
                 _mediator.loadPane(Type.MAIN, "MainMenu");
 				_mediator.setPracticeMainList(new ArrayList<>());
@@ -159,7 +162,6 @@ public class HeaderController extends ParentController {
 		Optional<ButtonType> result = confirm.showAndWait();
 		if (result.get() == saveQuit) {
 			//todo "save" the work
-			System.out.println("Saved!");
 			exit(headerPane);
 		} else if (result.get() == quit) {
 			exit(headerPane);
@@ -174,6 +176,11 @@ public class HeaderController extends ParentController {
 		colorAdjust.setHue(0.2);
 		colorAdjust.setSaturation(1.0);
 		micImage.setEffect(colorAdjust);
+	}
+
+	@FXML
+	private void help(ActionEvent event){
+		createPopUp("HelperPopup", "Help", 550, 350);
 	}
 
 

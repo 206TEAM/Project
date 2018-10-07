@@ -14,6 +14,7 @@ public class ChallengeSession {
     private List<String> _challengeFileList;
     private List<String> _goodList;
     private List<String> _badList;
+    private Control.ChallengePlayController _controller;
 
     //todo temp messages
     public static final String GOODMESSAGE = "Good job!";
@@ -70,12 +71,8 @@ public class ChallengeSession {
     /**
      * this session returns the score
      */
-    public int getSessionScore(){
-        System.out.println("no of names" + _numberOfNames);
-        System.out.println("goodsize :"+_goodList.size());
-        double ratio = (_goodList.size() / (double) _numberOfNames)*100;
-        System.out.println(ratio);
-            System.out.println( ratio*100);
+    public int getSessionScore() {
+        double ratio = (_goodList.size() / (double) _numberOfNames) * 100;
         return (int) ratio;
 
     }
@@ -102,17 +99,17 @@ public class ChallengeSession {
      * this gets rid of all the challenge files
      */
     public void abortSession() {
-       //todo: kill processes
-        if (_challengeFileList != null && !_challengeFileList.isEmpty()) {
+        //todo: kill processes
+        Mediator.getInstance().removeInChallengeSession();
+        if (_challengeFileList != null || !_challengeFileList.isEmpty()) {
             for (int i = 0; i < _challengeFileList.size(); i++) {
                 String name = _challengeList.get(i);
                 if (name != null) {
-
-                    System.out.println("to be deleted: " + _challengeFileList.get(i));
                     Challenges.getInstance().deleteChallenge(name, _challengeFileList.get(i));
                 }
             }
         }
+
     }
 
     public void getLists() {
@@ -130,9 +127,9 @@ public class ChallengeSession {
         }
     }
 
-    public String getScoreMessage(){
-        int score =  getSessionScore();
-        if (score>=ChallengeRatings.SCORELIMIT){ //currently 60% is good
+    public String getScoreMessage() {
+        int score = getSessionScore();
+        if (score >= ChallengeRatings.SCORELIMIT) { //currently 60% is good
             return GOODMESSAGE;
         } else {
             return BADMESSAGE;

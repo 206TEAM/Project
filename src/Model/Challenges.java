@@ -107,7 +107,6 @@ public class Challenges {
      */
     public void deleteChallenge(String nameKey, String fileName) {
         Boolean hi = challengeExists(nameKey, fileName);
-        System.out.println(hi);
         if (hi) {
             Challenge challengeDelete = getChallenge(nameKey, fileName);
             challengeDelete.delete(); // delete the challenge
