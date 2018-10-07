@@ -62,6 +62,7 @@ public class ListenController extends Controller {
         //todo rating show
         String name = listView.getSelectionModel().getSelectedItem();
         nameLabel.setText(name);
+        textSizeHandler(nameLabel, name);
         _mediator.setCurrentName(name);
         disableButtons();
 

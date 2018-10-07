@@ -73,24 +73,27 @@ public class ConcatenateNamesController extends Controller {
 
 	@FXML
 	public void add(ActionEvent actionEvent) {
-		try {
-			Files.deleteIfExists(Paths.get("Temp/output.wav"));
-			Files.deleteIfExists(Paths.get("list.txt"));
-			Files.createFile(Paths.get("list.txt"));
-			for (String name : _names) {
-				String fileName = pickBestOriginal(name);
+		String newFileName = _newName.replace(' ', '_');
+		if (Files.notExists(Paths.get("Temp/" + newFileName + ".wav"))) {
 
-				String dir = "file 'Names/" + name + "/Original/" + fileName + "'\n";
-				Files.write(Paths.get("list.txt"), dir.getBytes(), StandardOpenOption.APPEND);
+			try {
+				Files.deleteIfExists(Paths.get("Temp/output.wav"));
+				Files.deleteIfExists(Paths.get("list.txt"));
+				Files.createFile(Paths.get("list.txt"));
+				for (String name : _names) {
+					String fileName = pickBestOriginal(name);
 
+					String dir = "file 'Names/" + name + "/Original/" + fileName + "'\n";
+					Files.write(Paths.get("list.txt"), dir.getBytes(), StandardOpenOption.APPEND);
+
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
-		String newName = _newName.replace(' ', '_');
-		Media.concatNames(newName);
-		_originals.addConcat(new Original(_newName, newName + ".wav"));
+			Media.concatNames(newFileName);
+			_originals.addConcat(new Original(_newName, newFileName + ".wav"));
+		}
 
 		if (SelectPracticeController.getInstance() == null) {
 			List<String> list = new ArrayList<>();

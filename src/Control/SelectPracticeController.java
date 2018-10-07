@@ -184,9 +184,10 @@ public class SelectPracticeController extends Controller {
 	}
 
 	protected void addValue(String name) {
-		previewList.getItems().add(name);
-
-		disableButtons(false);
+		if (!previewList.getItems().contains(name)) {
+			previewList.getItems().add(name);
+			disableButtons(false);
+		}
 	}
 
 	protected static SelectPracticeController getInstance() {

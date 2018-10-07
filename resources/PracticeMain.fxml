@@ -26,7 +26,7 @@
       </Pane>
       <Pane layoutX="200.0" prefHeight="72.0" prefWidth="400.0">
          <children>
-            <Text fx:id="nameLabel" fill="#ff9900" layoutX="36.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select a Name">
+            <Text fx:id="nameLabel" fill="#ff9900" layoutX="45.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select a Name" wrappingWidth="283.4248046875">
                <font>
                   <Font name="DejaVu Sans Bold" size="26.0" />
                </font>

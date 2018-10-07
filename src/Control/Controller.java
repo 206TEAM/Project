@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -262,5 +263,23 @@ abstract class Controller implements Initializable {
 	protected void exit(Pane pane) {
 		Stage stage = (Stage) pane.getScene().getWindow();
 		stage.close();
+	}
+
+
+	protected void textSizeHandler(Text nameLabel, String name) {
+		int numChars = name.length();
+		int fontSize = 26;
+		int minSize = 15;
+		if (numChars > 17) {
+			fontSize = 26 - (numChars - 17);
+			if (numChars > 30) {
+				minSize = 12;
+			}
+			if (fontSize <= minSize) {
+				fontSize = minSize;
+				nameLabel.setY(nameLabel.getY() - 8);
+			}
+		}
+		nameLabel.setFont(new Font("DejaVu Sans Bold", fontSize));
 	}
 }

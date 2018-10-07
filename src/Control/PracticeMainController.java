@@ -13,6 +13,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.net.URL;
@@ -66,6 +67,7 @@ public class PracticeMainController extends ParentController {
 			versionsToDisplay = FXCollections.observableArrayList(versions);
 			versionListView.setItems(versionsToDisplay);
 			nameLabel.setText(name);
+			textSizeHandler(nameLabel, name);
 
 			String fileName;
 
