@@ -58,7 +58,9 @@ public class HeaderController extends ParentController {
             // If the user confirms, delete it
             if (confirmAction) {
                 ChallengeSession _session =_mediator.getChallengeSession();
-                _session.abortSession(); //gets rid of challenges
+                if (_session!=null) {
+					_session.abortSession(); //gets rid of challenges
+				}
                 _mediator.removeInChallengeSession();
                 _mediator.loadPane(Type.MAIN, "MainMenu");
 				_mediator.setPracticeMainList(new ArrayList<>());

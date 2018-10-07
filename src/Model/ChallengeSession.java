@@ -105,7 +105,7 @@ public class ChallengeSession {
     public void abortSession() {
         //todo: kill processes
         Mediator.getInstance().removeInChallengeSession();
-        if (_challengeFileList != null && !_challengeFileList.isEmpty()) {
+        if (_challengeFileList != null || !_challengeFileList.isEmpty()) {
             for (int i = 0; i < _challengeFileList.size(); i++) {
                 String name = _challengeList.get(i);
                 if (name != null) {
