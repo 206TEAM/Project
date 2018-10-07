@@ -75,10 +75,9 @@ public class ChallengeSettingsController implements Initializable {
         }
 
         //todo difficulty
-        /**_difficulty = 1.0;
+        double _difficulty = 1.0;
          ChallengeSession session = new ChallengeSession(numberOfChallenges, _difficulty);
          Mediator.getInstance().setChallengeSession(session);
-         **/
         // TODO implement DIFFICULTY with math and stuff (THIS WILL CHANGE HOW THE RANDOM NAMES ARE SELECTED)
         _mediator.loadPane(ParentController.Type.HEADER, "Challenge2");
     }

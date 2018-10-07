@@ -21,7 +21,7 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.*;
 
-public class ChallengePlayController implements Initializable {
+public class ChallengePlayController implements Initializable{
     @FXML
     public Text nameLabel;
     @FXML
@@ -37,6 +37,12 @@ public class ChallengePlayController implements Initializable {
     private Timeline _timeLine;
     private ChallengeSession _session;
     private Mediator _mediator;
+    private Boolean sessionEnded;
+
+    public void abort(){
+        _timeLine.stop();
+        _challengeList.clear();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -81,7 +87,6 @@ public class ChallengePlayController implements Initializable {
 
             Media.cancel();
             _mediator.setPracticeMainList(_challengeList);
-            //_mediator.loadPane(ParentController.Type.HEADER, "PracticeMain");
             _mediator.loadPane(ParentController.Type.MAIN, "Header");
             _mediator.loadPane(ParentController.Type.HEADER, "ChallengeMain");
         } else {
@@ -90,11 +95,15 @@ public class ChallengePlayController implements Initializable {
     }
 
     private void timer() {
-        timer.setProgress(0.0);
-        if (_timeLine.getStatus().equals(Animation.Status.RUNNING)) {
-            _timeLine.stop();
+        if(Mediator.getInstance().getChallengeStatus()) {
+            timer.setProgress(0.0);
+            if (_timeLine.getStatus().equals(Animation.Status.RUNNING)) {
+                _timeLine.stop();
+            }
+            _timeLine.play();
+        } else {
+            abort();
         }
-        _timeLine.play();
     }
 
     private void record() {
@@ -115,9 +124,11 @@ public class ChallengePlayController implements Initializable {
     }
 
     private void loadName() {
-        String currentName = _challengeList.get(_iteration);
-        nameLabel.setText(currentName);
-        _iteration++;
+        if (_challengeList.size()>0) {
+            String currentName = _challengeList.get(_iteration);
+            nameLabel.setText(currentName);
+            _iteration++;
+        }
     }
 
     private void nextName() {
@@ -133,4 +144,5 @@ public class ChallengePlayController implements Initializable {
             loadName();
         }
     }
+
 }
