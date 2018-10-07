@@ -92,7 +92,13 @@ public class ConcatenateNamesController extends Controller {
 		Media.concatNames(newName);
 		_originals.addConcat(new Original(_newName, newName + ".wav"));
 
-		SelectPracticeController.getInstance().addValue(_newName);
+		if (SelectPracticeController.getInstance() == null) {
+			List<String> list = new ArrayList<>();
+			list.add(_newName);
+			_mediator.setPracticeMainList(list);
+		} else {
+			SelectPracticeController.getInstance().addValue(_newName);
+		}
 		exit(pane);
 	}
 

@@ -1,22 +1,7 @@
 package Model;
 
 import Control.*;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.scene.control.ProgressIndicator;
-import javafx.util.Duration;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Mediator {
@@ -34,6 +19,7 @@ public class Mediator {
     private ChallengeSession _session;
 
 	private ParentController.PageType _currentPage;
+
     private String _currentName;
     private String _originalFileName;
     private Practice _currentPractice;

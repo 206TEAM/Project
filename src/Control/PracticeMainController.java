@@ -66,7 +66,6 @@ public class PracticeMainController extends ParentController {
 			versionsToDisplay = FXCollections.observableArrayList(versions);
 			versionListView.setItems(versionsToDisplay);
 			nameLabel.setText(name);
-			rateLabel.setOpacity(1.0);
 
 			String fileName;
 
@@ -124,12 +123,15 @@ public class PracticeMainController extends ParentController {
 	}
 
 	private void ratingHandler(String fileName, String name) {
-		goodButton.setDisable(false);
-		badButton.setDisable(false);
-		fileLabel.setText(fileName);
+		if (!name.contains(" ")) {
+			goodButton.setDisable(false);
+			badButton.setDisable(false);
+			rateLabel.setOpacity(1.0);
 
-		Original original = super.getOriginal(fileName, name, versionListView.getItems().size());
-		loadRating(original);
+			Original original = super.getOriginal(fileName, name, versionListView.getItems().size());
+			loadRating(original);
+		}
+		fileLabel.setText(fileName);
 	}
 
 	/**
