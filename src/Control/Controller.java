@@ -44,6 +44,8 @@ abstract class Controller implements Initializable {
 	public Mediator _mediator = Mediator.getInstance();
 	protected Originals _originals = Originals.getInstance();
 
+	protected ButtonType _yes;
+
 	/**
 	 * Same as {@link List#contains(Object)} method, except
 	 * it finds out if the {@code List<String>} contains a
@@ -209,6 +211,13 @@ abstract class Controller implements Initializable {
 		alert.getButtonTypes().setAll(buttons);
 
 		return alert;
+	}
+
+	protected Alert createAlert(Alert.AlertType type, String title, String headerText, String contentText) {
+		_yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+		ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+		return createAlert(type, title, headerText, contentText, new ButtonType[]{_yes, cancel});
 	}
 
 	/**

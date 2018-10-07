@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -21,8 +22,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
-public class HelperController implements Initializable {
-    private Stage stage = null;
+public class HelperController extends Controller {
+    @FXML
+    public AnchorPane pane;
     @FXML
     TextArea helperContent;
     @FXML
@@ -33,13 +35,12 @@ public class HelperController implements Initializable {
      */
     @FXML
     private void closeStage() {
-        if (stage != null) {
-            stage.close();
-        }
+         exit(pane);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    	helperContent.setEditable(false);
         try {
             Scanner s = new Scanner(new File("instructions.txt"));
             while (s.hasNextLine()) {

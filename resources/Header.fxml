@@ -50,8 +50,8 @@
             </Button>
             <MenuButton fx:id="settings" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #1e1e1e;">
               <items>
-                <MenuItem fx:id="save" mnemonicParsing="false" text="Save session" />
-                <MenuItem fx:id="reset" mnemonicParsing="false" text="Reset progress" />
+                <MenuItem fx:id="save" mnemonicParsing="false" text="Save session" onAction="#save"/>
+                <MenuItem fx:id="reset" mnemonicParsing="false" text="Reset progress" onAction="#reset" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="help" mnemonicParsing="false" onAction="#help" text="Help" />
                   <SeparatorMenuItem mnemonicParsing="false" />

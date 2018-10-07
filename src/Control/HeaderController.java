@@ -183,5 +183,36 @@ public class HeaderController extends ParentController {
 		createPopUp("HelperPopup", "Help", 550, 350);
 	}
 
+	@FXML
+	public void reset(ActionEvent actionEvent) {
+		String title = "Reset Progress";
+		String header = "Are you sure you want to delete all your progress?";
+		String content = "This cannot be undone.";
+		Alert alert = createAlert(Alert.AlertType.CONFIRMATION, title, header, content);
+
+		Optional<ButtonType> result = alert.showAndWait();
+
+		if (result.get() == _yes) {
+			donePopUp("Your progress has been reset");
+			_mediator.loadPane(Type.MAIN, "MainMenu");
+		}
+	}
+
+	@FXML
+	public void save(ActionEvent actionEvent) {
+		donePopUp("Your progress has been saved");
+	}
+
+	private void donePopUp(String headerText) {
+		ButtonType ok = new ButtonType("Ok", ButtonBar.ButtonData.APPLY);
+		Alert alert = createAlert(Alert.AlertType.INFORMATION, "Action complete", headerText, "",
+				new ButtonType[]{ok});
+		Optional<ButtonType> result = alert.showAndWait();
+
+		if (result.get() == ok) {
+			alert.close();
+		}
+	}
+
 
 }
