@@ -3,9 +3,10 @@
 *Name Sayer* is an application that allows you to listen to, and record different names in a database. You can *Practice* names or test your ability and *Challenge* yourself. This application is intended for anyone who wishes to master pronouncing the names of their peers to avoid potential embarrassment or just for fun. 
 
 ### **How to Run**
-1) Open the terminal my pressing 'Ctrl + Alt + T'
-2) Set the current directory to the location of 'NameSayer.jar'
-3) Type the code below and press 'Enter'
+1) Place all names files into 'Recordings' folder
+2) Open the terminal my pressing 'Ctrl + Alt + T'
+3) Set the current directory to the location of 'NameSayer.jar'
+4) Type the code below and press 'Enter'
     > java -jar NameSayer.jar
 
 ### **Usage**
