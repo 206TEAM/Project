@@ -17,6 +17,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ArrayList;
@@ -175,6 +176,11 @@ public class HeaderController extends ParentController {
 		colorAdjust.setHue(0.2);
 		colorAdjust.setSaturation(1.0);
 		micImage.setEffect(colorAdjust);
+	}
+
+	@FXML
+	private void help(ActionEvent event){
+		createPopUp("HelperPopup", "Help", 550, 350);
 	}
 
 
