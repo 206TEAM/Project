@@ -218,13 +218,16 @@ public class ChallengeCompareController extends ParentController {
     }
 
 
+    /**
+     * gets the difficulty rating from difficultyratings class, then changes the star colour appropriately.
+     * @param name
+     */
     private void updateStar(String name){
         if (name != null) {
             Boolean difficulty = DifficultyRatings.getInstance().getRating(name);
             starOn(difficultyStar, difficulty);
         }
     }
-
 
     /**
      * when user clicks on star
@@ -235,7 +238,7 @@ public class ChallengeCompareController extends ParentController {
         if (name != null) {
             Boolean difficulty = DifficultyRatings.getInstance().getRating(name);
             starOn(difficultyStar, !difficulty);
-            DifficultyRatings.getInstance().setRating(name, difficulty);
+            DifficultyRatings.getInstance().setRating(name, !difficulty);
         }
     }
 }

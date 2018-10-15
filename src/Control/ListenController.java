@@ -1,6 +1,7 @@
 package Control;
 
 import Model.*;
+import Ratings.DifficultyRatings;
 import com.sun.org.apache.xpath.internal.operations.Or;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,7 +40,6 @@ public class ListenController extends Controller {
     private String _selected;
     private String _type;
     private boolean _good;
-    private boolean _difficult;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -66,6 +66,7 @@ public class ListenController extends Controller {
         textSizeHandler(nameLabel, name);
         _mediator.setCurrentName(name);
         disableButtons();
+        updateStar(name);
 
         //todo populate sublists
         populateSubLists();
@@ -142,18 +143,29 @@ public class ListenController extends Controller {
         loadRating(original);
     }
 
-	@FXML
-	public void difficult(MouseEvent mouseEvent) {
-		if (_mediator.getCurrentName() != null) {
-			if (_difficult) {
-				starOn(difficultyStar, false);
-				_difficult = false;
-			} else {
-				starOn(difficultyStar,true);
-				_difficult = true;
-			}
-		}
-	}
+    /**
+     * gets the difficulty rating from difficultyratings class, then changes the star colour appropriately.
+     * @param name
+     */
+    private void updateStar(String name){
+        if (name != null) {
+            Boolean difficulty = DifficultyRatings.getInstance().getRating(name);
+            starOn(difficultyStar, difficulty);
+        }
+    }
+
+    /**
+     * when user clicks on star
+     */
+    @FXML
+    public void difficult(MouseEvent event) {
+        String name = Mediator.getInstance().getCurrentName();
+        if (name != null) {
+            Boolean difficulty = DifficultyRatings.getInstance().getRating(name);
+            starOn(difficultyStar, !difficulty);
+            DifficultyRatings.getInstance().setRating(name, !difficulty);
+        }
+    }
 
     @FXML
     public void play(ActionEvent event) {
