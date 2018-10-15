@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ChallengeSession {
-    private double _difficulty;
+    private int _difficulty;
     private int _numberOfNames;
     private String _currentName;
     private List<String> _challengeList;
@@ -20,7 +20,7 @@ public class ChallengeSession {
     public static final String GOODMESSAGE = "Good job!";
     public static final String BADMESSAGE = "Keep trying. You're almost there.";
 
-    public ChallengeSession(int number, double difficulty) {
+    public ChallengeSession(int number, int difficulty) {
         _numberOfNames = number;
         _difficulty = difficulty;
         generateNames();
@@ -28,7 +28,7 @@ public class ChallengeSession {
 
     public ChallengeSession(List<String> oldList) { //constructor for redoing
         _numberOfNames = oldList.size();
-        _difficulty = 0.0; //todo hmm
+        _difficulty = 0; //todo hmm
         setChallengeList(oldList);
     }
 
@@ -37,6 +37,11 @@ public class ChallengeSession {
         Collections.shuffle(challengeList);
         setChallengeList(challengeList.subList(0, _numberOfNames));
     }
+
+
+
+
+
 
     /********methods for getting/setting challenge related things********/
     public void setChallengeList(List<String> challengeList) {
@@ -109,7 +114,6 @@ public class ChallengeSession {
                 }
             }
         }
-
     }
 
     public void getLists() {

@@ -5,6 +5,7 @@ import Model.Challenges;
 import Model.Originals;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -87,14 +88,34 @@ public class DifficultyRatings {
     private void updateModel() { //todo
     }
 
-    /**
-     * this method returns a list of names based on the difficulty selected by user.
-     * @return
-     */
-    public List<String> getNames(Boolean difficult){ //todo
+    public List<String> generateList(int difficultySession, int number) {
+        switch (difficultySession) {
+            case 1:
+
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+            case 5:
+
+                break;
+        }
+
+        List<String> challengeList = Originals.getInstance().listNames();
+        Collections.shuffle(challengeList);
+        challengeList.subList(0, number);
 
         return null;
     }
+
+
+
 
 }
 

@@ -30,7 +30,7 @@ public class ChallengeSettingsController implements Initializable {
     private Mediator _mediator;
 
     /***fields***/
-    //private double _difficulty;
+    private int _difficulty;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -40,8 +40,9 @@ public class ChallengeSettingsController implements Initializable {
             howMany.setText(String.valueOf(newValue.intValue()));
         });
 
-        /**difficultySlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+        difficultySlider.valueProperty().addListener((observable, oldValue, newValue) -> {
          int num = newValue.intValue();
+         _difficulty = num;
          switch (num) {
          case 1:
          howDifficult.setText("Beginner");
@@ -60,7 +61,6 @@ public class ChallengeSettingsController implements Initializable {
          break;
          }
          });
-         **/
     }
 
     @FXML
@@ -74,8 +74,10 @@ public class ChallengeSettingsController implements Initializable {
             numberOfChallenges = Integer.parseInt(howMany.getText());
         }
 
-        //todo difficulty
-        double _difficulty = 1.0;
+        if (howDifficult.getText().equals("How Difficult")) {
+            _difficulty = 1;
+        }
+
          ChallengeSession session = new ChallengeSession(numberOfChallenges, _difficulty);
          Mediator.getInstance().setChallengeSession(session);
         // TODO implement DIFFICULTY with math and stuff (THIS WILL CHANGE HOW THE RANDOM NAMES ARE SELECTED)
