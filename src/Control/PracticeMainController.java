@@ -1,7 +1,9 @@
 package Control;
 
+import Model.Mediator;
 import Model.Original;
 import Model.Practice;
+import Ratings.DifficultyRatings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,7 +38,6 @@ public class PracticeMainController extends ParentController {
 
 	private Observer _observer;
 	private boolean _good;
-	private boolean _difficult;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -53,6 +54,7 @@ public class PracticeMainController extends ParentController {
 	public void nameSelected(MouseEvent mouseEvent) {
 		String name = practiceListView.getSelectionModel().getSelectedItem();
 		_mediator.setCurrentName(name);
+		updateStar(name);
 		if (name != null) {
 			List<String> versions = _originals.getFileName(name);
 			ObservableList<String> versionsToDisplay;
@@ -108,20 +110,26 @@ public class PracticeMainController extends ParentController {
 	}
 
 	/**
-	 * when the user clicks on the star.
-	 * @param mouseEvent
+	 * gets the difficulty rating from difficultyratings class, then changes the star colour appropriately.
+	 * @param name
+	 */
+	private void updateStar(String name){
+		if (name != null) {
+			Boolean difficulty = DifficultyRatings.getInstance().getRating(name);
+			starOn(difficultyStar, difficulty);
+		}
+	}
+
+	/**
+	 * when user clicks on star
 	 */
 	@FXML
-	public void difficult(MouseEvent mouseEvent) {
-		if (_mediator.getCurrentName() != null) {
-			if (_difficult) {
-				starOn(difficultyStar,false);
-
-				_difficult = false;
-			} else {
-				starOn(difficultyStar,true);
-				_difficult = true;
-			}
+	public void difficult(MouseEvent event) {
+		String name = Mediator.getInstance().getCurrentName();
+		if (name != null) {
+			Boolean difficulty = DifficultyRatings.getInstance().getRating(name);
+			starOn(difficultyStar, !difficulty);
+			DifficultyRatings.getInstance().setRating(name, !difficulty);
 		}
 	}
 
