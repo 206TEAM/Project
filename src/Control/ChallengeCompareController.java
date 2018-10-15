@@ -3,6 +3,7 @@ package Control;
 import Main.Main;
 import Model.*;
 import Ratings.ChallengeRatings;
+import Ratings.DifficultyRatings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -50,8 +51,6 @@ public class ChallengeCompareController extends ParentController {
     public Button addPractice;
     @FXML
     public Text nameLabel;
-    @FXML
-    public ComboBox rating;
     @FXML
     public ImageView difficultyStar; // set to visible if the name has been flagged difficult
     @FXML
@@ -135,6 +134,7 @@ public class ChallengeCompareController extends ParentController {
     @FXML
     public void nameSelected(MouseEvent mouseEvent) {
         String name = challengeListView.getSelectionModel().getSelectedItem();
+        updateStar(name);
         if (name != null) {
 	        String fileName = nameSelected(name);
 	        _mediator.setOriginalFilename(fileName);
@@ -188,6 +188,7 @@ public class ChallengeCompareController extends ParentController {
     }
 
     private String nameSelected(String name) {
+
 	    _session.setCurrentName(name);
 	    originalProgressText.setText("Play Original");
 	    playOriginal.setDisable(false);
@@ -214,5 +215,27 @@ public class ChallengeCompareController extends ParentController {
 		    }
 	    }
 	    return fileName;
+    }
+
+
+    private void updateStar(String name){
+        if (name != null) {
+            Boolean difficulty = DifficultyRatings.getInstance().getRating(name);
+            starOn(difficultyStar, difficulty);
+        }
+    }
+
+
+    /**
+     * when user clicks on star
+     */
+    @FXML
+    public void difficult(MouseEvent event) {
+        String name = _session.getCurrentName();
+        if (name != null) {
+            Boolean difficulty = DifficultyRatings.getInstance().getRating(name);
+            starOn(difficultyStar, !difficulty);
+            DifficultyRatings.getInstance().setRating(name, difficulty);
+        }
     }
 }

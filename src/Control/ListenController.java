@@ -96,19 +96,21 @@ public class ListenController extends Controller {
      * @param event
      */
     @FXML
-    public void selectNameChallenge(MouseEvent event) {
-        String name = challengeListView.getSelectionModel().getSelectedItem();
-        if (name != null) {
-            //showRatings(false);
-            // playButton_3.setDisable(false);
-            //deleteButton_3.setDisable(false);
-        } else {
-            // playButton_3.setDisable(true);
-            //deleteButton_3.setDisable(true);
-        }
+    public void selectNameChallenge(MouseEvent event) { //todo selecting original and challenge is very similar - refactor
+        String fileName = challengeListView.getSelectionModel().getSelectedItem();
+        String name = listView.getSelectionModel().getSelectedItem();
 
-        _selected = name;
-        _type = "challenge";
+        if (fileName != null) {
+            _selected = fileName;
+            _type = "challenge";
+            fileLabel.setText(fileName + ".wav");
+
+            //Challenge challenge = Challenges.getInstance().getChallenge(name, fileName);
+            //todo do we want to get the rating?
+            play.setDisable(false);
+        } else {
+            play.setDisable(true);
+        }
     }
 
     /**

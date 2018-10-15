@@ -4,6 +4,8 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
@@ -25,11 +27,19 @@
       </Pane>
       <Pane layoutX="200.0" prefHeight="72.0" prefWidth="400.0">
          <children>
-            <Text fx:id="nameLabel" fill="#ff9900" layoutX="14.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+            <Text fx:id="nameLabel" fill="#ff9900" layoutX="43.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
                <font>
                   <Font name="DejaVu Sans Bold" size="26.0" />
                </font>
             </Text>
+            <ImageView fx:id="difficultyStar" fitHeight="19.0" fitWidth="20.0" layoutX="14.0" layoutY="25.0" onMouseClicked="#difficult" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@star.png" />
+               </image>
+               <effect>
+                  <ColorAdjust contrast="-1.0" saturation="-1.0" />
+               </effect>
+            </ImageView>
          </children>
       </Pane>
       <Pane fx:id="subPane" layoutX="200.0" layoutY="72.0" prefHeight="248.0" prefWidth="400.0" style="-fx-background-color: #d9d9d9;">

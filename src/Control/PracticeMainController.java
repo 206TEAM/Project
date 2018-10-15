@@ -107,11 +107,16 @@ public class PracticeMainController extends ParentController {
 		setRating();
 	}
 
+	/**
+	 * when the user clicks on the star.
+	 * @param mouseEvent
+	 */
 	@FXML
 	public void difficult(MouseEvent mouseEvent) {
 		if (_mediator.getCurrentName() != null) {
 			if (_difficult) {
 				starOn(difficultyStar,false);
+
 				_difficult = false;
 			} else {
 				starOn(difficultyStar,true);
