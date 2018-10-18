@@ -30,7 +30,6 @@ public class SelectPracticeController extends Controller {
 	@FXML public MenuItem combine, upload, selected, alphabetical;
 
 	private static SelectPracticeController _INSTANCE;
-	private boolean _clicked;
 	private List<String> selectedOrder;
 	private List<String> currentPreviewList;
 
@@ -38,7 +37,6 @@ public class SelectPracticeController extends Controller {
 	public void initialize(URL location, ResourceBundle resources) {
 		_INSTANCE = this;
 		disableButtons(true);
-		_clicked = false;
 		selectedOrder = new ArrayList<>();
 		currentPreviewList = new ArrayList<>();
 
@@ -139,16 +137,13 @@ public class SelectPracticeController extends Controller {
 	public void previewListSelected(MouseEvent mouseEvent) {
 		String selectedItem = previewList.getSelectionModel().getSelectedItem();
 		if (selectedItem != null) {
-			if (_clicked) {
+			if (mouseEvent.getClickCount() == 2) {
 				previewList.getItems().remove(selectedItem);
 				selectedOrder.remove(selectedItem);
 				_mediator.setPracticeMainList(previewList.getItems());
 				if (previewList.getItems().size() == 0) {
 					disableButtons(true);
 				}
-				_clicked = false;
-			} else {
-				_clicked = true;
 			}
 		}
 		searchOpacity(true);
