@@ -23,10 +23,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -303,5 +300,39 @@ abstract class Controller implements Initializable {
 			color.setContrast(-1);
 		}
 		star.setEffect(color);
+	}
+
+	protected void micTester(MicTesterController controller) {
+		AudioFormat af = new AudioFormat(44100f, 16, 1, true, false);
+		TargetDataLine dataLine = null;
+		try {
+			dataLine = AudioSystem.getTargetDataLine(af);
+			dataLine.open(af, 2048);
+		} catch (LineUnavailableException e) {
+			e.printStackTrace();
+		}
+
+		byte[] buffer = new byte[2048];
+		float[] samples = new float[1024];
+
+		dataLine.start();
+		for (int i; (i = dataLine.read(buffer, 0, buffer.length)) > -1; ) {
+			for (int j = 0, k = 0; j < i; ) {
+				int sample = 0;
+
+				sample |= buffer[j++] & 0xFF;
+				sample |= buffer[j++] << 8;
+
+				samples[k++] = sample / 32768f;
+			}
+
+			float rms = 0f;
+			for (float sample : samples) {
+				rms += sample * sample;
+			}
+			rms = (float) Math.sqrt(rms / samples.length);
+			rms = Math.abs(rms);
+			controller.setMicLevel(rms);
+		}
 	}
 }

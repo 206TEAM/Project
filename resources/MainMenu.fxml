@@ -15,14 +15,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #d9d9d9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.MainMenuController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #d9d9d9;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.MainMenuController">
    <children>
-      <Text fill="#1e1e1e" layoutX="381.0" layoutY="130.0" scaleX="1.5" scaleY="1.5" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.1" text="Welcome to" textAlignment="CENTER" wrappingWidth="134.841796875">
+      <Text fill="#1e1e1e" layoutX="383.0" layoutY="79.0" scaleX="1.5" scaleY="1.5" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.1" text="Welcome to" textAlignment="CENTER" wrappingWidth="134.841796875">
          <font>
             <Font name="DejaVu Sans Bold" size="26.0" />
          </font>
       </Text>
-      <Text fill="#1e1e1e" layoutX="342.0" layoutY="215.0" scaleX="1.5" scaleY="1.5" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.1" text="NameSayer" textAlignment="CENTER" wrappingWidth="214.841796875">
+      <Text fill="#1e1e1e" layoutX="344.0" layoutY="164.0" scaleX="1.5" scaleY="1.5" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.1" text="NameSayer" textAlignment="CENTER" wrappingWidth="214.841796875">
          <font>
             <Font name="DejaVu Sans Bold" size="33.0" />
          </font>
@@ -65,35 +65,20 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="micTest" layoutX="17.0" layoutY="475.0" mnemonicParsing="false" onAction="#micTest" onMouseEntered="#micTestHovered" onMouseExited="#micTestExited" prefHeight="58.0" prefWidth="47.0" style="-fx-background-color: #d9d9d9;">
-         <graphic>
-            <ImageView fitHeight="28.0" fitWidth="28.0" preserveRatio="true">
-               <image>
-                  <Image url="@microphone.png" />
-               </image>
-               <effect>
-                  <ColorAdjust hue="0.2" saturation="1.0" />
-               </effect>
-            </ImageView>
-         </graphic></Button>
       <Button fx:id="help" layoutX="20.0" layoutY="534.0" mnemonicParsing="false" onAction="#help" onMouseEntered="#helpHovered" onMouseExited="#helpExited" prefHeight="32.0" prefWidth="37.0" scaleX="1.5" scaleY="1.5" style="-fx-background-color: #d9d9d9;" text="?" textFill="#ff9900">
          <font>
             <Font name="System Bold" size="22.0" />
          </font></Button>
-      <Text fx:id="micTestLabel" fill="#ff9900" layoutX="63.0" layoutY="511.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Test mic" visible="false">
-         <font>
-            <Font size="15.0" />
-         </font></Text>
       <Text fx:id="helpLabel" fill="#ff9900" layoutX="65.0" layoutY="560.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Help" visible="false">
          <font>
             <Font size="15.0" />
          </font></Text>
-      <Text fx:id="settingsLabel" fill="#ff9900" layoutX="86.0" layoutY="457.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" visible="false">
+      <Text fx:id="settingsLabel" fill="#ff9900" layoutX="86.0" layoutY="509.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" visible="false">
          <font>
             <Font size="15.0" />
          </font>
       </Text>
-      <MenuButton fx:id="settings" layoutX="17.0" layoutY="431.0" mnemonicParsing="false" onMouseEntered="#settingsHovered" onMouseExited="#settingsExited" style="-fx-background-color: #d9d9d9;">
+      <MenuButton fx:id="settings" layoutX="18.0" layoutY="483.0" mnemonicParsing="false" onMouseEntered="#settingsHovered" onMouseExited="#settingsExited" style="-fx-background-color: #d9d9d9;">
          <items>
             <MenuItem fx:id="save" mnemonicParsing="false" onAction="#save" text="Save session" />
             <MenuItem fx:id="reset" mnemonicParsing="false" onAction="#reset" text="Reset progress" />
@@ -112,6 +97,10 @@
             </ImageView>
          </graphic>
       </MenuButton>
+      <Text fx:id="micTestLabel" fill="RED" layoutX="262.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your microphone is not working" textAlignment="CENTER" wrappingWidth="379.49169921875">
+         <font>
+            <Font name="DejaVu Sans Bold" size="19.0" />
+         </font></Text>
    </children>
    <effect>
       <ColorAdjust />
