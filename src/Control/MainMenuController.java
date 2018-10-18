@@ -42,7 +42,7 @@ public class MainMenuController extends ParentController {
 
 	@FXML
 	public void challenge(ActionEvent actionEvent) {
-		loadNextPane("Challenge1", PageType.CHALLENGE);
+		loadNextPane("DifficultySliderVersion", PageType.CHALLENGE);
 	}
 
 	@FXML

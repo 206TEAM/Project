@@ -7,42 +7,42 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="349.0" prefWidth="513.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.5" prefWidth="769.5" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ListView fx:id="wrongListView" layoutX="26.0" layoutY="127.0" prefHeight="155.0" prefWidth="168.0" />
-      <Rectangle fill="#ff9900" height="19.0" layoutX="26.0" layoutY="109.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="168.0" />
-      <Text fill="#1e1e1e" layoutX="68.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect" />
-      <Text fx:id="nameLabel" fill="#ff9900" layoutX="212.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score">
+      <ListView fx:id="wrongListView" layoutX="84.0" layoutY="220.0" prefHeight="155.0" prefWidth="168.0" scaleX="1.5" scaleY="1.5" />
+      <Rectangle fill="#ff9900" height="19.0" layoutX="84.0" layoutY="159.0" scaleX="1.5" scaleY="1.5" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="168.0" />
+      <Text fill="#1e1e1e" layoutX="138.0" layoutY="172.0" scaleX="1.5" scaleY="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect" />
+      <Text fx:id="nameLabel" fill="#ff9900" layoutX="344.0" layoutY="63.0" scaleX="1.5" scaleY="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Score">
          <font>
             <Font name="DejaVu Sans Bold" size="26.0" />
          </font>
       </Text>
-      <Button fx:id="redoButton" layoutX="212.0" layoutY="143.0" mnemonicParsing="false" onAction="#add" prefHeight="29.0" prefWidth="98.0" text="Redo">
+      <Button fx:id="redoButton" layoutX="336.0" layoutY="213.0" mnemonicParsing="false" onAction="#add" prefHeight="29.0" prefWidth="98.0" scaleX="1.5" scaleY="1.5" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Redo" textFill="#ff9900">
          <font>
-            <Font size="15.0" />
+            <Font name="DejaVu Sans Bold" size="15.0" />
          </font>
       </Button>
-      <Text fx:id="conditionsText" layoutX="43.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Message" textAlignment="CENTER" wrappingWidth="427.970703125">
+      <Text fx:id="conditionsText" layoutX="167.0" layoutY="502.0" scaleX="1.5" scaleY="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Message" textAlignment="CENTER" wrappingWidth="427.970703125">
          <font>
             <Font name="FreeSans Oblique" size="14.0" />
          </font>
       </Text>
-      <Button fx:id="homeButton" layoutX="212.0" layoutY="186.0" mnemonicParsing="false" onAction="#cancel" prefHeight="29.0" prefWidth="98.0" text="Home">
+      <Button fx:id="homeButton" layoutX="336.0" layoutY="269.0" mnemonicParsing="false" onAction="#cancel" prefHeight="29.0" prefWidth="98.0" scaleX="1.5" scaleY="1.5" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Home" textFill="#ff9900">
          <font>
-            <Font size="15.0" />
+            <Font name="DejaVu Sans Bold" size="13.0" />
          </font>
       </Button>
-      <Text fx:id="scoreLabel" layoutX="192.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="121.58203125">
+      <Text fx:id="scoreLabel" layoutX="324.0" layoutY="108.0" scaleX="1.5" scaleY="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="--" textAlignment="CENTER" wrappingWidth="121.58203125">
          <font>
             <Font name="DejaVu Sans Bold" size="26.0" />
          </font>
       </Text>
-      <ListView fx:id="correctListView" layoutX="329.0" layoutY="127.0" prefHeight="155.0" prefWidth="160.0" />
-      <Rectangle fill="#ff9900" height="19.0" layoutX="329.0" layoutY="109.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="160.0" />
-      <Text fill="#1e1e1e" layoutX="374.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correct" />
-      <Button fx:id="challengeButton" layoutX="212.0" layoutY="231.0" mnemonicParsing="false" onAction="#challenge" prefHeight="29.0" prefWidth="98.0" text="Challenge">
+      <ListView fx:id="correctListView" layoutX="516.0" layoutY="220.0" prefHeight="155.0" prefWidth="160.0" scaleX="1.5" scaleY="1.5" />
+      <Rectangle fill="#ff9900" height="19.0" layoutX="516.0" layoutY="159.0" scaleX="1.5" scaleY="1.5" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="160.0" />
+      <Text fill="#1e1e1e" layoutX="572.0" layoutY="174.0" scaleX="1.5" scaleY="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Correct" />
+      <Button fx:id="challengeButton" layoutX="336.0" layoutY="324.0" mnemonicParsing="false" onAction="#challenge" prefHeight="29.0" prefWidth="98.0" scaleX="1.5" scaleY="1.5" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Challenge" textFill="#ff9900">
          <font>
-            <Font size="15.0" />
+            <Font name="DejaVu Sans Bold" size="13.0" />
          </font>
       </Button>
    </children>

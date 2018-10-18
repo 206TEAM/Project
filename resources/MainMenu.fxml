@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #d9d9d9;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.MainMenuController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #d9d9d9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.MainMenuController">
    <children>
       <Text fill="#1e1e1e" layoutX="381.0" layoutY="130.0" scaleX="1.5" scaleY="1.5" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.1" text="Welcome to" textAlignment="CENTER" wrappingWidth="134.841796875">
          <font>
@@ -114,6 +114,6 @@
       </MenuButton>
    </children>
    <effect>
-      <ColorAdjust brightness="-0.05" />
+      <ColorAdjust />
    </effect>
 </AnchorPane>
