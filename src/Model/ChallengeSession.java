@@ -1,6 +1,7 @@
 package Model;
 
 import Ratings.ChallengeRatings;
+import Ratings.DifficultyRatings;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,9 +34,12 @@ public class ChallengeSession {
     }
 
     private void generateNames() {
-        List<String> challengeList = Originals.getInstance().listNames();
-        Collections.shuffle(challengeList);
-        setChallengeList(challengeList.subList(0, _numberOfNames));
+
+        List<String> names = DifficultyRatings.getInstance().generateList(_difficulty, _numberOfNames);
+        System.out.println("\n the generated names are \n");
+        System.out.println(names);
+
+        setChallengeList(names);
     }
 
 
