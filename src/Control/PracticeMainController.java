@@ -114,7 +114,7 @@ public class PracticeMainController extends ParentController {
 	 * @param name
 	 */
 	private void updateStar(String name){
-		if (name != null) {
+		if ((name != null) && !name.contains(" ")) {
 			Boolean difficulty = DifficultyRatings.getInstance().getRating(name);
 			starOn(difficultyStar, difficulty);
 		}
