@@ -304,17 +304,4 @@ abstract class Controller implements Initializable {
 		}
 		star.setEffect(color);
 	}
-
-//	protected List<String> getDifficultNames() throws IOException {
-//		List<String> difficultNames = new ArrayList<>();
-//
-//		BufferedReader br = new BufferedReader(new FileReader("Difficult_Names.txt"));
-//		String line;
-//
-//		while ((line = br.readLine()) != null) {
-//			difficultNames.add(line);
-//		}
-//
-//		return difficultNames;
-//	}
 }

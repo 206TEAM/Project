@@ -5,6 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -14,15 +16,15 @@ import java.util.ResourceBundle;
 public class MainMenuController extends ParentController {
 	@FXML public Button practice;
 	@FXML public Button challenge;
-	@FXML public Button create;
 	@FXML public Button listen;
 	@FXML public Button stats;
 	@FXML public Button help;
 	@FXML public Button micTest;
 	@FXML public AnchorPane mainPane;
-	@FXML public Text micTestLabel;
-	@FXML public Text helpLabel;
+	@FXML public Text micTestLabel, helpLabel, settingsLabel;
 	@FXML public Label averageSuccessLabel, progressLabel;
+	@FXML public MenuButton settings;
+	@FXML public MenuItem save, reset, quit;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -41,11 +43,6 @@ public class MainMenuController extends ParentController {
 	@FXML
 	public void challenge(ActionEvent actionEvent) {
 		loadNextPane("Challenge1", PageType.CHALLENGE);
-	}
-
-	@FXML
-	public void create(ActionEvent actionEvent) {
-		createPopUp("ConcatenateNames", "Create Name", 450, 259);
 	}
 
 	@FXML
@@ -107,5 +104,22 @@ public class MainMenuController extends ParentController {
 
 	public void helpExited(MouseEvent mouseEvent) {
 		helpLabel.setVisible(false);
+	}
+
+	public void settingsHovered(MouseEvent mouseEvent) { settingsLabel.setVisible(true);
+	}
+
+	public void settingsExited(MouseEvent mouseEvent) { settingsLabel.setVisible(false);
+	}
+
+
+	public void save(ActionEvent actionEvent) {
+		//todo refactor the HeaderController method to do the same thing as this
+	}
+
+	public void reset(ActionEvent actionEvent) {
+	}
+
+	public void quit(ActionEvent actionEvent) {
 	}
 }
