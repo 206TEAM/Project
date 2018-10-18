@@ -7,6 +7,8 @@ import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 
@@ -23,11 +25,11 @@ import java.util.stream.Stream;
 public class SelectPracticeController extends Controller {
 
 	@FXML public ListView<String> selectListView, previewList;
-	@FXML public Button go, reset;
+	@FXML public Button go, uploadList, reset, add;
 	@FXML public CheckBox shuffle;
 	@FXML public TextField search;
-	@FXML public MenuButton add, sortBy;
-	@FXML public MenuItem combine, upload, selected, alphabetical;
+	@FXML public MenuButton sortBy;
+	@FXML public MenuItem selected, alphabetical;
 
 	private static SelectPracticeController _INSTANCE;
 	private List<String> selectedOrder;
@@ -40,10 +42,7 @@ public class SelectPracticeController extends Controller {
 		selectedOrder = new ArrayList<>();
 		currentPreviewList = new ArrayList<>();
 
-		List<String> names = Originals.getInstance().listNames();
-
-		combine.setOnAction(event -> combine());
-		upload.setOnAction(event -> upload());
+		List<String> names = _originals.listNames();
 
 		if (names.size() == 0) {
 			selectListView.setVisible(false);
@@ -68,6 +67,12 @@ public class SelectPracticeController extends Controller {
 
 			search.textProperty().addListener(((observable, oldValue, newValue) -> {
 				searchListener(filteredList, newValue, selectListView);
+				if (!newValue.equals("")) {
+					add.setDisable(false);
+					selectListView.getSelectionModel().selectFirst();
+				} else {
+					add.setDisable(true);
+				}
 			}));
 		}
 	}
@@ -149,6 +154,10 @@ public class SelectPracticeController extends Controller {
 		searchOpacity(true);
 	}
 
+	public void add(ActionEvent actionEvent) {
+		addName();
+	}
+
 	public void searchClicked(MouseEvent mouseEvent) {
 		searchOpacity(false);
 	}
@@ -161,11 +170,6 @@ public class SelectPracticeController extends Controller {
 //			removeFrom.getItems().remove(toAdd);
 //		}
 //	}
-
-	private void combine() {
-		createPopUp("ConcatenateNames", "Create Name", 675, 384);
-	}
-
 	private void searchOpacity(boolean on) {
 		if (on) {
 			search.setOpacity(1.0);
@@ -179,12 +183,12 @@ public class SelectPracticeController extends Controller {
 	}
 
 	public void alphabeticalSort(ActionEvent actionEvent) {
-		List<String> listDuplicate = new ArrayList<>(selectedOrder);
+		List<String> listDuplicate = new ArrayList<>(previewList.getItems());
 		Collections.sort(listDuplicate);
 		updatePreview(listDuplicate);
 	}
 
-	private void upload() {
+	public void upload(ActionEvent actionEvent) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Upload a List");
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("text files", "*.txt"));
@@ -196,8 +200,8 @@ public class SelectPracticeController extends Controller {
 		if (file != null) {
 			try (Stream<String> stream = Files.lines(file.toPath())) {
 				stream.forEach(e -> {
-					List<String> names = new ArrayList<>(selectListView.getItems());
-					if (containsName(e, names)) {
+					List<String> names = new ArrayList<>(_originals.listNames());
+					if (containsName(e, names) && !containsName(e, previewList.getItems())) {
 						e = e.substring(0, 1).toUpperCase() + e.substring(1).toLowerCase();
 						uploadedNames.add(e);
 					}
@@ -208,6 +212,7 @@ public class SelectPracticeController extends Controller {
 			if (uploadedNames.size() > 0) {
 				disableButtons(false);
 				previewList.getItems().addAll(uploadedNames);
+				selectedOrder.addAll(uploadedNames);
 			}
 		}
 	}
@@ -238,5 +243,17 @@ public class SelectPracticeController extends Controller {
 		return _INSTANCE;
 	}
 
+	public void addNameFromSearch(KeyEvent keyEvent) {
+		if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+			addName();
+		}
+	}
 
+	private void addName() {
+		String name = selectListView.getSelectionModel().getSelectedItem();
+		if (!containsName(name, previewList.getItems())) {
+			previewList.getItems().add(name);
+			selectedOrder.add(name);
+		}
+	}
 }

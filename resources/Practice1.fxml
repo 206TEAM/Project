@@ -15,26 +15,17 @@
    <children>
       <Text fill="#727272" layoutX="132.0" layoutY="245.0" scaleX="1.5" scaleY="1.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Database is empty" />
       <ListView fx:id="selectListView" layoutX="50.0" layoutY="106.0" onMouseClicked="#listViewSelected" prefHeight="269.0" prefWidth="198.0" scaleX="1.5" scaleY="1.5" />
-      <Button fx:id="go" disable="true" layoutX="415.0" layoutY="260.0" mnemonicParsing="false" onAction="#go" prefHeight="33.0" prefWidth="70.0" scaleX="1.5" scaleY="1.5" style="-fx-background-radius: 0; -fx-background-color: #1e1e1e;" text="Go" textFill="#ff9900">
+      <Button fx:id="go" disable="true" layoutX="406.0" layoutY="260.0" mnemonicParsing="false" onAction="#go" prefHeight="33.0" prefWidth="88.0" scaleX="1.5" scaleY="1.5" style="-fx-background-radius: 0; -fx-background-color: #1e1e1e;" text="Go" textFill="#ff9900">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
       <CheckBox fx:id="shuffle" disable="true" layoutX="415.0" layoutY="206.0" mnemonicParsing="false" onAction="#shuffle" scaleX="1.5" scaleY="1.5" text="Shuffle" textFill="#1e1e1e" />
-      <TextField fx:id="search" layoutX="33.0" layoutY="7.0" onMouseClicked="#searchClicked" prefHeight="26.0" prefWidth="136.0" promptText="Click to search" scaleX="1.5" scaleY="1.5" style="-fx-background-color: #ff9900; -fx-prompt-text-fill: #1e1e1e; -fx-text-fill: #1e1e1e;" />
+      <TextField fx:id="search" layoutX="33.0" layoutY="7.0" onKeyPressed="#addNameFromSearch" onMouseClicked="#searchClicked" prefHeight="26.0" prefWidth="155.0" promptText="Enter names here..." scaleX="1.5" scaleY="1.5" style="-fx-background-color: #ff9900; -fx-prompt-text-fill: #1e1e1e; -fx-text-fill: #1e1e1e; -fx-background-radius: 0;" />
       <Rectangle fill="#ff9900" height="26.0" layoutX="50.0" layoutY="449.0" scaleX="1.5" scaleY="1.5" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="198.0" />
       <ListView fx:id="previewList" layoutX="653.0" layoutY="106.0" onMouseClicked="#previewListSelected" prefHeight="269.0" prefWidth="198.0" scaleX="1.5" scaleY="1.5" />
       <Rectangle fill="#ff9900" height="26.0" layoutX="653.0" layoutY="449.0" scaleX="1.5" scaleY="1.5" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="198.0" />
-      <MenuButton fx:id="add" contentDisplay="RIGHT" layoutX="219.0" layoutY="7.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="26.0" prefWidth="63.0" scaleX="1.5" scaleY="1.5" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Add" textFill="#ff9900">
-        <items>
-          <MenuItem fx:id="combine" mnemonicParsing="false" text="Combine Names" />
-          <MenuItem fx:id="upload" mnemonicParsing="false" text="Upload List" />
-        </items>
-         <font>
-            <Font name="DejaVu Sans Bold" size="13.0" />
-         </font>
-      </MenuButton>
-      <Button fx:id="reset" disable="true" layoutX="415.0" layoutY="320.0" mnemonicParsing="false" onAction="#reset" prefHeight="18.0" prefWidth="70.0" scaleX="1.5" scaleY="1.5" style="-fx-background-radius: 0; -fx-background-color: #1e1e1e;" text="Reset" textFill="#ff9900">
+      <Button fx:id="reset" disable="true" layoutX="406.0" layoutY="374.0" mnemonicParsing="false" onAction="#reset" prefHeight="23.0" prefWidth="88.0" scaleX="1.5" scaleY="1.5" style="-fx-background-radius: 0; -fx-background-color: #1e1e1e;" text="Reset" textFill="#ff9900">
          <font>
             <Font size="12.0" />
          </font>
@@ -45,7 +36,7 @@
             <Font name="DejaVu Sans Bold" size="13.0" />
          </font>
       </Text>
-      <MenuButton fx:id="sortBy" onMouseClicked="#sortClicked" contentDisplay="RIGHT" layoutX="815.0" layoutY="7.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="69.0" scaleX="1.5" scaleY="1.5" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Sort by" textFill="#ff9900">
+      <MenuButton fx:id="sortBy" contentDisplay="RIGHT" layoutX="815.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#sortClicked" prefHeight="26.0" prefWidth="69.0" scaleX="1.5" scaleY="1.5" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Sort by" textFill="#ff9900">
          <items>
             <MenuItem fx:id="selected" mnemonicParsing="false" onAction="#selectedSort" text="Selected" />
             <MenuItem fx:id="alphabetical" mnemonicParsing="false" onAction="#alphabeticalSort" text="A-Z" />
@@ -64,5 +55,15 @@
             <Font name="System Italic" size="17.0" />
          </font>
       </Text>
+      <Button fx:id="uploadList" layoutX="406.0" layoutY="323.0" mnemonicParsing="false" onAction="#upload" prefHeight="23.0" prefWidth="88.0" scaleX="1.5" scaleY="1.5" style="-fx-background-radius: 0; -fx-background-color: #1e1e1e;" text="Upload List" textFill="#ff9900">
+         <font>
+            <Font size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="add" disable="true" layoutX="239.0" layoutY="6.0" mnemonicParsing="false" onAction="#add" prefHeight="27.0" prefWidth="46.0" scaleX="1.5" scaleY="1.5" style="-fx-background-radius: 0; -fx-background-color: #1e1e1e;" text="Add" textFill="#ff9900">
+         <font>
+            <Font size="12.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
