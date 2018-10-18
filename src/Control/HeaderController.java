@@ -98,7 +98,7 @@ public class HeaderController extends ParentController {
 
 	@FXML
 	public void micTest(ActionEvent actionEvent) {
-		createPopUp("MicTest", "Microphone Test", 450, 259);
+		createPopUp("MicTest", "Microphone Test", 675, 389);
 	}
 
 	public void setPage(PageType pageType) {

@@ -230,6 +230,10 @@ public class SelectPracticeController extends Controller {
 		}
 	}
 
+	public void sortClicked(MouseEvent mouseEvent) {
+		searchOpacity(true);
+	}
+
 	private void updatePreview(List<String> list) {
 		currentPreviewList = list;
 		previewList.getItems().setAll(currentPreviewList);
@@ -238,4 +242,6 @@ public class SelectPracticeController extends Controller {
 	protected static SelectPracticeController getInstance() {
 		return _INSTANCE;
 	}
+
+
 }

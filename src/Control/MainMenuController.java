@@ -62,7 +62,7 @@ public class MainMenuController extends ParentController {
 
 	@FXML
 	public void micTest(ActionEvent actionEvent) { //todo MIC TEST POPUP
-		createPopUp("MicTest", "Microphone Test", 450, 259);
+		createPopUp("MicTest", "Microphone Test", 675, 389);
 	}
 
 	/**

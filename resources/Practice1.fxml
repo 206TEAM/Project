@@ -45,7 +45,7 @@
             <Font name="DejaVu Sans Bold" size="13.0" />
          </font>
       </Text>
-      <MenuButton fx:id="sortBy" contentDisplay="RIGHT" layoutX="815.0" layoutY="7.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="69.0" scaleX="1.5" scaleY="1.5" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Sort by" textFill="#ff9900">
+      <MenuButton fx:id="sortBy" onMouseClicked="#sortClicked" contentDisplay="RIGHT" layoutX="815.0" layoutY="7.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="69.0" scaleX="1.5" scaleY="1.5" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Sort by" textFill="#ff9900">
          <items>
             <MenuItem fx:id="selected" mnemonicParsing="false" onAction="#selectedSort" text="Selected" />
             <MenuItem fx:id="alphabetical" mnemonicParsing="false" onAction="#alphabeticalSort" text="A-Z" />
