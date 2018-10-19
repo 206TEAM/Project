@@ -270,6 +270,7 @@ public class SelectPracticeController extends Controller {
 	}
 
 	public void upload(ActionEvent actionEvent) {
+		concatNameText.setText("");
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Upload a List");
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("text files", "*.txt"));
@@ -280,16 +281,43 @@ public class SelectPracticeController extends Controller {
 
 		if (file != null) {
 			try (Stream<String> stream = Files.lines(file.toPath())) {
-				stream.forEach(e -> {
+				stream.forEach(name -> {
 					List<String> names = new ArrayList<>(_allNames);
-					if (containsName(e, names) && !containsName(e, previewList.getItems())) {
-						e = e.substring(0, 1).toUpperCase() + e.substring(1).toLowerCase();
-						uploadedNames.add(e);
+					if (containsName(name, names) && !containsName(name, previewList.getItems())) {
+						name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+						uploadedNames.add(name);
+					} else if (name.contains(" ") || name.contains("-")) {
+						String[] diffNames = name.split("[ -]");
+						List<Character> splits = extractSplits(name);
+						StringBuilder confirmed = new StringBuilder();
+						_names = new ArrayList<>();
+
+						for (int i = 0; i < diffNames.length; i++) {
+							String singleName = diffNames[i];
+							if (containsName(singleName, _allNames)) {
+								singleName = singleName.substring(0, 1).toUpperCase() + singleName.substring(1).toLowerCase();
+								confirmed.append(singleName);
+								_names.add(singleName);
+
+								if (i >= splits.size()) {
+									confirmed.append(" ");
+								} else {
+									confirmed.append(splits.get(i));
+								}
+							}
+						}
+
+						String entered = name.toUpperCase() + " ";
+						if (entered.equals(confirmed.toString().toUpperCase())) {
+							_newName = confirmed.toString();
+							concatNames();
+						}
 					}
 				});
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+
 			if (uploadedNames.size() > 0) {
 				disableButtons(false);
 				previewList.getItems().addAll(uploadedNames);
