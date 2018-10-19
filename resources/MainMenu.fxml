@@ -27,8 +27,8 @@
             <Font name="DejaVu Sans Bold" size="33.0" />
          </font>
       </Text>
-      <Label fx:id="averageSuccessLabel" layoutX="354.0" layoutY="244.0" prefHeight="16.0" prefWidth="191.0" scaleX="1.5" scaleY="1.5" text="Average Success: 100% (A+)" textAlignment="CENTER" textFill="#00900ced" />
-      <Label fx:id="progressLabel" layoutX="381.0" layoutY="274.0" scaleX="1.5" scaleY="1.5" text="Progress: 100% (A+)" textAlignment="CENTER" textFill="#00900ced" />
+      <Label fx:id="averageSuccessLabel" alignment="CENTER" layoutX="325.0" layoutY="247.0" prefHeight="16.0" prefWidth="254.0" scaleX="1.5" scaleY="1.5" text="Average Success: 100% (A+)" textAlignment="CENTER" textFill="#00900ced" />
+      <Label fx:id="progressLabel" alignment="CENTER" layoutX="343.0" layoutY="280.0" prefHeight="16.0" prefWidth="218.0" scaleX="1.5" scaleY="1.5" text="Progress: 100% (A+)" textAlignment="CENTER" textFill="#00900ced" />
       <Button fx:id="practice" contentDisplay="TOP" layoutX="248.0" layoutY="325.0" mnemonicParsing="false" onAction="#practice" prefHeight="60.0" prefWidth="202.5" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Practice" textFill="#ff9900">
          <font>
             <Font name="DejaVu Sans Condensed Bold" size="23.0" />
