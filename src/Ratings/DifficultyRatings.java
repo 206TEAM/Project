@@ -93,24 +93,32 @@ public class DifficultyRatings extends Saving {
      */
     public void setRating(String nameKey, Boolean difficulty) {
         _nameRatings.put(nameKey, difficulty);
-        if (!difficulty) { //if user set rating to be easy
+        updateDifficultyList(nameKey, difficulty);
+    }
 
+    private void updateDifficultyList(String nameKey, Boolean difficulty){
+        if (!difficulty) { //if user set rating to be easy
             if (_hardNames.contains(nameKey)) {
                 _hardNames.remove(nameKey);
             }
             _easyNames.add(nameKey); //todo should it be easy?
-
         } else { //user set rating of name to be hard
             if (_easyNames.contains(nameKey)) {
                 _easyNames.remove(nameKey);
-
                 _hardNames.add(nameKey);
             } else if (_mediumNames.contains(nameKey)) {
                 _mediumNames.remove(nameKey);
-
                 _hardNames.add(nameKey);
             }
         }
+    }
+
+    public void setDifficult(String nameKey){
+        updateDifficultyList(nameKey, true);
+    }
+
+    public void setEasy(String nameKey){
+        updateDifficultyList(nameKey, false);
     }
 
     /**

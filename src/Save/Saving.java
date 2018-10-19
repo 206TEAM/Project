@@ -32,7 +32,6 @@ public abstract class Saving {
                     Files.write(Paths.get(fileName), fileContents, StandardCharsets.UTF_8);
                 }
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }

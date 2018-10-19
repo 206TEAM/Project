@@ -123,6 +123,13 @@ public class ChallengeRatings extends Saving {
             newAvg = currentAvg + (number - currentAvg) / challengeSize;
         }
         _challengesRating.put(nameKey, newAvg); //puts new average into hashmap
+
+        int challengeSize = Challenges.getInstance().getChallengeSize(nameKey);
+        if (newAvg<50 && challengeSize>2){ //todo change threshold
+            DifficultyRatings.getInstance().setDifficult(nameKey);
+        } else if (newAvg>90 && challengeSize > 3){
+            DifficultyRatings.getInstance().setEasy(nameKey);
+        }
         handleList(currentAvg, newAvg, nameKey); //updates the list
     }
 
