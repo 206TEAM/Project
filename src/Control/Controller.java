@@ -23,13 +23,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.BufferedReader;
+import javax.sound.sampled.*;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,6 +38,7 @@ import java.util.List;
 abstract class Controller implements Initializable {
 	public Mediator _mediator = Mediator.getInstance();
 	protected Originals _originals = Originals.getInstance();
+	protected List<String> _allNames = _originals.listNames();
 
 	protected ButtonType _yes;
 
@@ -305,16 +301,37 @@ abstract class Controller implements Initializable {
 		star.setEffect(color);
 	}
 
-//	protected List<String> getDifficultNames() throws IOException {
-//		List<String> difficultNames = new ArrayList<>();
-//
-//		BufferedReader br = new BufferedReader(new FileReader("Difficult_Names.txt"));
-//		String line;
-//
-//		while ((line = br.readLine()) != null) {
-//			difficultNames.add(line);
-//		}
-//
-//		return difficultNames;
-//	}
+	protected void micTester(MicTesterController controller) {
+		AudioFormat af = new AudioFormat(44100f, 16, 1, true, false);
+		TargetDataLine dataLine = null;
+		try {
+			dataLine = AudioSystem.getTargetDataLine(af);
+			dataLine.open(af, 2048);
+		} catch (LineUnavailableException e) {
+			e.printStackTrace();
+		}
+
+		byte[] buffer = new byte[2048];
+		float[] samples = new float[1024];
+
+		dataLine.start();
+		for (int i; (i = dataLine.read(buffer, 0, buffer.length)) > -1; ) {
+			for (int j = 0, k = 0; j < i; ) {
+				int sample = 0;
+
+				sample |= buffer[j++] & 0xFF;
+				sample |= buffer[j++] << 8;
+
+				samples[k++] = sample / 32768f;
+			}
+
+			float rms = 0f;
+			for (float sample : samples) {
+				rms += sample * sample;
+			}
+			rms = (float) Math.sqrt(rms / samples.length);
+			rms = Math.abs(rms);
+			controller.setMicLevel(rms);
+		}
+	}
 }

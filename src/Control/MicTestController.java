@@ -13,47 +13,19 @@ import javax.sound.sampled.TargetDataLine;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MicTestController extends Controller {
+public class MicTestController extends Controller implements MicTesterController {
 	@FXML public ProgressBar micLevel;
 	@FXML public Button done;
 	@FXML public AnchorPane pane;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		MicTestController instance = this;
+
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				AudioFormat af = new AudioFormat(44100f, 16, 1, true, false);
-				TargetDataLine dataLine = null;
-				try {
-					dataLine = AudioSystem.getTargetDataLine(af);
-					dataLine.open(af, 2048);
-				} catch (LineUnavailableException e) {
-					e.printStackTrace();
-				}
-
-				byte[] buffer = new byte[2048];
-				float[] samples = new float[1024];
-
-				dataLine.start();
-				for (int i; (i = dataLine.read(buffer, 0, buffer.length)) > -1; ) {
-					for (int j = 0, k = 0; j < i; ) {
-						int sample = 0;
-
-						sample |= buffer[j++] & 0xFF;
-						sample |= buffer[j++] << 8;
-
-						samples[k++] = sample / 32768f;
-					}
-
-					float rms = 0f;
-					for (float sample : samples) {
-						rms += sample * sample;
-					}
-					rms = (float) Math.sqrt(rms / samples.length);
-					rms = Math.abs(rms);
-					setMicLevel(rms);
-				}
+				micTester(instance);
 			}
 		});
 
@@ -66,8 +38,8 @@ public class MicTestController extends Controller {
 		exit(pane);
 	}
 
-	private void setMicLevel(float val) {
-		double level = 2*val;
+	public void setMicLevel(float rms) {
+		double level = 2*rms;
 		if (level >= 1) {
 			micLevel.setProgress(1);
 		} else {

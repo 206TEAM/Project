@@ -3,34 +3,36 @@ package Control;
 import Ratings.ChallengeRatings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainMenuController extends ParentController {
-	@FXML public Button practice;
-	@FXML public Button challenge;
-	@FXML public Button create;
-	@FXML public Button listen;
-	@FXML public Button stats;
-	@FXML public Button help;
-	@FXML public Button micTest;
+public class MainMenuController extends ParentController implements MicTesterController {
+	@FXML public Button practice, challenge, listen, stats, help;
 	@FXML public AnchorPane mainPane;
-	@FXML public Text micTestLabel;
-	@FXML public Text helpLabel;
+	@FXML public Text micTestLabel, helpLabel, settingsLabel;
 	@FXML public Label averageSuccessLabel, progressLabel;
+	@FXML public MenuButton settings;
+	@FXML public MenuItem save, reset, quit;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		MainMenuController instance = this;
 		_mediator.setParent(this);
 		String score = Integer.toString(ChallengeRatings.getInstance().getOverallScore());
 		averageSuccessLabel.setText("Average success: " + score + "%");
 		String progress = Integer.toString(ChallengeRatings.getInstance().getProgress());
-		progressLabel.setText("Progress is: "+progress+"%");
+		progressLabel.setText("Progress is: " + progress + "%");
+
+		Thread thread = new Thread(() -> micTester(instance));
+
+		thread.setDaemon(true);
+		thread.start();
 	}
 
 	@FXML
@@ -40,12 +42,7 @@ public class MainMenuController extends ParentController {
 
 	@FXML
 	public void challenge(ActionEvent actionEvent) {
-		loadNextPane("Challenge1", PageType.CHALLENGE);
-	}
-
-	@FXML
-	public void create(ActionEvent actionEvent) {
-		createPopUp("ConcatenateNames", "Create Name", 450, 259);
+		loadNextPane("DifficultySliderVersion", PageType.CHALLENGE);
 	}
 
 	@FXML
@@ -61,11 +58,6 @@ public class MainMenuController extends ParentController {
 	@FXML
 	public void help(ActionEvent actionEvent) { //todo HELP POPUP
 		createPopUp("HelperPopup", "Help", 550, 350);
-	}
-
-	@FXML
-	public void micTest(ActionEvent actionEvent) { //todo MIC TEST POPUP
-		createPopUp("MicTest", "Microphone Test", 450, 259);
 	}
 
 	/**
@@ -93,19 +85,38 @@ public class MainMenuController extends ParentController {
 		_mediator.loadPane(Type.HEADER, page);
 	}
 
-	public void micTestHovered(MouseEvent mouseEvent) {
-		micTestLabel.setVisible(true);
-	}
-
-	public void micTestExited(MouseEvent mouseEvent) {
-		micTestLabel.setVisible(false);
-	}
-
 	public void helpHovered(MouseEvent mouseEvent) {
 		helpLabel.setVisible(true);
 	}
 
 	public void helpExited(MouseEvent mouseEvent) {
 		helpLabel.setVisible(false);
+	}
+
+	public void settingsHovered(MouseEvent mouseEvent) {
+		settingsLabel.setVisible(true);
+	}
+
+	public void settingsExited(MouseEvent mouseEvent) {
+		settingsLabel.setVisible(false);
+	}
+
+
+	public void save(ActionEvent actionEvent) {
+		//todo refactor the HeaderController method to do the same thing as this
+	}
+
+	public void reset(ActionEvent actionEvent) {
+	}
+
+	public void quit(ActionEvent actionEvent) {
+	}
+
+	@Override
+	public void setMicLevel(float rms) {
+		if ((10*rms) > 0) {
+			micTestLabel.setText("Your microphone is good to go!");
+			micTestLabel.setFill(Color.DARKGREEN);
+		}
 	}
 }

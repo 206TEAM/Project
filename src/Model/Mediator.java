@@ -27,6 +27,8 @@ public class Mediator {
     private List<String> _challengeList;
     private List<String> _challengeFileList;
     private Boolean _inChallengeSession;
+    private List<String> _missingNames;
+    private String _missingListFile;
 
 	public void addObserver(Observer o) {
 		_practiceMain.addObserver(o);
@@ -129,6 +131,7 @@ public class Mediator {
         }
     }
 
+	/*********Methods for setting up practices**********/
     public void setPracticeMainList(List<String> list) {
         _practiceMainList = list;
     }
@@ -164,6 +167,19 @@ public class Mediator {
 
 	public boolean praticeNotNull() {
 		return _practiceMain != null;
+	}
+
+	public void setMissingNames(List<String> missingNames, String missingListFile) {
+		_missingNames = missingNames;
+		_missingListFile = missingListFile;
+	}
+
+	public List<String> getMissingNames() {
+		return _missingNames;
+	}
+
+	public String getMissngListFile() {
+		return _missingListFile;
 	}
 
 }

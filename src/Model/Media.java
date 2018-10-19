@@ -1,7 +1,9 @@
 package Model;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -18,6 +20,7 @@ public class Media {
 	private String _originalName;
 	private File _directory;
 	private static final File CURRENT_DIRECTORY = FileSystems.getDefault().getPath(".").toFile();
+	private static final int TARGET_VOLUME = 20; // Normalise concatenated names to reach 30dB
 	private static Process PROCESS;
 
 	public Media(Challenge challenge) {
@@ -96,11 +99,38 @@ public class Media {
 	public static void concatNames(String outputName) {
 		String command = "ffmpeg -f concat -safe 0 -i list.txt -c copy Temp/output.wav";
 		process(command, CURRENT_DIRECTORY);
-		cleanUp(outputName);
+		removeSilence(outputName);
 	}
 
-	private static void cleanUp(String file) {
-		String command = "ffmpeg -hide_banner -i Temp/output.wav -af silenceremove=1:0:-40dB:1:5:-40dB:0:peak " +
+	public static void normalizeVolume(String file, int num) {
+		try {
+			String command = "ffmpeg -i " + file + " -filter:a volumedetect -f null /dev/null 2>&1 | grep mean_volume";
+			ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", command);
+			Process process = pb.start();
+			process.waitFor();
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			String volumeDetectOutput = br.readLine();
+			volumeDetectOutput = volumeDetectOutput.replaceAll(".*:", ""); // remove all unnecessary characters
+			double meanVolume = Double.valueOf(volumeDetectOutput.substring(1, volumeDetectOutput.lastIndexOf('d') - 1)); // Only get digits
+			double difference = TARGET_VOLUME - Math.abs(meanVolume);
+			System.out.println(difference);
+
+			String applyAdjusmentCommand = "ffmpeg -i " +file + " -filter:a \"volume=" + Math.abs(difference) +
+					"dB\" Temp/normalized" + num + ".wav";
+
+			process(applyAdjusmentCommand, CURRENT_DIRECTORY);
+
+			// Normalize even more
+			String normalizeAgain = "ffmpeg -i Temp/normalized" + num + ".wav -filter:a loudnorm Temp/finalNormalized" + num + ".wav";
+			process(normalizeAgain, CURRENT_DIRECTORY);
+		} catch (IOException | InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void removeSilence(String file) {
+		String command = "ffmpeg -hide_banner -i Temp/output.wav -af silenceremove=1:0:-50dB:1:5:-50dB:0:peak " +
 				"Temp/" + file + ".wav";
 		process(command, CURRENT_DIRECTORY);
 	}
