@@ -71,6 +71,8 @@ public class ChallengeCompareController extends ParentController {
         List<String> list = _mediator.getPracticeMainList();
         ObservableList<String> practiceList = FXCollections.observableArrayList(list);
         challengeListView.setItems(practiceList);
+        playChallenge.setDisable(true);
+        playOriginal.setDisable(true);
     }
 
     @FXML
@@ -92,7 +94,6 @@ public class ChallengeCompareController extends ParentController {
         correct.setDisable(false);
         wrong.setDisable(false);
     }
-
 
     @FXML
     public void correct(ActionEvent actionEvent) {
@@ -192,6 +193,7 @@ public class ChallengeCompareController extends ParentController {
 	    _session.setCurrentName(name);
 	    originalProgressText.setText("Play Original");
 	    playOriginal.setDisable(false);
+	    playChallenge.setDisable(false);
 
 	    List<String> versions = _originals.getFileName(name);
 	    ObservableList<String> versionsToDisplay;

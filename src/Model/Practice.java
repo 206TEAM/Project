@@ -26,7 +26,6 @@ public class Practice {
 	    }
         _fileName = generateFileName();
     }
-
     public Practice(String nameKey, String fileName) {
         _nameKey = nameKey;
         _fileName = fileName;

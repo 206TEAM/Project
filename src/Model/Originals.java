@@ -315,7 +315,6 @@ public class Originals {
 						break;
 					}
 				}
-
 				if (found) {
 					Pattern pattern = Pattern.compile("&[a-z]+&");
 					Matcher matcher = pattern.matcher(line);

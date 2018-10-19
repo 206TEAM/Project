@@ -2,6 +2,8 @@ package Control;
 
 import Model.ChallengeSession;
 import Model.Mediator;
+import Ratings.ChallengeRatings;
+import Ratings.DifficultyRatings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -201,6 +203,8 @@ public class HeaderController extends ParentController {
 	@FXML
 	public void save(ActionEvent actionEvent) {
 		donePopUp("Your progress has been saved");
+		ChallengeRatings.getInstance().saveSession();
+		DifficultyRatings.getInstance().saveSession();
 	}
 
 	private void donePopUp(String headerText) {

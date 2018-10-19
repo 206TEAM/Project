@@ -29,7 +29,7 @@ public class ChallengeSession {
 
     public ChallengeSession(List<String> oldList) { //constructor for redoing
         _numberOfNames = oldList.size();
-        _difficulty = 0; //todo hmm
+        _difficulty = 1; //todo hmm
         setChallengeList(oldList);
     }
 
@@ -41,11 +41,6 @@ public class ChallengeSession {
 
         setChallengeList(names);
     }
-
-
-
-
-
 
     /********methods for getting/setting challenge related things********/
     public void setChallengeList(List<String> challengeList) {
