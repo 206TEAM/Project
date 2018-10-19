@@ -271,6 +271,8 @@ public class SelectPracticeController extends Controller {
 
 	public void upload(ActionEvent actionEvent) {
 		concatNameText.setText("");
+
+		List<String> missingNames = new ArrayList<>();
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Upload a List");
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("text files", "*.txt"));
@@ -304,6 +306,8 @@ public class SelectPracticeController extends Controller {
 								} else {
 									confirmed.append(splits.get(i));
 								}
+							} else {
+								missingNames.add("\"" + singleName + "\" from: \"" + name + "\"");
 							}
 						}
 
@@ -311,6 +315,10 @@ public class SelectPracticeController extends Controller {
 						if (entered.equals(confirmed.toString().toUpperCase())) {
 							_newName = confirmed.toString();
 							concatNames();
+						}
+					} else {
+						if (!name.equals("")) {
+							missingNames.add(name);
 						}
 					}
 				});
@@ -322,6 +330,11 @@ public class SelectPracticeController extends Controller {
 				disableButtons(false);
 				previewList.getItems().addAll(uploadedNames);
 				_selectedOrder.addAll(uploadedNames);
+			}
+			if (missingNames.size() > 0) {
+				String missingListFile = file.getName();
+				_mediator.setMissingNames(missingNames, missingListFile);
+				createPopUp("NoNameWarning", "WARNING: Names not found", 505, 462);
 			}
 		}
 	}
