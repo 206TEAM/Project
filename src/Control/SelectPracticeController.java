@@ -21,10 +21,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class SelectPracticeController extends Controller {
@@ -160,7 +157,11 @@ public class SelectPracticeController extends Controller {
 					_selectedOrder.add(selectedItem);
 					String newString = concatNameText.getText().substring(0, concatNameText.getText().length() - selectedItem.length() - 1);
 					concatNameText.setText(newString);
-					setLabelText(newString.substring(0, newString.lastIndexOf(' ')));
+					if (newString.contains(" ")) {
+						setLabelText(newString.substring(0, newString.lastIndexOf(' ')));
+					} else {
+						setLabelText("");
+					}
 				}
 				disableButtons(false);
 			}
@@ -385,17 +386,21 @@ public class SelectPracticeController extends Controller {
 	private void concatNames() {
 		String newFileName = _newName.replace(' ', '_');
 		if (Files.notExists(Paths.get("Temp/" + newFileName + ".wav"))) {
-
 			try {
 				Files.deleteIfExists(Paths.get("Temp/output.wav"));
 				Files.deleteIfExists(Paths.get("list.txt"));
+				Files.deleteIfExists(Paths.get("Temp/normalized.wav"));
+				Files.deleteIfExists(Paths.get("Temp/finalNormalized.wav"));
 				Files.createFile(Paths.get("list.txt"));
-				for (String name : _names) {
+				for (int i = 0; i < _names.size(); i++) {
+					String name = _names.get(i);
 					String fileName = pickBestOriginal(name);
 
-					String dir = "file 'Names/" + name + "/Original/" + fileName + "'\n";
-					Files.write(Paths.get("list.txt"), dir.getBytes(), StandardOpenOption.APPEND);
+					String dir = "Names/" + name + "/Original/" + fileName;
+					String line = "file 'Temp/finalNormalized" + i + ".wav'\n";
+					Files.write(Paths.get("list.txt"), line.getBytes(), StandardOpenOption.APPEND);
 
+					Media.normalizeVolume(dir, i);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
