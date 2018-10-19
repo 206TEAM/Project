@@ -2,7 +2,6 @@ package Control;
 
 import Model.Media;
 import Model.Original;
-import Model.Originals;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -14,7 +13,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -32,9 +30,9 @@ import java.util.stream.Stream;
 public class SelectPracticeController extends Controller {
 
 	@FXML public ListView<String> selectListView, previewList;
-	@FXML public Button go, uploadList, reset, add;
+	@FXML public Button go, uploadList, reset, add, concatAdd, clear;
 	@FXML public CheckBox shuffle;
-	@FXML public TextField search;
+	@FXML public TextField search, concatNameText;
 	@FXML public MenuButton sortBy;
 	@FXML public MenuItem selected, alphabetical;
 	@FXML public Label nameText;
@@ -52,9 +50,7 @@ public class SelectPracticeController extends Controller {
 		_selectedOrder = new ArrayList<>();
 		_currentPreviewList = new ArrayList<>();
 
-		List<String> names = _originals.listNames();
-
-		if (names.size() == 0) {
+		if (_allNames.size() == 0) {
 			selectListView.setVisible(false);
 		} else {
 			selectListView.setVisible(true);
@@ -62,35 +58,31 @@ public class SelectPracticeController extends Controller {
 			List<String> previouslySelected = _mediator.getPracticeMainList();
 			if (previouslySelected != null) {
 				if (previouslySelected.size() > 0) {
-					names.removeAll(previouslySelected);
+					_allNames.removeAll(previouslySelected);
 					ObservableList<String> previewNames = FXCollections.observableArrayList(previouslySelected);
 					previewList.setItems(previewNames);
 					disableButtons(false);
 				}
 			}
 
-			Collections.sort(names);
-			ObservableList<String> practiceNames = FXCollections.observableArrayList(names);
+			Collections.sort(_allNames);
+			ObservableList<String> practiceNames = FXCollections.observableArrayList(_allNames);
 			FilteredList<String> filteredList = new FilteredList<>(practiceNames, s -> true);
 			selectListView.setItems(filteredList);
 			selectListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
 			search.textProperty().addListener(((observable, oldValue, newValue) -> {
-				selectListView.setItems(filteredList);
-				if (!newValue.equals("") && !newValue.contains(" ")) {
+				if (!newValue.equals("")) {
 					add.setDisable(false);
 					searchListener(filteredList, newValue, selectListView);
 					selectListView.getSelectionModel().selectFirst();
-					setNameText("Enter another name to combine", Color.BLACK, true);
-				} else if (newValue.contains(" ")) {
-					selectListView.setItems(practiceNames);
-					setLabelText(newValue);
 				} else {
 					add.setDisable(true);
-					nameText.setText("");
 					selectListView.setItems(practiceNames);
 				}
 			}));
+
+			concatNameText.textProperty().addListener((observable, oldValue, newValue) -> setLabelText(newValue));
 		}
 	}
 
@@ -111,7 +103,7 @@ public class SelectPracticeController extends Controller {
 		}
 
 		_mediator.setPracticeMainList(practiceList);
-		_mediator.loadPane(ParentController.Type.HEADER,"PracticeMain");
+		_mediator.loadPane(ParentController.Type.HEADER, "PracticeMain");
 		_mediator.loadPane(ParentController.Type.PRACTICE, "PracticeRecord");
 		searchOpacity(true);
 	}
@@ -146,11 +138,32 @@ public class SelectPracticeController extends Controller {
 	public void listViewSelected(MouseEvent mouseEvent) {
 		String selectedItem = selectListView.getSelectionModel().getSelectedItem();
 		if (selectedItem != null) {
-			if (!previewList.getItems().contains(selectedItem)) {
-				previewList.getItems().add(selectedItem);
-				_selectedOrder.add(selectedItem);
+			int clickCount = mouseEvent.getClickCount();
+			if (clickCount == 1) {
+				String currString = concatNameText.getText();
+
+				if (currString.contains(" ") || currString.isEmpty()) {
+					currString = currString + selectedItem;
+				} else {
+					if (containsName(currString, _allNames)) {
+						currString = currString + " " + selectedItem;
+					} else {
+						currString = selectedItem;
+					}
+				}
+				concatNameText.setText(currString + " ");
+				setLabelText(currString);
+
+			} else if (clickCount > 1) {
+				if (!previewList.getItems().contains(selectedItem)) {
+					previewList.getItems().add(selectedItem);
+					_selectedOrder.add(selectedItem);
+					String newString = concatNameText.getText().substring(0, concatNameText.getText().length() - selectedItem.length() - 1);
+					concatNameText.setText(newString);
+					setLabelText(newString.substring(0, newString.lastIndexOf(' ')));
+				}
+				disableButtons(false);
 			}
-			disableButtons(false);
 		}
 		searchOpacity(true);
 	}
@@ -196,19 +209,17 @@ public class SelectPracticeController extends Controller {
 	}
 
 	private void setLabelText(String curName) {
-		List<String> allNames = _originals.listNames();
-
 		String[] names = curName.split("[ -]");
 		List<Character> splits = extractSplits(curName);// Get all spaces and hyphens only
 		StringBuilder confirmed = new StringBuilder();
 		_names = new ArrayList<>();
 
 		if (names.length == 1) {
-			setNameText("Enter another name to combine", Color.BLACK, true);
+			setNameText("Enter or click two or more names to combine them", Color.BLACK, true);
 		} else {
 			for (int i = 0; i < names.length; i++) {
 				String name = names[i];
-				if (!containsName(name, allNames)) {
+				if (!containsName(name, _allNames)) {
 					setNameText("\"" + name + "\" is not in the database", Color.RED, true);
 				} else {
 					name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
@@ -241,10 +252,11 @@ public class SelectPracticeController extends Controller {
 		return output;
 	}
 
-	private void setNameText(String text, Paint paint, boolean disableAdd) {
+	private void setNameText(String text, Paint paint, boolean disable) {
 		nameText.setText(text);
 		nameText.setTextFill(paint);
-		add.setDisable(disableAdd);
+		concatAdd.setDisable(disable);
+		clear.setDisable(disable);
 	}
 
 	public void selectedSort(ActionEvent actionEvent) {
@@ -269,7 +281,7 @@ public class SelectPracticeController extends Controller {
 		if (file != null) {
 			try (Stream<String> stream = Files.lines(file.toPath())) {
 				stream.forEach(e -> {
-					List<String> names = new ArrayList<>(_originals.listNames());
+					List<String> names = new ArrayList<>(_allNames);
 					if (containsName(e, names) && !containsName(e, previewList.getItems())) {
 						e = e.substring(0, 1).toUpperCase() + e.substring(1).toLowerCase();
 						uploadedNames.add(e);
@@ -295,6 +307,7 @@ public class SelectPracticeController extends Controller {
 	protected void addValue(String name) {
 		if (!previewList.getItems().contains(name)) {
 			previewList.getItems().add(name);
+			_selectedOrder.add(name);
 			disableButtons(false);
 		}
 	}
@@ -319,15 +332,12 @@ public class SelectPracticeController extends Controller {
 	}
 
 	private void addName() {
-		String name = search.getText();
-		if (name != null && !name.contains(" ")) {
-			name = selectListView.getSelectionModel().getSelectedItem();
+		String name = selectListView.getSelectionModel().getSelectedItem();
+		if (name != null) {
 			if (!containsName(name, previewList.getItems())) {
 				previewList.getItems().add(name);
 				_selectedOrder.add(name);
 			}
-		} else {
-			concatNames();
 		}
 	}
 
@@ -354,12 +364,19 @@ public class SelectPracticeController extends Controller {
 			_originals.addConcat(new Original(_newName, newFileName + ".wav"));
 		}
 
-		if (SelectPracticeController.getInstance() == null) {
-			List<String> list = new ArrayList<>();
-			list.add(_newName);
-			_mediator.setPracticeMainList(list);
-		} else {
-			_INSTANCE.addValue(_newName);
+		addValue(_newName);
+		concatNameText.clear();
+	}
+
+	public void concatAdd(ActionEvent actionEvent) {
+		if (!concatNameText.getText().isEmpty()) {
+			concatNames();
+		}
+	}
+
+	public void concatClear(ActionEvent actionEvent) {
+		if (!concatAdd.getText().isEmpty()) {
+			concatNameText.clear();
 		}
 	}
 }

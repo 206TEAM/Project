@@ -24,9 +24,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import javax.sound.sampled.*;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,6 +38,7 @@ import java.util.List;
 abstract class Controller implements Initializable {
 	public Mediator _mediator = Mediator.getInstance();
 	protected Originals _originals = Originals.getInstance();
+	protected List<String> _allNames = _originals.listNames();
 
 	protected ButtonType _yes;
 
