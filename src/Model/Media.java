@@ -97,7 +97,7 @@ public class Media {
 	}
 
 	public static void concatNames(String outputName) {
-		String command = "ffmpeg -f concat -safe 0 -i list.txt -c copy Temp/output.wav";
+		String command = "ffmpeg -f concat -safe 0 -i list.txt -c copy Temp/_output.wav";
 		process(command, CURRENT_DIRECTORY);
 		removeSilence(outputName);
 	}
@@ -117,12 +117,12 @@ public class Media {
 			System.out.println(difference);
 
 			String applyAdjusmentCommand = "ffmpeg -i " +file + " -filter:a \"volume=" + Math.abs(difference) +
-					"dB\" Temp/normalized" + num + ".wav";
+					"dB\" Temp/_normalized" + num + ".wav";
 
 			process(applyAdjusmentCommand, CURRENT_DIRECTORY);
 
 			// Normalize even more
-			String normalizeAgain = "ffmpeg -i Temp/normalized" + num + ".wav -filter:a loudnorm Temp/finalNormalized" + num + ".wav";
+			String normalizeAgain = "ffmpeg -i Temp/_normalized" + num + ".wav -filter:a loudnorm Temp/_finalNormalized" + num + ".wav";
 			process(normalizeAgain, CURRENT_DIRECTORY);
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
@@ -130,7 +130,7 @@ public class Media {
 	}
 
 	private static void removeSilence(String file) {
-		String command = "ffmpeg -hide_banner -i Temp/output.wav -af silenceremove=1:0:-50dB:1:5:-50dB:0:peak " +
+		String command = "ffmpeg -hide_banner -i Temp/_output.wav -af silenceremove=1:0:-50dB:1:5:-50dB:0:peak " +
 				"Temp/" + file + ".wav";
 		process(command, CURRENT_DIRECTORY);
 	}

@@ -16,6 +16,7 @@ import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -387,17 +388,25 @@ public class SelectPracticeController extends Controller {
 		String newFileName = _newName.replace(' ', '_');
 		if (Files.notExists(Paths.get("Temp/" + newFileName + ".wav"))) {
 			try {
-				Files.deleteIfExists(Paths.get("Temp/output.wav"));
+				final File tempFolder = new File("Temp");
+				// Only delete temp files (Not concatenated name files)
+				final File[] tempFiles = tempFolder.listFiles((dir, name) -> name.matches("^_.*"));
+				if (tempFiles != null) {
+					for (final File file : tempFiles) {
+						if (!file.delete()) {
+							System.err.println("File " + file.getName() + " could not be deleted");
+						}
+					}
+				}
 				Files.deleteIfExists(Paths.get("list.txt"));
-				Files.deleteIfExists(Paths.get("Temp/normalized.wav"));
-				Files.deleteIfExists(Paths.get("Temp/finalNormalized.wav"));
 				Files.createFile(Paths.get("list.txt"));
+
 				for (int i = 0; i < _names.size(); i++) {
 					String name = _names.get(i);
 					String fileName = pickBestOriginal(name);
 
 					String dir = "Names/" + name + "/Original/" + fileName;
-					String line = "file 'Temp/finalNormalized" + i + ".wav'\n";
+					String line = "file 'Temp/_finalNormalized" + i + ".wav'\n";
 					Files.write(Paths.get("list.txt"), line.getBytes(), StandardOpenOption.APPEND);
 
 					Media.normalizeVolume(dir, i);
