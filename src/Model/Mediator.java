@@ -149,6 +149,10 @@ public class Mediator {
 		fireDisableTable(type2, disable);
 	}
 
+	public void requestUpdate() {
+    	_practiceMain.updateOnRequest();
+	}
+
 	/**
 	 * Disables a table in {@link PracticeMainController} so that
 	 * the user cannot change their selection.

@@ -80,7 +80,7 @@ public class ChallengeCompareController extends ParentController {
 	    String name = _session.getCurrentName();
 	    String fileName = _mediator.getOriginalFilename();
 
-	    super.playFile(originalProgressText, playOriginal, originalProgressBar, fileName, name, _originals.getFileName(name).size());
+	   // todo super.playFile(originalProgressText, playOriginal, originalProgressBar, fileName, name, _originals.getFileName(name).size());
     }
 
     @FXML
@@ -90,7 +90,7 @@ public class ChallengeCompareController extends ParentController {
 	    String fileName = _session.getChallengeFile(name);
 	    String dir = "Names/" + name + "/Challenge/" + _session.getChallengeFile(name) + ".wav";
 	    Media media = new Media(Challenges.getInstance().getChallenge(name,fileName ));
-	    super.playFile(challengeProgressText, playChallenge, practiceProgressBar, dir, media);
+	    // todo super.playFile(challengeProgressText, playChallenge, practiceProgressBar, dir, media);
         correct.setDisable(false);
         wrong.setDisable(false);
     }
@@ -243,4 +243,5 @@ public class ChallengeCompareController extends ParentController {
             DifficultyRatings.getInstance().setRating(name, !difficulty);
         }
     }
+
 }

@@ -57,15 +57,15 @@ public class PracticeCompareController extends PracticeMainController implements
 
 	@FXML
 	public void playOriginal(ActionEvent actionEvent) {
-		super.playFile(originalProgressText, playOriginal, originalProgressBar,
-				_mediator.getOriginalFilename(), _mediator.getCurrentName(), _numVersions);
+//	todo	super.playFile(originalProgressText, playOriginal, originalProgressBar,
+//				_mediator.getOriginalFilename(), _mediator.getCurrentName(), _numVersions);
 		_mediator.fireDisableTable(TableType.VERSION, false);
 	}
 
 	@FXML
 	public void playPractice(ActionEvent actionEvent) {
 		String dir = "Temp/" + _currentPractice.getFileName() + ".wav";
-		super.playFile(practiceProgressText, playPractice, practiceProgressBar, dir, new Media(_currentPractice));
+//		todo super.playFile(practiceProgressText, playPractice, practiceProgressBar, dir, new Media(_currentPractice));
 		_mediator.fireDisableTable(TableType.VERSION, false);
 	}
 

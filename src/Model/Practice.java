@@ -49,7 +49,7 @@ public class Practice {
 		    e.printStackTrace();
 	    }
 
-	    String command = "ffmpeg -f alsa -i default -t 5 " + _fileName + ".wav";
+	    String command = "ffmpeg -f alsa -i default -t 15 " + _fileName + ".wav";
         File directory = getDirectory();
         Media.process(command, directory);
     }
