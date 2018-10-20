@@ -44,6 +44,7 @@ public class ListenController extends Controller {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //todo add listeners to each table and adjust progressText text accordingly
+        difficultyStar.setDisable(true);
 
         List<String> names = _originals.listNames();
 
@@ -60,6 +61,7 @@ public class ListenController extends Controller {
 
     @FXML
     public void selectName(MouseEvent event) {
+        difficultyStar.setDisable(false);
         //todo rating show
         String name = listView.getSelectionModel().getSelectedItem();
         nameLabel.setText(name);

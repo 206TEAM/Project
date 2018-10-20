@@ -20,8 +20,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * This class represents a list of challenges for each Name
- * _challengesRating is a hashmap that contains the Name as the key value, and challenge list for each name as the value.
+ * This class deals with the ratings of challenges and implements some algorithms that dictate the score of the
+ * users progress
+ *
+ * @author Lucy Chen
  */
 
 /**
@@ -38,7 +40,7 @@ public class ChallengeRatings extends Saving {
     private int _noOfSessions;
     private int _overallScore;
     private int _progress;
-    public static final int SCORELIMIT = 60;
+    public static final int SCORELIMIT = 60; //note that -1 is notattempted, 0 to 60 is badNames and 60 to 100 is goodNames
     public static final String SESSIONFILE = "NameRatings.txt";
 
     private final static ChallengeRatings instance = new ChallengeRatings();
@@ -53,19 +55,51 @@ public class ChallengeRatings extends Saving {
         _overallScore = 0;
         _progress = 0;
 
-
         List<String> names = Originals.getInstance().listNames();
 
         for (String name : names) {
-            _challengesRating.put(name, -1); //adding names
+            _challengesRating.put(name, -1);
             _notAttemptedNames.add(name);
         }
         updateModel();
-
     }
 
     public static ChallengeRatings getInstance() {
         return instance;
+    }
+
+    public int getProgress() {
+        return _progress;
+    }
+
+    /**
+     * score of a particular name.
+     */
+    public int getScore(String nameKey) {
+        return _challengesRating.get(nameKey);
+    }
+
+    /**
+     * This method reads from saved session text file and updates the fields
+     */
+    private void updateModel() {
+        try {
+            _noOfSessions = Integer.parseInt(getSaved(SESSIONFILE, "_noOfSessions"));
+            _overallScore = Integer.parseInt(getSaved(SESSIONFILE, "_overallScore"));
+            _progress = Integer.parseInt(getSaved(SESSIONFILE, "_progress"));
+            _goodNames = getList(SESSIONFILE, "_goodNames");
+            _badNames = getList(SESSIONFILE, "_badNames");
+
+            for (String name : _goodNames) {
+                updateAverage(name, true);
+            }
+            for (String name : _badNames) {
+                updateAverage(name, false);
+            }
+
+        } catch (Exception e) {
+            //todo
+        }
     }
 
     public int getOverallScore() {
@@ -93,13 +127,19 @@ public class ChallengeRatings extends Saving {
         updateAverage(nameKey, rating);
     }
 
+    /**
+     * returns the rating for challenge given name and fileName
+     * @param nameKey
+     * @param fileName
+     * @return
+     */
     public Boolean getRating(String nameKey, String fileName) {
         Challenge challenge = Challenges.getInstance().getChallenge(nameKey, fileName);
         return challenge.getRating();
     }
 
     /**
-     * This method takes the new rating
+     * This method takes the new rating and
      * calculates the score for the particular namekey, adds value to hashmap
      * and puts the name into the correct list through helper methods.
      */
@@ -126,6 +166,12 @@ public class ChallengeRatings extends Saving {
         handleList(currentAvg, newAvg, nameKey); //updates the list
     }
 
+    /**
+     * this is a helper method that puts the name into the right list based on their old and new score
+     * @param oldScore
+     * @param newScore
+     * @param nameKey
+     */
     private void handleList(int oldScore, int newScore, String nameKey) {
         if (getList(newScore) != getList(oldScore)) {
             if (getList(oldScore) != null) {
@@ -137,6 +183,12 @@ public class ChallengeRatings extends Saving {
         }
     }
 
+    /**
+     * helper method that returns the list based on the average score of the name
+     * can be _badNames or _goodNames (based on scorelimit).
+     * @param average
+     * @return
+     */
     private List<String> getList(int average) {
         if (average == -1) {
             return null;
@@ -158,45 +210,9 @@ public class ChallengeRatings extends Saving {
         _overallScore = newAvg;
     }
 
-    public int getProgress() {
-        return _progress;
-    }
-
     /**
-     * score of a particular name.
+     * public method that writes all the fields and values to a text file
      */
-    public int getScore(String nameKey) {
-        return _challengesRating.get(nameKey);
-    }
-
-    /**
-     * This method reads from saved session text file and updates the hashmap
-     * AND the lists
-     */
-    private void updateModel() {
-        try {
-            _noOfSessions = Integer.parseInt(getSaved(SESSIONFILE, "_noOfSessions"));
-            _overallScore = Integer.parseInt(getSaved(SESSIONFILE, "_overallScore"));
-            _progress = Integer.parseInt(getSaved(SESSIONFILE, "_progress"));
-
-            _goodNames = getList(SESSIONFILE, "_goodNames");
-            _badNames = getList(SESSIONFILE, "_badNames");
-
-            System.out.println(_goodNames.size());
-
-            for (String name : _goodNames) {
-                updateAverage(name, true);
-            }
-
-            for (String name : _badNames) {
-                updateAverage(name, false);
-            }
-        } catch (Exception e) {
-            //todo
-        }
-
-    }
-
     public void saveSession() {
 
         List<String> params = new ArrayList<String>();
@@ -217,6 +233,9 @@ public class ChallengeRatings extends Saving {
         saveSession(SESSIONFILE, params);
     }
 
+    /**
+     * this method resets all the fields and variables to the default settings
+     */
     public void reset() {
         _noOfSessions = 0;
         _overallScore = 0;
@@ -231,10 +250,7 @@ public class ChallengeRatings extends Saving {
             _challengesRating.put(name, -1); //adding names
             _notAttemptedNames.add(name);
         }
-
     }
-
-
 }
 
 
