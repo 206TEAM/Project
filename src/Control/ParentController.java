@@ -1,9 +1,17 @@
 package Control;
 
+import Ratings.ChallengeRatings;
+import Ratings.DifficultyRatings;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * Represents all classes which can contain Sub-scenes.
@@ -29,4 +37,22 @@ public abstract class ParentController extends Controller {
 	}
 
 	public abstract void loadPane(String page);
+
+	protected void donePopUp(String headerText) {
+		ButtonType ok = new ButtonType("Ok", ButtonBar.ButtonData.APPLY);
+		Alert alert = createAlert(Alert.AlertType.INFORMATION, "Action complete", headerText, "",
+				new ButtonType[]{ok});
+		Optional<ButtonType> result = alert.showAndWait();
+
+		if (result.get() == ok) {
+			alert.close();
+		}
+	}
+
+	@FXML
+	protected void save(ActionEvent actionEvent) {
+		donePopUp("Your progress has been saved");
+		ChallengeRatings.getInstance().saveSession();
+		DifficultyRatings.getInstance().saveSession();
+	}
 }

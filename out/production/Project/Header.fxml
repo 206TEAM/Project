@@ -14,9 +14,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.HeaderController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.HeaderController">
    <children>
-      <Pane prefHeight="80.0" prefWidth="600.0" style="-fx-background-color: #1e1e1e;">
+      <Pane layoutX="150.0" layoutY="20.0" prefHeight="80.0" prefWidth="600.0" scaleX="1.5" scaleY="1.5" style="-fx-background-color: #1e1e1e;">
          <children>
             <Text fx:id="home" fill="WHITE" layoutX="218.0" layoutY="36.0" onMouseClicked="#home" onMouseEntered="#homeHovered" onMouseExited="#homeExited" strokeType="OUTSIDE" strokeWidth="0.0" text="Name Sayer">
                <font>
@@ -32,7 +32,7 @@
                   <Font name="DejaVu Sans Bold" size="17.0" />
                </font>
             </Text>
-            <Line endX="268.0" layoutX="332.0" layoutY="80.0" startX="-332.0" stroke="WHITE" strokeWidth="4.0" />
+            <Line endX="268.0" layoutX="330.0" layoutY="80.0" startX="-332.0" stroke="WHITE" strokeWidth="4.0" />
             <Button fx:id="micTest" layoutX="543.0" layoutY="24.0" mnemonicParsing="false" onAction="#micTest" onMouseEntered="#micHovered" onMouseExited="#micExited" prefHeight="32.0" prefWidth="15.0" style="-fx-background-color: #1e1e1e;">
                <graphic>
                   <ImageView fx:id="micImage" fitHeight="26.0" fitWidth="25.0" preserveRatio="true">
@@ -50,8 +50,8 @@
             </Button>
             <MenuButton fx:id="settings" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: #1e1e1e;">
               <items>
-                <MenuItem fx:id="save" mnemonicParsing="false" text="Save session" onAction="#save"/>
-                <MenuItem fx:id="reset" mnemonicParsing="false" text="Reset progress" onAction="#reset" />
+                <MenuItem fx:id="save" mnemonicParsing="false" onAction="#save" text="Save session" />
+                <MenuItem fx:id="reset" mnemonicParsing="false" onAction="#reset" text="Reset progress" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="help" mnemonicParsing="false" onAction="#help" text="Help" />
                   <SeparatorMenuItem mnemonicParsing="false" />
@@ -70,6 +70,6 @@
             </MenuButton>
          </children>
       </Pane>
-      <Pane fx:id="headerPane" layoutY="80.0" prefHeight="320.0" prefWidth="600.0" />
+      <Pane fx:id="headerPane" layoutY="120.0" prefHeight="360.0" prefWidth="900.0" />
    </children>
 </AnchorPane>

@@ -1,6 +1,7 @@
 package Control;
 
 import Ratings.ChallengeRatings;
+import Ratings.DifficultyRatings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -119,4 +120,5 @@ public class MainMenuController extends ParentController implements MicTesterCon
 			micTestLabel.setFill(Color.DARKGREEN);
 		}
 	}
+
 }

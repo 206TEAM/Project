@@ -7,26 +7,26 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="248.0" prefWidth="400.0" style="-fx-background-color: #d9d9d9;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.PracticeCompareController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="372.0" prefWidth="600.0" style="-fx-background-color: #d9d9d9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.PracticeCompareController">
    <children>
-      <ProgressBar fx:id="originalProgressBar" layoutX="101.0" layoutY="55.0" prefHeight="30.0" prefWidth="200.0" progress="0.0">
+      <ProgressBar fx:id="originalProgressBar" layoutX="222.0" layoutY="110.0" prefHeight="30.0" prefWidth="200.0" progress="0.0" scaleX="1.5" scaleY="1.5">
          <effect>
             <ColorAdjust brightness="0.12" contrast="0.56" hue="-0.47" saturation="-0.14" />
          </effect>
       </ProgressBar>
-      <Button fx:id="playOriginal" layoutX="72.0" layoutY="57.0" mnemonicParsing="false" onAction="#playOriginal" prefHeight="20.0" prefWidth="29.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="▶️" textFill="#00ff12" />
-      <ProgressBar fx:id="practiceProgressBar" layoutX="101.0" layoutY="109.0" prefHeight="30.0" prefWidth="200.0" progress="0.0">
+      <Button fx:id="playOriginal" layoutX="136.0" layoutY="112.0" mnemonicParsing="false" onAction="#playOriginal" prefHeight="20.0" prefWidth="29.0" scaleX="1.5" scaleY="1.5" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="▶️" textFill="#00ff12" />
+      <ProgressBar fx:id="practiceProgressBar" layoutX="222.0" layoutY="179.0" prefHeight="30.0" prefWidth="200.0" progress="0.0" scaleX="1.5" scaleY="1.5">
          <effect>
             <ColorAdjust brightness="0.12" contrast="0.56" hue="-0.06" saturation="-0.14" />
          </effect>
       </ProgressBar>
-      <Button fx:id="playPractice" layoutX="72.0" layoutY="111.0" mnemonicParsing="false" onAction="#playPractice" prefHeight="20.0" prefWidth="29.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="▶️" textFill="#00ff12" />
-      <Button fx:id="next" layoutX="143.0" layoutY="167.0" mnemonicParsing="false" onAction="#next" prefHeight="39.0" prefWidth="115.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Next" textFill="#ff9900">
+      <Button fx:id="playPractice" layoutX="136.0" layoutY="181.0" mnemonicParsing="false" onAction="#playPractice" prefHeight="20.0" prefWidth="29.0" scaleX="1.5" scaleY="1.5" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="▶️" textFill="#00ff12" />
+      <Button fx:id="next" layoutX="243.0" layoutY="270.0" mnemonicParsing="false" onAction="#next" prefHeight="39.0" prefWidth="115.0" scaleX="1.5" scaleY="1.5" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Next" textFill="#ff9900">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Text fx:id="originalProgressText" fill="#1e1e1e" layoutX="101.0" layoutY="75.0" text="Play Original" textAlignment="CENTER" wrappingWidth="200.0" />
-      <Text fx:id="practiceProgressText" fill="#1e1e1e" layoutX="101.0" layoutY="129.0" text="Play Practice" textAlignment="CENTER" wrappingWidth="200.0" />
+      <Text fx:id="originalProgressText" fill="#1e1e1e" layoutX="222.0" layoutY="130.0" scaleX="1.5" scaleY="1.5" text="Play Original" textAlignment="CENTER" wrappingWidth="200.0" />
+      <Text fx:id="practiceProgressText" fill="#1e1e1e" layoutX="222.0" layoutY="199.0" scaleX="1.5" scaleY="1.5" text="Play Practice" textAlignment="CENTER" wrappingWidth="200.0" />
    </children>
 </AnchorPane>

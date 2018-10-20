@@ -200,23 +200,5 @@ public class HeaderController extends ParentController {
 		}
 	}
 
-	@FXML
-	public void save(ActionEvent actionEvent) {
-		donePopUp("Your progress has been saved");
-		ChallengeRatings.getInstance().saveSession();
-		DifficultyRatings.getInstance().saveSession();
-	}
-
-	private void donePopUp(String headerText) {
-		ButtonType ok = new ButtonType("Ok", ButtonBar.ButtonData.APPLY);
-		Alert alert = createAlert(Alert.AlertType.INFORMATION, "Action complete", headerText, "",
-				new ButtonType[]{ok});
-		Optional<ButtonType> result = alert.showAndWait();
-
-		if (result.get() == ok) {
-			alert.close();
-		}
-	}
-
 
 }
