@@ -65,18 +65,18 @@ public class SelectPracticeController extends Controller {
 
 			Collections.sort(_allNames);
 			ObservableList<String> practiceNames = FXCollections.observableArrayList(_allNames);
+
 			FilteredList<String> filteredList = new FilteredList<>(practiceNames, s -> true);
 			selectListView.setItems(filteredList);
 			selectListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
 			search.textProperty().addListener(((observable, oldValue, newValue) -> {
+				searchListener(filteredList, newValue, selectListView);
 				if (!newValue.equals("")) {
 					add.setDisable(false);
-					searchListener(filteredList, newValue, selectListView);
 					selectListView.getSelectionModel().selectFirst();
 				} else {
 					add.setDisable(true);
-					selectListView.setItems(practiceNames);
 				}
 			}));
 
@@ -194,14 +194,6 @@ public class SelectPracticeController extends Controller {
 		searchOpacity(false);
 	}
 
-	//TODO can make it so it removes from select practice. Requires a bit of work... not sure if necessary.
-//	private void transferListItem(ListView<String> removeFrom, ListView<String> addTo) {
-//		String toAdd = removeFrom.getSelectionModel().getSelectedItem();
-//		if (toAdd != null) {
-//			addTo.getItems().add(toAdd);
-//			removeFrom.getItems().remove(toAdd);
-//		}
-//	}
 	private void searchOpacity(boolean on) {
 		if (on) {
 			search.setOpacity(1.0);
@@ -286,8 +278,7 @@ public class SelectPracticeController extends Controller {
 		if (file != null) {
 			try (Stream<String> stream = Files.lines(file.toPath())) {
 				stream.forEach(name -> {
-					List<String> names = new ArrayList<>(_allNames);
-					if (containsName(name, names) && !containsName(name, previewList.getItems())) {
+					if (containsName(name, _allNames) && !containsName(name, previewList.getItems())) {
 						name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
 						uploadedNames.add(name);
 					} else if (name.contains(" ") || name.contains("-")) {
@@ -320,7 +311,9 @@ public class SelectPracticeController extends Controller {
 						}
 					} else {
 						if (!name.equals("")) {
-							missingNames.add(name);
+							if (!containsName(name, _allNames)) {
+								missingNames.add(name);
+							}
 						}
 					}
 				});
@@ -401,16 +394,28 @@ public class SelectPracticeController extends Controller {
 				Files.deleteIfExists(Paths.get("list.txt"));
 				Files.createFile(Paths.get("list.txt"));
 
-				for (int i = 0; i < _names.size(); i++) {
-					String name = _names.get(i);
-					String fileName = pickBestOriginal(name);
+				Thread thread = new Thread(new Runnable() {
+					@Override
+					public void run() {
+						for (int i = 0; i < _names.size(); i++) {
+							try { String name = _names.get(i);
+								String fileName = pickBestOriginal(name);
 
-					String dir = "Names/" + name + "/Original/" + fileName;
-					String line = "file 'Temp/_finalNormalized" + i + ".wav'\n";
-					Files.write(Paths.get("list.txt"), line.getBytes(), StandardOpenOption.APPEND);
+								String dir = "Names/" + name + "/Original/" + fileName;
+								String line = "file 'Temp/_finalNormalized" + i + ".wav'\n";
 
-					Media.normalizeVolume(dir, i);
-				}
+								Files.write(Paths.get("list.txt"), line.getBytes(), StandardOpenOption.APPEND);
+								Media.normalizeVolume(dir, i);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+
+
+						}
+					}
+				});
+				thread.setDaemon(true);
+				thread.start();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
