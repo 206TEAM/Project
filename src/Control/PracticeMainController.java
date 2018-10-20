@@ -47,7 +47,7 @@ public class PracticeMainController extends ParentController {
 
 	@FXML
 	public void add(ActionEvent actionEvent) {
-		_mediator.loadPane(Type.HEADER, "Practice1");
+		_mediator.loadPane(Type.HEADER, "SelectPractices");
 	}
 
 	@FXML
