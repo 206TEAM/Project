@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 public class MainMenuController extends ParentController implements MicTesterController {
 	@FXML public Button practice, challenge, listen, stats, help;
 	@FXML public AnchorPane mainPane;
-	@FXML public Text micTestLabel, helpLabel, settingsLabel;
+	@FXML public Text micTestLabel, helpLabel, settingsLabel, micLabel;
 	@FXML public Label averageSuccessLabel, progressLabel;
 	@FXML public MenuButton settings;
 	@FXML public MenuItem save, reset, quit;
@@ -115,6 +115,8 @@ public class MainMenuController extends ParentController implements MicTesterCon
 		if ((10*rms) > 0) {
 			micTestLabel.setText("Your microphone is good to go!");
 			micTestLabel.setFill(Color.DARKGREEN);
+			micLabel.setText("✔️");
+			micLabel.setFill(Color.DARKGREEN);
 		}
 	}
 

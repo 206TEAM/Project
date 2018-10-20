@@ -1,5 +1,7 @@
 package Main;
 
+import Control.ParentController;
+import Model.Mediator;
 import Model.Originals;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

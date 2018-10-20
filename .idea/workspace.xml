@@ -2,7 +2,123 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0cc29b0-2ec1-4ce3-9151-d827d483beaa" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Control/StatsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Control/StatsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Ahn/Challenge/AhnChallenge1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Ahn/Original/se206_18-5-2018_12-13-0_Ahn.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Antony/Original/se206_21-5-2018_14-9-29_Antony.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Ardern/Original/se206_27-4-2018_16-8-10_Ardern.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Beena/Original/se206_21-5-2018_14-8-47_Beena.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Bruce/Original/se206_23-8-2018_21-11-36_Bruce.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Catherine/Original/se206_27-4-2018_16-2-23_Catherine.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Chamara/Original/se206_18-5-2018_12-57-27_Chamara.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Chen/Original/se206_16-5-2018_23-37-41_Chen2.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Chen/Original/se206_30-4-2018_11-21-35_chen1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Deepika/Original/se206_21-5-2018_14-9-57_Deepika.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Dylan/Original/se206_18-5-2018_13-0-46_Dylan.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Eleanor/Original/se206_27-4-2018_15-56-37_Eleanor.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Eng/Challenge/EngChallenge1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Eng/Challenge/EngChallenge2.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Eng/Challenge/EngChallenge3.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Eng/Challenge/EngChallenge4.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Eng/Original/se206_30-4-2018_9-52-26_Eng.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Eric/Challenge/EricChallenge1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Eric/Original/se206_30-4-2018_11-23-36_eric.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Francis/Original/se206_27-4-2018_16-18-3_Francis.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/George/Original/se206_17-5-2018_18-57-1_george.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Hall/Challenge/HallChallenge1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Hall/Challenge/HallChallenge2.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Hall/Challenge/HallChallenge3.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Hall/Original/se206_18-5-2018_13-1-14_Hall.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Hanyu/Original/se206_17-5-2018_14-29-11_Hanyu.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Hywel/Original/se206_27-4-2018_20-3-38_hywel.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Ian/Original/se206_17-5-2018_17-15-48_Ian.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Isabella/Original/se206_18-5-2018_12-8-46_Isabella.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Izzy/Original/se206_18-5-2018_12-9-17_Izzy.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Jacinda/Original/se206_27-4-2018_16-7-40_Jacinda.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/James/Original/se206_18-5-2018_16-8-4_James.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Jesin/Original/se206_18-5-2018_16-7-33_Jesin.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Jiaqiu/Original/se206_17-5-2018_14-13-49_Jiaqiu.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Jonathan/Original/se206_2-5-2018_15-47-27_Jonathan2.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Jonathan/Original/zkon584_2-5-2018_15-26-44_jonathan1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Junyan/Original/se206_16-5-2018_23-34-53_Junyan.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Kachun/Original/se206_17-5-2018_14-43-7_Kachun.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Kalana/Original/se206_18-5-2018_12-58-21_Kalana.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Kun/Challenge/KunChallenge1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Kun/Challenge/KunChallenge2.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Kun/Challenge/KunChallenge3.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Kun/Original/se206_17-5-2018_14-30-38_Kun.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Lam/Challenge/LamChallenge1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Lam/Original/se206_17-5-2018_14-43-55_Lam.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Lee/Challenge/LeeChallenge1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Lee/Original/se206_18-5-2018_11-8-55_Lee1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Lee/Original/se206_23-8-2018_20-42-12_Lee2.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Li/Challenge/LiChallenge1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Li/Original/se206_17-5-2018_12-3-36_Li1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Li/Original/se206_17-5-2018_12-5-59_Li3.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Li/Original/se206_17-5-2018_12-7-35_Li2.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Lin/Original/se206_17-5-2018_14-33-23_Lin.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Louis/Original/se206_17-5-2018_18-57-48_Louis.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Ma/Challenge/MaChallenge1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Ma/Challenge/MaChallenge2.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Ma/Original/se206_17-5-2018_14-27-14_Ma.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Macdonald/Original/se206_23-8-2018_21-13-35_MacDonald.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Maggie/Original/se206_18-5-2018_11-6-43_maggie.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Mason/Original/se206_2-5-2018_15-23-50_Mason.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Melvin/Original/se206_18-5-2018_16-8-39_Melvin.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Ngo/Challenge/NgoChallenge1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Ngo/Original/se206_18-5-2018_11-7-31_Ngo.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Nicholas/Original/se206_30-4-2018_9-42-4_Nicholas.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Patricia/Original/se206_17-5-2018_17-20-26_Patricia.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Paul/Challenge/PaulChallenge1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Paul/Original/se206_18-5-2018_16-9-14_Paul.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Rajagopal/Original/se206_21-5-2018_14-10-29_Rajagopal.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Ratnayake/Original/se206_18-5-2018_12-59-6_Ratnayake.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Ruozi/Original/se206_17-5-2018_14-28-6_Ruozi.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Saereem/Original/se206_18-5-2018_12-12-37_Saereem.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Sean/Original/se206_23-8-2018_20-13-44_sean.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Shen/Original/se206_17-5-2018_14-23-8_Shen.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Shi/Challenge/ShiChallenge1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Shi/Original/se206_2-5-2018_15-31-49_Shi.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Shields/Original/se206_18-5-2018_12-10-9_Shields.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Stoakes/Original/se206_27-4-2018_20-7-45_stoakes.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Sueyeon/Original/se206_18-5-2018_11-8-6_Sueyeon.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Tang/Original/se206_30-4-2018_11-20-3_tang.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Thorpe/Original/se206_27-4-2018_15-52-6_Thorpe2.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Thorpe/Original/se206_27-4-2018_16-4-11_Thorpe1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Tina/Challenge/TinaChallenge1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Tina/Challenge/TinaChallenge2.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Tina/Original/se206_17-5-2018_14-34-30_Tina.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Wang/Challenge/WangChallenge1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Wang/Challenge/WangChallenge2.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Wang/Challenge/WangChallenge3.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Wang/Original/se206_17-5-2018_14-31-7_Wang.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Watson/Original/se206_27-4-2018_15-54-26_Watson.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Wei/Challenge/WeiChallenge1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Wei/Original/se206_30-4-2018_11-22-50_wei.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/William/Original/se206_23-8-2018_20-38-49_William1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/William/Original/se206_27-4-2018_16-5-35_William2.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Word/Original/se206_8-6-2018_1-58-21_word.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Xiaoran/Original/se206_17-5-2018_14-26-41_Xiaoran.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Xuyun/Original/se206_4-5-2018_15-56-40_Xuyun.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Yenting/Original/se206_17-5-2018_14-32-54_Yenting.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Yeting/Original/se206_17-5-2018_14-25-5_Yeting.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Yichen/Original/se206_30-4-2018_11-20-46_yichen.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Ying/Original/se206_17-5-2018_14-29-56_Ying.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Zhan/Original/se206_17-5-2018_14-24-2_Zhan.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Zhang/Original/se206_17-5-2018_14-28-39_Zhang2.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Zhang/Original/se206_4-5-2018_16-1-13_Zhang1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Zhao/Original/se206_17-5-2018_14-15-7_Zhao.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Zhu/Challenge/ZhuChallenge1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Names/Zhu/Original/se206_17-5-2018_14-25-56_Zhu.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ratings.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Ratings.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/list.txt" beforeDir="false" afterPath="$PROJECT_DIR$/list.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project/Main/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project/Main/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project/MainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project/MainMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/MainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/resources/MainMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Control/HeaderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Control/HeaderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Control/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Control/MainMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Control/ParentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Control/ParentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/Main.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,8 +133,9 @@
         <counts>
           <entry key="project.closed" value="1" />
           <entry key="project.open.time.11" value="1" />
+          <entry key="project.open.time.17" value="1" />
           <entry key="project.open.time.6" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -28,46 +145,61 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="fxml" value="1" />
-          <entry key="java" value="39" />
-          <entry key="txt" value="1" />
+          <entry key="fxml" value="8" />
+          <entry key="java" value="46" />
+          <entry key="png" value="1" />
+          <entry key="txt" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="39" />
-          <entry key="PLAIN_TEXT" value="1" />
-          <entry key="XML" value="1" />
+          <entry key="Image" value="1" />
+          <entry key="JAVA" value="46" />
+          <entry key="PLAIN_TEXT" value="2" />
+          <entry key="XML" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="7816" />
+          <entry key="fxml" value="12" />
+          <entry key="java" value="7944" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="7816" />
+          <entry key="JAVA" value="7944" />
+          <entry key="XML" value="12" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Model/ChallengeSession.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="522">
-              <caret line="150" column="71" selection-start-line="150" selection-start-column="71" selection-end-line="150" selection-end-column="71" />
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/MainMenu.fxml">
+          <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
+          <provider editor-type-id="text-editor">
+            <state relative-caret-position="381">
+              <caret line="72" column="104" selection-start-line="72" selection-start-column="104" selection-end-line="72" selection-end-column="104" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Control/StatsController.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Control/MainMenuController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
-              <caret line="88" column="72" selection-start-line="88" selection-start-column="72" selection-end-line="88" selection-end-column="72" />
+            <state relative-caret-position="2291">
+              <caret line="110" column="5" selection-start-line="110" selection-start-column="5" selection-end-line="110" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/Header.fxml">
+          <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
+          <provider editor-type-id="text-editor">
+            <state relative-caret-position="1421">
+              <caret line="49" column="21" lean-forward="true" selection-start-line="35" selection-start-column="12" selection-end-line="49" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -75,32 +207,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Control/HeaderController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4044">
-              <caret line="200" column="44" selection-start-line="200" selection-start-column="44" selection-end-line="200" selection-end-column="44" />
+            <state relative-caret-position="2088">
+              <caret line="99" column="5" selection-start-line="99" selection-start-column="5" selection-end-line="99" selection-end-column="5" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Control/ChallengePlayController.java">
+        <entry file="file://$PROJECT_DIR$/src/Control/ParentController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="132" column="12" selection-start-line="132" selection-start-column="12" selection-end-line="132" selection-end-column="12" />
+            <state relative-caret-position="493">
+              <caret line="48" column="5" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
               <folding>
-                <element signature="e#1703#1704#0" expanded="true" />
-                <element signature="e#1790#1791#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Model/Media.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1002">
-              <caret line="156" selection-start-line="156" selection-end-line="156" />
-              <folding>
-                <element signature="e#4936#4937#0" expanded="true" />
+                <element signature="e#1257#1258#0" expanded="true" />
+                <element signature="e#1315#1316#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -123,6 +243,9 @@
       <find>nameSelected</find>
       <find>null</find>
       <find>_challengeList</find>
+      <find>settings</find>
+      <find>image</find>
+      <find>setting</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -136,9 +259,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/Control/MainMenuController.java" />
-        <option value="$PROJECT_DIR$/src/Control/HeaderController.java" />
-        <option value="$PROJECT_DIR$/src/Control/ParentController.java" />
         <option value="$PROJECT_DIR$/src/Save/Saving.java" />
         <option value="$PROJECT_DIR$/src/Ratings/ChallengeRatings.java" />
         <option value="$PROJECT_DIR$/src/Ratings/DifficultyRatings.java" />
@@ -151,6 +271,11 @@
         <option value="$PROJECT_DIR$/src/Control/ChallengePlayController.java" />
         <option value="$PROJECT_DIR$/src/Model/ChallengeSession.java" />
         <option value="$PROJECT_DIR$/src/Control/StatsController.java" />
+        <option value="$PROJECT_DIR$/src/Main/Main.java" />
+        <option value="$PROJECT_DIR$/src/Control/HeaderController.java" />
+        <option value="$PROJECT_DIR$/src/Control/ParentController.java" />
+        <option value="$PROJECT_DIR$/src/Control/MainMenuController.java" />
+        <option value="$PROJECT_DIR$/resources/MainMenu.fxml" />
       </list>
     </option>
   </component>
@@ -165,20 +290,12 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="Project" type="b2602c69:ProjectViewProjectNode" />
               <item name="Project" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project" type="462c0819:PsiDirectoryNode" />
-              <item name=".idea" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Project" type="b2602c69:ProjectViewProjectNode" />
@@ -202,32 +319,17 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Main" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Ratings" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Save" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540015873234" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540024910967" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
@@ -277,7 +379,7 @@
     <frame x="134" y="35" width="2746" height="1585" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2535741" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25771257" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -323,24 +425,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Control/MainMenuController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="105" column="47" lean-forward="true" selection-start-line="105" selection-start-column="47" selection-end-line="105" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Model/Originals.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="241">
           <caret line="276" column="47" selection-start-line="276" selection-start-column="39" selection-end-line="276" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Control/ParentController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-135">
-          <caret line="58" column="18" selection-start-line="58" selection-start-column="18" selection-end-line="58" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -350,9 +438,6 @@
           <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/list.txt">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Ratings/ChallengeRatings.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -407,13 +492,6 @@
       <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Control/HeaderController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4044">
-          <caret line="200" column="44" selection-start-line="200" selection-start-column="44" selection-end-line="200" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Control/HelperController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
@@ -456,17 +534,90 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/ChallengeSession.java">
+    <entry file="file://$PROJECT_DIR$/src/Control/StatsController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="522">
-          <caret line="150" column="71" selection-start-line="150" selection-start-column="71" selection-end-line="150" selection-end-column="71" />
+        <state relative-caret-position="508">
+          <caret line="94" column="5" lean-forward="true" selection-start-line="94" selection-start-column="5" selection-end-line="94" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Control/StatsController.java">
+    <entry file="file://$PROJECT_DIR$/src/Main/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="88" column="72" selection-start-line="88" selection-start-column="72" selection-end-line="88" selection-end-column="72" />
+        <state relative-caret-position="337">
+          <caret line="29" column="29" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/ChallengeSession.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="464">
+          <caret line="21" column="11" lean-forward="true" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Control/PopupController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="609">
+          <caret line="40" column="28" selection-start-line="40" selection-start-column="28" selection-end-line="40" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/list.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/MicTest.fxml">
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
+      <provider editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/NoNameWarning.fxml">
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
+      <provider editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/microphone.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/ChallengeMain.fxml">
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
+      <provider editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Control/HeaderController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2088">
+          <caret line="99" column="5" selection-start-line="99" selection-start-column="5" selection-end-line="99" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Control/ParentController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="48" column="5" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
+          <folding>
+            <element signature="e#1257#1258#0" expanded="true" />
+            <element signature="e#1315#1316#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/Header.fxml">
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="1421">
+          <caret line="49" column="21" lean-forward="true" selection-start-line="35" selection-start-column="12" selection-end-line="49" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Control/MainMenuController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2291">
+          <caret line="110" column="5" selection-start-line="110" selection-start-column="5" selection-end-line="110" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/MainMenu.fxml">
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="72" column="104" selection-start-line="72" selection-start-column="104" selection-end-line="72" selection-end-column="104" />
         </state>
       </provider>
     </entry>

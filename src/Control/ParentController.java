@@ -43,6 +43,11 @@ public abstract class ParentController extends Controller {
 
 	public abstract void loadPane(String page);
 
+	@FXML
+	public void micTest(ActionEvent actionEvent) {
+		createPopUp("MicTest", "Microphone Test", 675, 389);
+	}
+
 	protected void donePopUp(String headerText) {
 		ButtonType ok = new ButtonType("Ok", ButtonBar.ButtonData.APPLY);
 		Alert alert = createAlert(Alert.AlertType.INFORMATION, "Action complete", headerText, "",

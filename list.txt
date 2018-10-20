@@ -1,2 +1,3 @@
 file 'Temp/_finalNormalized0.wav'
 file 'Temp/_finalNormalized1.wav'
+file 'Temp/_finalNormalized2.wav'
