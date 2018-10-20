@@ -1,8 +1,6 @@
 package Ratings;
-
-import Model.Challenge;
-import Model.Challenges;
 import Model.Originals;
+import Save.Saving;
 
 import java.util.*;
 
@@ -10,7 +8,7 @@ import java.util.*;
  * This class represents difficulty in names
  * _nameRatings is a hashmap that contains the Name as the key value, and challenge list for each name as the value.
  */
-public class DifficultyRatings {
+public class DifficultyRatings extends Saving {
 
     private HashMap<String, Boolean> _nameRatings; //legit difficulty rating for each name
 
@@ -127,6 +125,17 @@ public class DifficultyRatings {
      * AND the lists
      */
     private void updateModel() { //todo
+        try {
+
+            List<String> list = getList(ChallengeRatings.SESSIONFILE, "difficultNames");
+            for (String name : list){
+                _nameRatings.put(name,true);
+                setRating(name, true);
+            }
+
+        } catch (Exception e) {
+            //todo
+        }
     }
 
     /**
@@ -224,7 +233,17 @@ public class DifficultyRatings {
         return challengeList;
     }
 
+    public void saveSession() {
+
+        List<String> params = new ArrayList<String>();
+
+        for (String name : _nameRatings.keySet()){
+            if (_nameRatings.get(name)==true){
+                params.add("difficultNames &" + name + "&");
+            }
+        }
+        saveSession(ChallengeRatings.SESSIONFILE, params);
+    }
+
+
 }
-
-
-

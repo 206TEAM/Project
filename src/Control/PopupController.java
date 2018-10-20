@@ -46,8 +46,10 @@ public class PopupController implements Initializable {
 
     @FXML
     private void add(ActionEvent event) { //todo make it so that it redos the stuff the user has selected
+        System.out.println("challenge list is "+_session.getChallengeList());
         ChallengeSession newSession = new ChallengeSession(_session.getChallengeList());
         _mediator.setChallengeSession(newSession);
+        Mediator.getInstance().setInChallengeSession();
         _mediator.loadPane(ParentController.Type.MAIN, "Header");
         _mediator.loadPane(ParentController.Type.HEADER, "Challenge2");
         stage.close();

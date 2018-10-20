@@ -2,11 +2,22 @@ package Ratings;
 
 import Model.Challenge;
 import Model.Challenges;
+import Model.Original;
 import Model.Originals;
+import Save.Saving;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This class represents a list of challenges for each Name
@@ -18,7 +29,7 @@ import java.util.List;
  * 0 to 60 (badNames)
  * 60 to 100 (goodNames)
  */
-public class ChallengeRatings {
+public class ChallengeRatings extends Saving {
 
     private HashMap<String, Integer> _challengesRating; //rating for each name.
     private List<String> _goodNames;
@@ -28,10 +39,12 @@ public class ChallengeRatings {
     private int _overallScore;
     private int _progress;
     public static final int SCORELIMIT = 60;
+    public static final String SESSIONFILE = "NameRatings.txt";
 
     private final static ChallengeRatings instance = new ChallengeRatings();
 
     private ChallengeRatings() {
+        createTextFile(SESSIONFILE);
         _challengesRating = new HashMap<String, Integer>();
         _goodNames = new ArrayList<String>();
         _notAttemptedNames = new ArrayList<String>();
@@ -39,14 +52,16 @@ public class ChallengeRatings {
         _noOfSessions = 0;
         _overallScore = 0;
         _progress = 0;
+
+
         List<String> names = Originals.getInstance().listNames();
 
         for (String name : names) {
             _challengesRating.put(name, -1); //adding names
             _notAttemptedNames.add(name);
-
         }
         updateModel();
+
     }
 
     public static ChallengeRatings getInstance() {
@@ -159,7 +174,51 @@ public class ChallengeRatings {
      * AND the lists
      */
     private void updateModel() {
+        try {
+            _noOfSessions = Integer.parseInt(getSaved(SESSIONFILE, "_noOfSessions"));
+            _overallScore = Integer.parseInt(getSaved(SESSIONFILE, "_overallScore"));
+            _progress = Integer.parseInt(getSaved(SESSIONFILE, "_progress"));
+
+            _goodNames = getList(SESSIONFILE, "_goodNames");
+            _badNames = getList(SESSIONFILE, "_badNames");
+
+            System.out.println(_goodNames.size());
+
+            for (String name : _goodNames) {
+                updateAverage(name, true);
+            }
+
+            for (String name : _badNames) {
+                updateAverage(name, false);
+            }
+        } catch (Exception e) {
+            //todo
+        }
+
+
+
     }
+
+    public void saveSession() {
+
+        List<String> params = new ArrayList<String>();
+        params.add("_noOfSessions &" + _noOfSessions + "&");
+        params.add("_overallScore &" + _overallScore + "&");
+        params.add("_progress &" + _progress + "&");
+
+        int i = 0;
+        for (String name : _goodNames) {
+            params.add("_goodNames &" + _goodNames.get(i) + "&");
+            i++;
+        }
+        i = 0;
+        for (String name : _badNames) {
+            params.add("_badNames &" + _badNames.get(i) + "&");
+            i++;
+        }
+        saveSession(SESSIONFILE, params);
+    }
+
 
 }
 

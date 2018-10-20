@@ -42,7 +42,7 @@ public class MainMenuController extends ParentController implements MicTesterCon
 
 	@FXML
 	public void challenge(ActionEvent actionEvent) {
-		loadNextPane("DifficultySliderVersion", PageType.CHALLENGE);
+		loadNextPane("Challenge1", PageType.CHALLENGE);
 	}
 
 	@FXML
