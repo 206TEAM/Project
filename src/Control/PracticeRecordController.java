@@ -120,7 +120,7 @@ public class PracticeRecordController extends PracticeMainController implements 
 		if (_mainPlayState) {
 			stopPlaying(mainProgressBar, playMain);
 		} else {
-			super.playFile(this, progressText, playMain, mainProgressBar, _currentFileName, _currentName, _numVersions);
+			playFile(this, progressText, playMain, mainProgressBar, _currentFileName, _currentName, _numVersions);
 			_mainPlayState = true;
 		}
 	}
@@ -136,7 +136,7 @@ public class PracticeRecordController extends PracticeMainController implements 
 		}
 	}
 
-	public void autoPlay() {
+	public void finish() {
 		if (_autoClicked) {
 			_autoClicked = false;
 			playAttempt();

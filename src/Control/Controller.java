@@ -98,7 +98,7 @@ abstract class Controller implements Initializable {
 			playButton.setText("▶️");
 			playButton.setTextFill(Color.LIME);
 			controller.stopPlaying(progressBar, playButton);
-			controller.autoPlay();
+			controller.finish();
 		};
 		progressText.setText("Playing...");
 		playButton.setText("◼️");

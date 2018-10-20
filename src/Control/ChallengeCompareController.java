@@ -18,6 +18,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -27,72 +28,53 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ChallengeCompareController extends ParentController {
+public class ChallengeCompareController extends ParentController implements MediaController {
 
     @FXML
-    public ProgressBar originalProgressBar;
+    public ProgressBar originalProgressBar, practiceProgressBar;
     @FXML
-    public Button playOriginal;
+    public Text originalProgressText, nameLabel, challengeProgressText;
     @FXML
-    public ProgressBar practiceProgressBar;
+    public Button correct, wrong, compare, playOriginal, playChallenge;
     @FXML
-    public Button playChallenge;
-    @FXML
-    public Text originalProgressText;
-    @FXML
-    public Button correct;
-    @FXML
-    public Button wrong;
-    @FXML
-    public ListView<String> challengeListView;
-    @FXML
-    public ListView<String> versionListView;
-    @FXML
-    public Button addPractice;
-    @FXML
-    public Text nameLabel;
+    public ListView<String> challengeListView, versionListView;
     @FXML
     public ImageView difficultyStar; // set to visible if the name has been flagged difficult
     @FXML
     public Pane subPane;
-	@FXML
-    public Text challengeProgressText;
 
 	private Main main;
 
     /***********fields****************/
     private ChallengeSession _session;
-
+	private boolean _mainPlayState, _challengePlayState, _autoClicked;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         _mediator.setParent(this);
+        _mainPlayState = false;
+        _challengePlayState = false;
+        _autoClicked = false;
+
         _session = _mediator.getChallengeSession();
         List<String> list = _mediator.getPracticeMainList();
         ObservableList<String> practiceList = FXCollections.observableArrayList(list);
         challengeListView.setItems(practiceList);
-        playChallenge.setDisable(true);
-        playOriginal.setDisable(true);
+
+        challengeListView.getSelectionModel().selectFirst();
+        nameSelected(challengeListView.getSelectionModel().getSelectedItem());
+	    String fileName = versionListView.getSelectionModel().getSelectedItem();
+	    _mediator.setOriginalFilename(fileName);
     }
 
     @FXML
     public void playOriginal(ActionEvent actionEvent) {
-	    String name = _session.getCurrentName();
-	    String fileName = _mediator.getOriginalFilename();
-
-	   // todo super.playFile(originalProgressText, playOriginal, originalProgressBar, fileName, name, _originals.getFileName(name).size());
+	    playOriginal();
     }
 
     @FXML
     public void playChallenge(ActionEvent actionEvent) {
-
-	    String name = _session.getCurrentName();
-	    String fileName = _session.getChallengeFile(name);
-	    String dir = "Names/" + name + "/Challenge/" + _session.getChallengeFile(name) + ".wav";
-	    Media media = new Media(Challenges.getInstance().getChallenge(name,fileName ));
-	    // todo super.playFile(challengeProgressText, playChallenge, practiceProgressBar, dir, media);
-        correct.setDisable(false);
-        wrong.setDisable(false);
+    	playChallenge();
     }
 
     @FXML
@@ -128,11 +110,6 @@ public class ChallengeCompareController extends ParentController {
     }
 
     @FXML
-    public void add(ActionEvent actionEvent) {
-        _mediator.loadPane(Type.HEADER, "Practice1");
-    }
-
-    @FXML
     public void nameSelected(MouseEvent mouseEvent) {
         String name = challengeListView.getSelectionModel().getSelectedItem();
         updateStar(name);
@@ -154,6 +131,44 @@ public class ChallengeCompareController extends ParentController {
         }
     }
 
+    @FXML
+    public void autoCompare(ActionEvent actionEvent) {
+    	_autoClicked = true;
+    	playOriginal();
+    }
+
+    private void playOriginal() {
+    	disableTables(true);
+    	if (_mainPlayState) {
+    		stopPlaying(originalProgressBar, playOriginal);
+    		_mainPlayState = false;
+	    } else {
+		    String name = _session.getCurrentName();
+		    String fileName = _mediator.getOriginalFilename();
+
+		    playFile(this, originalProgressText, playOriginal, originalProgressBar, fileName, name, _originals.getFileName(name).size());
+		    _mainPlayState = true;
+	    }
+    }
+
+    private void playChallenge() {
+    	if (_challengePlayState) {
+    		stopPlaying(practiceProgressBar, playChallenge);
+    		_challengePlayState = false;
+	    } else {
+		    String name = _session.getCurrentName();
+		    String fileName = _session.getChallengeFile(name);
+		    String dir = "Names/" + name + "/Challenge/" + _session.getChallengeFile(name) + ".wav";
+		    Media media = new Media(Challenges.getInstance().getChallenge(name, fileName));
+
+		    playFile(this, challengeProgressText, playChallenge, practiceProgressBar, dir, media);
+
+		    correct.setDisable(false);
+		    wrong.setDisable(false);
+		    _challengePlayState = true;
+	    }
+    }
+
     /**
      * Load a scene into the {@code subPane}.
      *
@@ -163,7 +178,6 @@ public class ChallengeCompareController extends ParentController {
     public void loadPane(String page) {
         super.loadPane(page, subPane);
     }
-
 
     public void popup() {
         FXMLLoader loader = new FXMLLoader();
@@ -189,7 +203,6 @@ public class ChallengeCompareController extends ParentController {
     }
 
     private String nameSelected(String name) {
-
 	    _session.setCurrentName(name);
 	    originalProgressText.setText("Play Original");
 	    playOriginal.setDisable(false);
@@ -244,4 +257,30 @@ public class ChallengeCompareController extends ParentController {
         }
     }
 
+    private void disableTables(boolean disable) {
+    	challengeListView.setDisable(disable);
+    	versionListView.setDisable(disable);
+    }
+
+	@Override
+	public void stopPlaying(ProgressBar progressBar, Button playButton) {
+		stopProgress();
+		progressBar.setProgress(0.0);
+		playButton.setText("▶️️");
+		playButton.setTextFill(Color.LIME);
+		if (_mainPlayState) {
+			_mainPlayState = false;
+		}
+		if (_challengePlayState) {
+			_challengePlayState = false;
+		}
+	}
+
+	@Override
+	public void finish() {
+		if (_autoClicked) {
+			_autoClicked = false;
+			playChallenge();
+		}
+	}
 }
