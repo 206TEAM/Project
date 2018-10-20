@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0cc29b0-2ec1-4ce3-9151-d827d483beaa" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Temp/Ahn_Antony_.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Temp/_finalNormalized0.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Temp/_finalNormalized1.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Temp/_normalized0.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Temp/_normalized1.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Temp/_output.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Control/ChallengePlayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Control/ChallengePlayController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/ChallengeSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/ChallengeSession.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Control/StatsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Control/StatsController.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,36 +29,45 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="fxml" value="1" />
-          <entry key="java" value="38" />
+          <entry key="java" value="39" />
           <entry key="txt" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="38" />
+          <entry key="JAVA" value="39" />
           <entry key="PLAIN_TEXT" value="1" />
           <entry key="XML" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="7660" />
+          <entry key="java" value="7816" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="7660" />
+          <entry key="JAVA" value="7816" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Model/ChallengeSession.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
+            <state relative-caret-position="522">
               <caret line="150" column="71" selection-start-line="150" selection-start-column="71" selection-end-line="150" selection-end-column="71" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Control/StatsController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="334">
+              <caret line="88" column="72" selection-start-line="88" selection-start-column="72" selection-end-line="88" selection-end-column="72" />
             </state>
           </provider>
         </entry>
@@ -144,12 +145,12 @@
         <option value="$PROJECT_DIR$/src/Model/Challenge.java" />
         <option value="$PROJECT_DIR$/src/Model/Challenges.java" />
         <option value="$PROJECT_DIR$/src/Model/Mediator.java" />
-        <option value="$PROJECT_DIR$/src/Control/StatsController.java" />
         <option value="$PROJECT_DIR$/src/Control/ChallengeCompareController.java" />
         <option value="$PROJECT_DIR$/src/Control/HelperController.java" />
         <option value="$PROJECT_DIR$/src/Control/ListenController.java" />
         <option value="$PROJECT_DIR$/src/Control/ChallengePlayController.java" />
         <option value="$PROJECT_DIR$/src/Model/ChallengeSession.java" />
+        <option value="$PROJECT_DIR$/src/Control/StatsController.java" />
       </list>
     </option>
   </component>
@@ -290,7 +291,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32953683" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32903716" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32877752" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32953683" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.32953683" />
@@ -395,13 +396,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Control/StatsController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="19" column="55" selection-start-line="19" selection-start-column="55" selection-end-line="19" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Model/Mediator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2600">
@@ -464,8 +458,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Model/ChallengeSession.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
+        <state relative-caret-position="522">
           <caret line="150" column="71" selection-start-line="150" selection-start-column="71" selection-end-line="150" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Control/StatsController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="88" column="72" selection-start-line="88" selection-start-column="72" selection-end-line="88" selection-end-column="72" />
         </state>
       </provider>
     </entry>

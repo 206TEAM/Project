@@ -24,6 +24,7 @@ public class StatsController implements Initializable {
 
     public ListView<String> poorListView, naListView, goodListView;
     public Label nameLabel, attemptLabel, scoreLabel;
+    public static final String NASCORE= "NA";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -84,9 +85,12 @@ public class StatsController implements Initializable {
             String attempts = Integer.toString(Challenges.getInstance().getChallengeSize(name));
             attemptLabel.setText(attempts);
             String score = Integer.toString(ChallengeRatings.getInstance().getScore(name));
+            if (score.equals("-1")){
+                score = NASCORE; //displays NA names as NASCORE constant
+            }
             scoreLabel.setText(score);
         } catch (NumberFormatException e){
-            //todo
+            e.printStackTrace();
         }
     }
 
