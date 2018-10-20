@@ -37,7 +37,6 @@ public class ChallengePlayController implements Initializable{
     private Timeline _timeLine;
     private ChallengeSession _session;
     private Mediator _mediator;
-    private Boolean sessionEnded;
 
     public void abort(){
         _timeLine.stop();

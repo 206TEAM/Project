@@ -129,6 +129,7 @@ public class ChallengeSession {
 
     /**
      * this method returns the score message based on the score of the session.
+     *
      * @return
      */
     public String getScoreMessage() {
@@ -146,19 +147,18 @@ public class ChallengeSession {
     public void abortSession() {
         //todo: kill processes
         Mediator.getInstance().removeInChallengeSession();
-        if (_challengeFileList != null || !_challengeFileList.isEmpty()) {
-
-            for (int i = 0; i < _challengeFileList.size(); i++) {
-                String name = _challengeList.get(i);
-                if (name != null) {
-                    try {
+        try {
+            if (_challengeFileList!=null || _challengeFileList!=null) {
+                for (int i = 0; i < _challengeFileList.size(); i++) {
+                    String name = _challengeList.get(i);
+                    if (name != null) {
                         Challenges.getInstance().deleteChallenge(name, _challengeFileList.get(i)); //removes challenge file and from the model
-                    } catch (Exception e) {
-                        //todo
                     }
                 }
 
             }
+        } catch (Exception e) {
+            System.out.println("error");
         }
     }
 }
