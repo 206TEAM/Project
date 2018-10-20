@@ -7,7 +7,8 @@ import java.util.List;
 
 /**
  * This class represents a list of challenges for each Name
- * _challenges is a hashmap that contains the Name as the key value, and challenge list for each name as the value.
+ * _challenges is a hashmap that contains the Name as the key value, and challenge list for each name as the value
+ * @author Lucy Chen
  */
 public class Challenges {
 
@@ -76,6 +77,11 @@ public class Challenges {
         }
     }
 
+    /**
+     * this method gets the number of challenges
+     * @param nameKey
+     * @return
+     */
     public int getChallengeSize(String nameKey) {
         if (_challenges.get(nameKey) != null) {
             return _challenges.get(nameKey).size();
@@ -128,7 +134,6 @@ public class Challenges {
 
     /**
      * gets the challenge from the filename of challenge and the nameKey
-     *
      * @param fileName
      * @return
      */
@@ -161,6 +166,12 @@ public class Challenges {
         return challenge.getFileName();
     }
 
+    /**
+     * helper method that checks if challenge exists as .wav files
+     * @param nameKey
+     * @param fileName
+     * @return
+     */
     private Boolean challengeExists(String nameKey, String fileName) {
 
         File file = new File("Names/" + nameKey + "/Challenge/" + fileName + ".wav");
@@ -168,16 +179,14 @@ public class Challenges {
     }
 
     /**
-     * deletes all existing challenges.
+     * deletes all existing challenges from model as well as .wav format
      */
     public void reset() {
         for (Challenge challenge : _existingChallenges){
             deleteChallenge(challenge);
         }
-
         _existingChallenges.clear();
     }
-
 }
 
 

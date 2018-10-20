@@ -10,8 +10,9 @@ import java.util.List;
  * This class represents a single recording for a particular name.
  * This file is saved as a .wav in the directory:
  * Names/(_nameKey)/Practices/(fileName).wav
+ *
+ * @author Lucy Chen
  */
-
 
 public class Challenge {
 

@@ -1,16 +1,23 @@
 package Ratings;
+
 import Model.Originals;
 import Save.Saving;
 
 import java.util.*;
 
 /**
- * This class represents difficulty in names
- * _nameRatings is a hashmap that contains the Name as the key value, and challenge list for each name as the value.
+ * This class handles difficulty of name pronounciations
+ * It contains methods for setting / retrieving difficulty ratings (by the user)
+ * It also implements an algorithm for selecting a pool of names based on difficulty (by the system)
+ *
+ * @author Lucy Chen
  */
 public class DifficultyRatings extends Saving {
 
-    private HashMap<String, Boolean> _nameRatings; //legit difficulty rating for each name
+    /**
+     * hashmap that contains the Name as the key value, and challenge list for each name as the value.
+     **/
+    private HashMap<String, Boolean> _nameRatings;
 
     private List<String> _easyNames;
     private List<String> _mediumNames;
@@ -121,15 +128,14 @@ public class DifficultyRatings extends Saving {
     }
 
     /**
-     * This method reads from saved session text file and updates the hashmap
-     * AND the lists
+     * This method reads from saved session text file and updates all the fields to their default values
      */
     private void updateModel() { //todo
         try {
 
             List<String> list = getList(ChallengeRatings.SESSIONFILE, "difficultNames");
-            for (String name : list){
-                _nameRatings.put(name,true);
+            for (String name : list) {
+                _nameRatings.put(name, true);
                 setRating(name, true);
             }
 
@@ -171,12 +177,13 @@ public class DifficultyRatings extends Saving {
      * for hard/easy. if names run out, it then takes a random portion of the remaining names left to get to the required
      * number of names.
      * if difficulty is 3, it uses 50% for medium names, and 25% for easy and hard to ensure for a balance of names.
-     * @param first: dominant list of names (if difficulty is 1,2), then it would be easy
-     * @param second middle for difficulty levels 1,2,4,5
-     * @param third recessive list of names
-     * @param number number of challenge names required
+     *
+     * @param first:  dominant list of names (if difficulty is 1,2), then it would be easy
+     * @param second  middle for difficulty levels 1,2,4,5
+     * @param third   recessive list of names
+     * @param number  number of challenge names required
      * @param extreme true for difficulty 1,5
-     * @param middle true for difficulty 2,4
+     * @param middle  true for difficulty 2,4
      */
     private List<String> getDiffList(List<String> first, List<String> second, List<String> third, int number, Boolean extreme, Boolean middle) {
         List<String> challengeList = new ArrayList<String>();
@@ -233,19 +240,25 @@ public class DifficultyRatings extends Saving {
         return challengeList;
     }
 
+    /**
+     * this method saves the users difficulty ratings by writing it to a text file
+     */
     public void saveSession() {
 
         List<String> params = new ArrayList<String>();
 
-        for (String name : _nameRatings.keySet()){
-            if (_nameRatings.get(name)==true){
+        for (String name : _nameRatings.keySet()) {
+            if (_nameRatings.get(name) == true) {
                 params.add("difficultNames &" + name + "&");
             }
         }
         saveSession(ChallengeRatings.SESSIONFILE, params);
     }
 
-    public void reset(){
+    /**
+     * this method resets the users difficulty settings
+     */
+    public void reset() {
         _easyNames.clear();
         _mediumNames.clear();
         _hardNames.clear();
@@ -253,8 +266,8 @@ public class DifficultyRatings extends Saving {
         List<String> names = Originals.getInstance().listNames();
         sortNames();
 
-        for (String name : names){
-            _nameRatings.put (name, false);
+        for (String name : names) {
+            _nameRatings.put(name, false);
         }
 
     }

@@ -252,6 +252,3 @@ public class ChallengeRatings extends Saving {
         }
     }
 }
-
-
-

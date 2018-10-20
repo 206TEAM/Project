@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0cc29b0-2ec1-4ce3-9151-d827d483beaa" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Control/ListenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Control/ListenController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Challenge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Challenge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/ChallengeSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/ChallengeSession.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Challenges.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Challenges.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Ratings/ChallengeRatings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Ratings/ChallengeRatings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Save/Saving.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Save/Saving.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Ratings/DifficultyRatings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Ratings/DifficultyRatings.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,24 +30,24 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="24" />
+          <entry key="java" value="28" />
           <entry key="txt" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="24" />
+          <entry key="JAVA" value="28" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="3051" />
+          <entry key="java" value="4810" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="3051" />
+          <entry key="JAVA" value="4810" />
         </counts>
       </usages-collector>
     </session>
@@ -53,28 +55,19 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Control/ListenController.java">
+        <entry file="file://$PROJECT_DIR$/src/Ratings/DifficultyRatings.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="63" column="39" selection-start-line="63" selection-start-column="39" selection-end-line="63" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Save/Saving.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="16" column="20" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
+            <state relative-caret-position="261">
+              <caret line="12" column="20" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Ratings/ChallengeRatings.java">
+        <entry file="file://$PROJECT_DIR$/src/Model/ChallengeSession.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="446">
-              <caret line="252" column="5" selection-start-line="252" selection-start-column="5" selection-end-line="252" selection-end-column="5" />
+            <state relative-caret-position="232">
+              <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -107,15 +100,16 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/Control/MainMenuController.java" />
-        <option value="$PROJECT_DIR$/src/Model/Challenge.java" />
         <option value="$PROJECT_DIR$/src/Control/HeaderController.java" />
-        <option value="$PROJECT_DIR$/src/Model/Challenges.java" />
-        <option value="$PROJECT_DIR$/src/Ratings/DifficultyRatings.java" />
         <option value="$PROJECT_DIR$/src/Control/ParentController.java" />
         <option value="$PROJECT_DIR$/src/Control/ChallengeCompareController.java" />
         <option value="$PROJECT_DIR$/src/Control/ListenController.java" />
         <option value="$PROJECT_DIR$/src/Save/Saving.java" />
         <option value="$PROJECT_DIR$/src/Ratings/ChallengeRatings.java" />
+        <option value="$PROJECT_DIR$/src/Ratings/DifficultyRatings.java" />
+        <option value="$PROJECT_DIR$/src/Model/Challenge.java" />
+        <option value="$PROJECT_DIR$/src/Model/Challenges.java" />
+        <option value="$PROJECT_DIR$/src/Model/ChallengeSession.java" />
       </list>
     </option>
   </component>
@@ -153,6 +147,12 @@
               <item name="Project" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Model" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Project" type="b2602c69:ProjectViewProjectNode" />
@@ -234,12 +234,12 @@
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24981189" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" weight="0.32953683" />
-      <window_info anchor="bottom" id="Terminal" weight="0.32953683" />
+      <window_info anchor="bottom" id="Terminal" visible="true" weight="0.32953683" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Messages" weight="0.32953683" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32953683" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32953683" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -293,27 +293,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Ratings/DifficultyRatings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="247" column="24" selection-start-line="247" selection-start-column="24" selection-end-line="247" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/Challenge.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1363">
-          <caret line="99" column="5" selection-start-line="99" selection-start-column="5" selection-end-line="99" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Model/Challenges.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1623">
-          <caret line="138" selection-start-line="138" selection-end-line="138" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Control/ParentController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-135">
@@ -349,17 +328,45 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Ratings/ChallengeRatings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="591">
+          <caret line="253" column="1" selection-start-line="253" selection-start-column="1" selection-end-line="253" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Save/Saving.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
+        <state relative-caret-position="-2310">
           <caret line="16" column="20" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Ratings/ChallengeRatings.java">
+    <entry file="file://$PROJECT_DIR$/src/Model/Challenge.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="446">
-          <caret line="252" column="5" selection-start-line="252" selection-start-column="5" selection-end-line="252" selection-end-column="5" />
+        <state relative-caret-position="330">
+          <caret line="108" lean-forward="true" selection-start-line="108" selection-end-line="108" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/Challenges.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="609">
+          <caret line="188" column="5" selection-start-line="188" selection-start-column="5" selection-end-line="188" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Ratings/DifficultyRatings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="12" column="20" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Model/ChallengeSession.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
         </state>
       </provider>
     </entry>
