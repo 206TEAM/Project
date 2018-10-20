@@ -73,6 +73,7 @@ public class ChallengeCompareController extends ParentController {
         challengeListView.setItems(practiceList);
         playChallenge.setDisable(true);
         playOriginal.setDisable(true);
+        difficultyStar.setDisable(true);
     }
 
     @FXML
@@ -123,6 +124,7 @@ public class ChallengeCompareController extends ParentController {
             challengeListView.getSelectionModel().selectFirst();
 
             String originalFileName = nameSelected(challengeListView.getSelectionModel().getSelectedItem());
+            System.out.println(originalFileName);
             _mediator.setOriginalFilename(originalFileName);
         }
     }
@@ -134,6 +136,7 @@ public class ChallengeCompareController extends ParentController {
 
     @FXML
     public void nameSelected(MouseEvent mouseEvent) {
+        difficultyStar.setDisable(false);
         String name = challengeListView.getSelectionModel().getSelectedItem();
         updateStar(name);
         if (name != null) {
@@ -201,6 +204,7 @@ public class ChallengeCompareController extends ParentController {
 	    versionsToDisplay = FXCollections.observableArrayList(versions);
 	    versionListView.setItems(versionsToDisplay);
 	    nameLabel.setText(name);
+	    updateStar(name);
 
 	    String fileName;
 

@@ -245,5 +245,19 @@ public class DifficultyRatings extends Saving {
         saveSession(ChallengeRatings.SESSIONFILE, params);
     }
 
+    public void reset(){
+        _easyNames.clear();
+        _mediumNames.clear();
+        _hardNames.clear();
+
+        List<String> names = Originals.getInstance().listNames();
+        sortNames();
+
+        for (String name : names){
+            _nameRatings.put (name, false);
+        }
+
+    }
+
 
 }

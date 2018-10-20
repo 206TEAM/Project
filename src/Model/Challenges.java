@@ -12,11 +12,13 @@ import java.util.List;
 public class Challenges {
 
     private HashMap<String, ArrayList<Challenge>> _challenges;
+    private List<Challenge> _existingChallenges;
 
     private final static Challenges instance = new Challenges();
 
     private Challenges() {
         _challenges = new HashMap<String, ArrayList<Challenge>>();
+        _existingChallenges = new ArrayList<Challenge>();
         updateModel();
     }
 
@@ -38,6 +40,7 @@ public class Challenges {
 
             // if list does not exist create it
             if (challengeList == null) {
+                _existingChallenges.add(challenge);
                 challengeList = new ArrayList<Challenge>();
                 challengeList.add(challenge);
                 _challenges.put(nameKey, challengeList);
@@ -115,6 +118,15 @@ public class Challenges {
     }
 
     /**
+     * deletes the challenge from directory AND the challenges list
+     */
+    public void deleteChallenge(Challenge challenge) {
+        challenge.getNameKey();
+        _challenges.get(challenge.getNameKey()).remove(challenge); //not sure if this works yet (needs testing)
+        challenge.delete();
+    }
+
+    /**
      * gets the challenge from the filename of challenge and the nameKey
      *
      * @param fileName
@@ -145,6 +157,7 @@ public class Challenges {
         Challenge challenge = new Challenge(nameKey);
         challenge.create();
         addChallenge(nameKey, challenge);
+        _existingChallenges.add(challenge);
         return challenge.getFileName();
     }
 
@@ -152,7 +165,17 @@ public class Challenges {
 
         File file = new File("Names/" + nameKey + "/Challenge/" + fileName + ".wav");
         return file.exists();
+    }
 
+    /**
+     * deletes all existing challenges.
+     */
+    public void reset() {
+        for (Challenge challenge : _existingChallenges){
+            deleteChallenge(challenge);
+        }
+
+        _existingChallenges.clear();
     }
 
 }

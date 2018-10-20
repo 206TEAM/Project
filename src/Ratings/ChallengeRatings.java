@@ -195,8 +195,6 @@ public class ChallengeRatings extends Saving {
             //todo
         }
 
-
-
     }
 
     public void saveSession() {
@@ -217,6 +215,23 @@ public class ChallengeRatings extends Saving {
             i++;
         }
         saveSession(SESSIONFILE, params);
+    }
+
+    public void reset() {
+        _noOfSessions = 0;
+        _overallScore = 0;
+        _progress = 0;
+
+        _goodNames.clear();
+        _badNames.clear();
+        _notAttemptedNames.clear();
+
+        List<String> names = Originals.getInstance().listNames();
+        for (String name : names) {
+            _challengesRating.put(name, -1); //adding names
+            _notAttemptedNames.add(name);
+        }
+
     }
 
 

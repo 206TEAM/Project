@@ -95,6 +95,10 @@ public class Challenge {
         return name;
     }
 
+    public String getNameKey(){
+        return _nameKey;
+    }
+
     /**
      * @return fileName without extension
      */

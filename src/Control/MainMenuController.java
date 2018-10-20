@@ -107,9 +107,6 @@ public class MainMenuController extends ParentController implements MicTesterCon
 		//todo refactor the HeaderController method to do the same thing as this
 	}
 
-	public void reset(ActionEvent actionEvent) {
-	}
-
 	public void quit(ActionEvent actionEvent) {
 	}
 

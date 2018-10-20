@@ -1,6 +1,7 @@
 package Control;
 
 import Model.ChallengeSession;
+import Model.Challenges;
 import Model.Mediator;
 import Ratings.ChallengeRatings;
 import Ratings.DifficultyRatings;
@@ -186,13 +187,14 @@ public class HeaderController extends ParentController {
 	}
 
 	@FXML
-	public void reset(ActionEvent actionEvent) {
+	public void reset(ActionEvent actionEvent) { //todo move to header
 		String title = "Reset Progress";
 		String header = "Are you sure you want to delete all your progress?";
 		String content = "This cannot be undone.";
 		Alert alert = createAlert(Alert.AlertType.CONFIRMATION, title, header, content);
 
 		Optional<ButtonType> result = alert.showAndWait();
+		Challenges.getInstance().reset();
 
 		if (result.get() == _yes) {
 			donePopUp("Your progress has been reset");

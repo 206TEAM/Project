@@ -1,5 +1,6 @@
 package Control;
 
+import Model.Challenges;
 import Ratings.ChallengeRatings;
 import Ratings.DifficultyRatings;
 import javafx.event.ActionEvent;
@@ -11,6 +12,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
+import java.nio.file.DirectoryNotEmptyException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 /**
@@ -54,5 +59,26 @@ public abstract class ParentController extends Controller {
 		donePopUp("Your progress has been saved");
 		ChallengeRatings.getInstance().saveSession();
 		DifficultyRatings.getInstance().saveSession();
+	}
+
+	/**
+	 * this method resets any progress
+	 * deletes challenges
+	 */
+	@FXML
+	protected void reset(){
+		Challenges.getInstance().reset();
+		ChallengeRatings.getInstance().reset();
+		DifficultyRatings.getInstance().reset();
+		_mediator.loadPane(Type.MAIN, "MainMenu");
+		try {
+			Files.deleteIfExists(Paths.get("Ratings.txt"));
+			Files.deleteIfExists(Paths.get("NameRatings.txt"));
+		} catch (Exception e){
+			//todo
+		}
+
+
+
 	}
 }
