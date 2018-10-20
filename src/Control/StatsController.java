@@ -14,14 +14,16 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * this class controls the Stats.fxml page
+ * it adds the good, bad and not attemped names into the list views of the scene
+ * it controls how the stats of each name is displayed.
+ *
+ */
 public class StatsController implements Initializable {
 
     public ListView<String> poorListView, naListView, goodListView;
     public Label nameLabel, attemptLabel, scoreLabel;
-
-    private void statsText() {
-        // todo set statsText to display stats of selected poor/good/na name.
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -36,35 +38,56 @@ public class StatsController implements Initializable {
         goodListView.setItems(goodList);
     }
 
+    /**
+     * when user selects a name from the good list view, display stats
+     * @param event
+     */
     @FXML
-    public void selectNameGood(MouseEvent event) { //todo get name for any item from each list selected
+    public void selectNameGood(MouseEvent event) {
         if (goodListView.getItems().size()>0) {
             String name = goodListView.getSelectionModel().getSelectedItem();
             updateText(name);
         }
     }
 
+    /**
+     * when user selects name from the bad list view display stats
+     * @param event
+     */
     @FXML
-    public void selectNamePoor(MouseEvent event) { //todo get name for any item from each list selected
+    public void selectNamePoor(MouseEvent event) {
         if (poorListView.getItems().size()>0) {
             String name = poorListView.getSelectionModel().getSelectedItem();
             updateText(name);
         }
     }
+
+    /**
+     * when user selects name from the not attempted list view, display stats
+     * @param event
+     */
     @FXML
-    public void selectNameNa(MouseEvent event) { //todo get name for any item from each list selected
+    public void selectNameNa(MouseEvent event) {
         if (naListView.getItems().size()>0) {
             String name = naListView.getSelectionModel().getSelectedItem();
             updateText(name);
         }
     }
 
+    /**
+     * this method updates the stats such as number of attempts, score for name
+     * @param name
+     */
     private void updateText(String name) {
         nameLabel.setText(name);
-        String attempts = Integer.toString(Challenges.getInstance().getChallengeSize(name));
-        attemptLabel.setText(attempts);
-        String score = Integer.toString(ChallengeRatings.getInstance().getScore(name));
-        scoreLabel.setText(score);
+        try {
+            String attempts = Integer.toString(Challenges.getInstance().getChallengeSize(name));
+            attemptLabel.setText(attempts);
+            String score = Integer.toString(ChallengeRatings.getInstance().getScore(name));
+            scoreLabel.setText(score);
+        } catch (NumberFormatException e){
+            //todo
+        }
     }
 
 }

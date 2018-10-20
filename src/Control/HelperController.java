@@ -22,6 +22,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
+/**
+ * this controller controls the helperpopup.fxml file
+ * a pop up is displayed containing information about how to use the app
+ */
 public class HelperController extends Controller {
     @FXML
     public AnchorPane pane;
@@ -41,6 +45,7 @@ public class HelperController extends Controller {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	helperContent.setEditable(false);
+        //it reads the instructions file
         try {
             Scanner s = new Scanner(new File("instructions.txt"));
             while (s.hasNextLine()) {

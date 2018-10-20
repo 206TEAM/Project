@@ -17,15 +17,11 @@ public class Mediator {
 
     /********fields are for challenges********/
     private ChallengeSession _session;
-
 	private ParentController.PageType _currentPage;
-
     private String _currentName;
     private String _originalFileName;
     private Practice _currentPractice;
     private int _numVersions;
-    private List<String> _challengeList;
-    private List<String> _challengeFileList;
     private Boolean _inChallengeSession;
     private List<String> _missingNames;
     private String _missingListFile;
