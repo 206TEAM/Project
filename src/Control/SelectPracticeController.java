@@ -441,7 +441,7 @@ public class SelectPracticeController extends Controller {
 							String fileName = pickBestOriginal(name);
 
 							String dir = "Names/" + name + "/Original/" + fileName;
-							String line = "file 'Temp/_finalNormalized" + i + ".wav'\n";
+							String line = "file 'Temp/_normalized" + i + ".wav'\n";
 
 							Files.write(Paths.get("list.txt"), line.getBytes(), StandardOpenOption.APPEND);
 							Media.normalizeVolume(dir, i);

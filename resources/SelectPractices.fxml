@@ -95,7 +95,7 @@
             <ColorAdjust brightness="-0.1" contrast="1.0" hue="-0.83" saturation="0.15" />
          </effect>
       </ProgressIndicator>
-      <Text fx:id="loadingText" fill="#1e1e1e" layoutX="307.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Combining names..." visible="false">
+      <Text fx:id="loadingText" fill="#1e1e1e" layoutX="310.0" layoutY="443.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Combining names..." visible="false">
          <font>
             <Font name="DejaVu Sans Bold" size="25.0" />
          </font>
