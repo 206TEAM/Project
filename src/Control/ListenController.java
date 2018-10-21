@@ -109,9 +109,6 @@ public class ListenController extends Controller implements MediaController {
 			_selected = fileName;
 			_type = "challenge";
 			fileLabel.setText(fileName + ".wav");
-
-			//Challenge challenge = Challenges.getInstance().getChallenge(name, fileName);
-			//todo do we want to get the rating?
 			play.setDisable(false);
 		} else {
 			play.setDisable(true);
@@ -258,6 +255,8 @@ public class ListenController extends Controller implements MediaController {
     public void disableButtons() {
         goodButton.setDisable(true);
         badButton.setDisable(true);
+        play.setDisable(true);
+
     }
 
 	private void disableTables(boolean disable) {
