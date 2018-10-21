@@ -27,9 +27,16 @@ public class Main extends Application {
 		Originals.getInstance().populateFolders();
 		try {
 			if (Files.exists(Paths.get("Temp"))) {
+				// Delete All contents of Temp folder
 				Files.walk(Paths.get("Temp")).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
 			}
 			Files.createDirectory(Paths.get("Temp"));
+			if (Files.notExists(Paths.get("Recordings"))) {
+				Files.createDirectory(Paths.get("Recordings"));
+			}
+			if (Files.notExists(Paths.get("Names"))) {
+				Files.createDirectory(Paths.get("Names"));
+			}
 
 			Parent root = FXMLLoader.load(getClass().getResource("/MainMenu.fxml"));
 			Scene scene = new Scene(root);
@@ -39,7 +46,6 @@ public class Main extends Application {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public static void main(String[] args) {
