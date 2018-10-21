@@ -110,6 +110,9 @@ public class PracticeRecordController extends PracticeMainController implements 
 				_mediator.loadPane(Type.MAIN, "MainMenu");
 			}
 		} else {
+			if (practices.size() == 1) {
+				next.setText("Done");
+			}
 			_mediator.setPracticeMainList(practices);
 			_mediator.fireTableValues(practices);
 			_mediator.fireDisableTable(TableType.PRACTICE, TableType.VERSION, false);

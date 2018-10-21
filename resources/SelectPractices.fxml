@@ -51,7 +51,7 @@
                   <Font name="DejaVu Sans Bold" size="10.0" />
                </font>
             </MenuButton>
-            <Text fill="#1e1e1e" layoutX="33.0" layoutY="467.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Double click names to add" wrappingWidth="232.50002592802048">
+            <Text fill="#1e1e1e" layoutX="65.0" layoutY="467.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click names to add" wrappingWidth="167.50002592802048">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
@@ -71,7 +71,7 @@
                   <Font size="12.0" />
                </font>
             </Button>
-            <Label fx:id="nameText" alignment="TOP_CENTER" layoutX="310.0" layoutY="86.0" prefHeight="101.0" prefWidth="280.0" text="Enter or click two or more names to combine them" textAlignment="CENTER" textFill="BLACK" wrapText="true">
+            <Label fx:id="nameText" alignment="TOP_CENTER" layoutX="310.0" layoutY="86.0" prefHeight="101.0" prefWidth="280.0" text="Enter or double click two or more names to combine them" textAlignment="CENTER" textFill="BLACK" wrapText="true">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
