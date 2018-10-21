@@ -25,13 +25,27 @@ import java.util.Optional;
  * are enumerated in {@link Type}.
  *
  * @author Eric Pedrido
+ * @author Lucy Chen
  */
 public abstract class ParentController extends Controller {
 
+	/**
+	 * Types of different {@code ParentController}'s.
+	 */
 	public enum Type {HEADER, MAIN, SUB_MAIN, PRACTICE}
 
+	/**
+	 * Different types of pages. Enumerated so that the system knows which page
+	 * the GUI is currently at.
+	 */
 	public enum PageType{PRACTICE, CHALLENGE, LISTEN, STATS, CHALLENGECOMPARE}
 
+	/**
+	 * Changes scene to the desired fxml file.
+	 *
+	 * @param page the desired scene to switch to.
+	 * @param pane the JavaFX pane to load the scene onto.
+	 */
 	void loadPane(String page, Pane pane) {
 		Pane newPane = null;
 		try {
@@ -49,6 +63,12 @@ public abstract class ParentController extends Controller {
 		createPopUp("MicTest", "Microphone Test", 675, 389);
 	}
 
+	/**
+	 * A generic {@code Alert} pop-up template which displays a message to the user.
+	 * This pop-up contains only one button that is "Ok".
+	 *
+	 * @param headerText text to display to user.
+	 */
 	protected void donePopUp(String headerText) {
 		ButtonType ok = new ButtonType("Ok", ButtonBar.ButtonData.APPLY);
 		Alert alert = createAlert(Alert.AlertType.INFORMATION, "Action complete", headerText, "",
@@ -60,6 +80,10 @@ public abstract class ParentController extends Controller {
 		}
 	}
 
+	/**
+	 * Creates an informative pop-up, telling the user that their progress
+	 * has been saved.
+	 */
 	@FXML
 	protected void save(ActionEvent actionEvent) {
 		donePopUp("Your progress has been saved");
@@ -68,8 +92,7 @@ public abstract class ParentController extends Controller {
 	}
 
 	/**
-	 * this method resets any progress
-	 * deletes challenges
+	 * Resets any progress and deletes any challenges.
 	 */
 	@FXML
 	protected void reset() {
@@ -81,6 +104,5 @@ public abstract class ParentController extends Controller {
 		}
 		DifficultyRatings.getInstance().reset();
 		_mediator.loadPane(Type.MAIN, "MainMenu");
-
 	}
 }
