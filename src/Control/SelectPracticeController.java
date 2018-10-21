@@ -2,6 +2,9 @@ package Control;
 
 import Model.Media;
 import Model.Original;
+import javafx.animation.PauseTransition;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -10,6 +13,10 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -18,17 +25,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 
+import java.awt.*;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
 public class SelectPracticeController extends Controller {
@@ -60,8 +68,8 @@ public class SelectPracticeController extends Controller {
 	private List<String> _currentPreviewList, _delayedPreviewList;
 	private List<String> _names;
 	private String _newName;
-	private Thread _thread;
-	private boolean _clicked;
+	private boolean _clicked, _selected;
+	private String _previousItem;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -71,6 +79,7 @@ public class SelectPracticeController extends Controller {
 		_currentPreviewList = new ArrayList<>();
 		_delayedPreviewList = new ArrayList<>();
 		_clicked = false;
+		_selected = false;
 
 		if (_allNames.size() == 0) {
 			selectListView.setVisible(false);
@@ -161,7 +170,6 @@ public class SelectPracticeController extends Controller {
 		if (selectedItem != null) {
 			int clickCount = mouseEvent.getClickCount();
 			if (clickCount == 2) {
-
 				String currString = concatNameText.getText();
 
 				if (currString.contains(" ") || currString.isEmpty()) {
@@ -176,24 +184,32 @@ public class SelectPracticeController extends Controller {
 				concatNameText.setText(currString + " ");
 				setLabelText(currString);
 
-				if (!_delayedPreviewList.contains(selectedItem) && !_clicked) {
-					previewList.getItems().remove(selectedItem);
-				}
-
-			} else if (clickCount == 1) {
+				removeFromList(selectedItem);
+			} else {
 				if (!previewList.getItems().contains(selectedItem)) {
 					if (_clicked) {
-						_delayedPreviewList.addAll(previewList.getItems());
+						_delayedPreviewList.add(_previousItem);
 						_clicked = false;
+						_previousItem = selectedItem;
 					}
 					previewList.getItems().add(selectedItem);
 					_selectedOrder.add(selectedItem);
-					_clicked = true;
+					if (!_clicked) {
+						_previousItem = selectedItem;
+						_clicked = true;
+					}
 				}
 				disableButtons(false);
 			}
 		}
 		searchOpacity(true);
+	}
+
+	private void removeFromList(String selectedItem) {
+		if (!_delayedPreviewList.contains(selectedItem)) {
+			previewList.getItems().remove(selectedItem);
+			_selectedOrder.remove(selectedItem);
+		}
 	}
 
 	@FXML
