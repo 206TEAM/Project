@@ -116,6 +116,8 @@ public class PracticeRecordController extends PracticeMainController implements 
 		} else {
 			if (practices.size() == 1) {
 				next.setText("Done");
+				next.setDisable(true);
+				compare.setDisable(true);
 			}
 			_mediator.setPracticeMainList(practices);
 			_mediator.fireTableValues(practices);
@@ -128,8 +130,9 @@ public class PracticeRecordController extends PracticeMainController implements 
 		if (_mainPlayState) {
 			stopPlaying(mainProgressBar, playMain);
 		} else {
-			playFile(this, progressText, playMain, mainProgressBar, _currentFileName, _currentName, _numVersions);
+			disableButtons(true);
 			_mainPlayState = true;
+			playFile(this, progressText, playMain, mainProgressBar, _currentFileName, _currentName, _numVersions);
 		}
 	}
 
@@ -138,9 +141,11 @@ public class PracticeRecordController extends PracticeMainController implements 
 			stopPlaying(practiceProgressBar, playPractice);
 			_practicePlayState = false;
 		} else {
+			disableButtons(true);
 			String dir = "Temp/" + _currentPractice.getFileName() + ".wav";
-			super.playFile(this, practiceProgressText, playPractice, practiceProgressBar, dir, _currentMedia);
 			_practicePlayState = true;
+			super.playFile(this, practiceProgressText, playPractice, practiceProgressBar, dir, _currentMedia);
+
 		}
 	}
 
@@ -149,7 +154,7 @@ public class PracticeRecordController extends PracticeMainController implements 
 			_autoClicked = false;
 			playAttempt();
 		} else {
-			compare.setDisable(false);
+			stopPlaying();
 		}
 	}
 
@@ -157,10 +162,8 @@ public class PracticeRecordController extends PracticeMainController implements 
 		practiceProgressBar.setProgress(0.0); // reset progress bar
 		practiceProgressText.setText("Play Your Attempt");
 		record.setText("Re-record");
-		next.setDisable(false);
+		disableButtons(false);
 		playPractice.setDisable(false);
-		compare.setDisable(false);
-		next.setDisable(false);
 		_recordState = false; // resets it to give opportunity to re-record.
 	}
 
@@ -177,6 +180,11 @@ public class PracticeRecordController extends PracticeMainController implements 
 		_currentMedia = new Media(practice);
 	}
 
+	private void stopPlaying() {
+		stopPlaying(mainProgressBar, playMain);
+		stopPlaying(practiceProgressBar, playPractice);
+	}
+
 	public void stopPlaying(ProgressBar progressBar, Button playButton) {
 		if (!_recordClicked) {
 			_mediator.fireDisableTable(TableType.PRACTICE, TableType.VERSION, false);
@@ -186,10 +194,21 @@ public class PracticeRecordController extends PracticeMainController implements 
 		playButton.setText("▶️️");
 		playButton.setTextFill(Color.LIME);
 		if (_mainPlayState) {
+			record.setDisable(false);
+			if (record.getText().equals("Re-record")) {
+				next.setDisable(false);
+			}
 			_mainPlayState = false;
 		}
 		if (_practicePlayState) {
+			disableButtons(false);
 			_practicePlayState = false;
 		}
+	}
+
+	private void disableButtons(boolean disable) {
+		record.setDisable(disable);
+		compare.setDisable(disable);
+		next.setDisable(disable);
 	}
 }

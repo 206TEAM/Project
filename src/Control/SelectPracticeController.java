@@ -472,6 +472,7 @@ public class SelectPracticeController extends Controller {
 			};
 			task.setOnSucceeded(event -> {
 				concatNameText.setText("");
+				addValue(_newName);
 				setLoading(false);
 			});
 			Thread thread = new Thread(task);

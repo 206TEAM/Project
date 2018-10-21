@@ -1,12 +1,12 @@
 package Control;
 
-import Model.ChallengeSession;
-import Model.Mediator;
 import Ratings.ChallengeRatings;
-import Ratings.DifficultyRatings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -33,7 +33,7 @@ public class MainMenuController extends ParentController implements MicTesterCon
 		progressLabel.setText("Progress is: " + progress + "%");
 
 		Thread thread = new Thread(() -> micTester(instance));
-		Mediator.getInstance().setChallengeSession(null); //reset if main menu
+		_mediator.setChallengeSession(null); //reset if main menu
 		thread.setDaemon(true);
 		thread.start();
 	}
