@@ -4,8 +4,6 @@ import Model.Media;
 import Model.Mediator;
 import Model.Original;
 import Model.Originals;
-import Ratings.ChallengeRatings;
-import Ratings.DifficultyRatings;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -32,7 +30,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Methods that all controllers can use as utility.
@@ -40,12 +37,12 @@ import java.util.Optional;
  * @author Eric Pedrido
  */
 abstract class Controller implements Initializable {
+
     public Mediator _mediator = Mediator.getInstance();
     protected Originals _originals = Originals.getInstance();
     protected List<String> _allNames = _originals.listNames();
 
     private Timeline _progressTimeline;
-
     protected ButtonType _yes;
 
     /**
@@ -103,9 +100,11 @@ abstract class Controller implements Initializable {
             controller.stopPlaying(progressBar, playButton);
             controller.finish();
         };
+
         progressText.setText("Playing...");
         playButton.setText("◼️");
         playButton.setTextFill(Color.RED);
+
         if (_mediator.praticeNotNull()) {
             _mediator.fireDisableTable(PracticeMainController.TableType.PRACTICE, PracticeMainController.TableType.VERSION, true);
         }
@@ -130,6 +129,8 @@ abstract class Controller implements Initializable {
                          int numVersions) {
         Original original;
         String dir;
+
+        // Find the corresponding Original given the parameters
         if (name.contains(" ")) {
             original = _originals.getConcatOriginal(name);
             dir = "Temp/" + fileName;
@@ -137,6 +138,7 @@ abstract class Controller implements Initializable {
             original = getOriginal(fileName, name, numVersions);
             dir = "Names/" + name + "/Original/" + fileName;
         }
+
         playFile(controller, progressText, playButton, progressBar, dir, new Media(original));
     }
 
@@ -154,6 +156,7 @@ abstract class Controller implements Initializable {
         String fileName;
 
         if (allVersions.isEmpty()) {
+        	// If there are only singular versions of a name, set that one as the best version
             goodFiles.add(_originals.getFileName(name).get(0));
         } else {
             for (Original original : allVersions) {
@@ -219,6 +222,11 @@ abstract class Controller implements Initializable {
         return alert;
     }
 
+	/**
+	 * Creates a default {@code Alert} pop-up, with the buttons being "Yes" and "Cancel".
+	 *
+	 * @see #createAlert(Alert.AlertType, String, String, String, ButtonType[])
+	 */
     protected Alert createAlert(Alert.AlertType type, String title, String headerText, String contentText) {
         _yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -234,6 +242,7 @@ abstract class Controller implements Initializable {
      * @param filteredList list containing data to filter from.
      * @param newValue     text to find in filtered list.
      * @param listView     JavaFX component to set the items to.
+     *
      */
     protected void searchListener(FilteredList<String> filteredList, String newValue, ListView<String> listView) {
         filteredList.setPredicate(string -> {
@@ -249,6 +258,10 @@ abstract class Controller implements Initializable {
      * Sets the duration of which the progress bar goes from
      * 0 to 100 to be the length that the audio file it is
      * playing plays for.
+     *
+     * The {@code Timeline} for the {@code ProgressIndicator} was retrieved from
+     * <a href="https://stackoverflow.com/questions/38773124/how-to-get-javafx-timeline-to-increase-by-second-and-to-bind-to-a-progressbar">
+     * "https://stackoverflow.com/questions/38773124/how-to-get-javafx-timeline-to-increase-by-second-and-to-bind-to-a-progressbar"</a>
      *
      * @param progress the {@code ProgressIndicator} being displayed
      * @param dir      whether it is an {@code Original} or a {@code Challenge}
@@ -267,6 +280,7 @@ abstract class Controller implements Initializable {
             e.printStackTrace();
         }
 
+        // This segment has been referenced in the JavaDocs
         _progressTimeline = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(progress.progressProperty(), 0)),
                 new KeyFrame(Duration.seconds(duration), event,
@@ -293,19 +307,19 @@ abstract class Controller implements Initializable {
         stage.close();
     }
 
-
     protected void textSizeHandler(Text nameLabel, String name) {
+    	nameLabel.setLayoutY(43);
         int numChars = name.length();
         int fontSize = 26;
         int minSize = 15;
-        if (numChars > 17) {
-            fontSize = 26 - (numChars - 17);
+        if (numChars > 15) {
+            fontSize = 26 - (numChars - 15);
             if (numChars > 30) {
                 minSize = 12;
             }
             if (fontSize <= minSize) {
                 fontSize = minSize;
-                nameLabel.setY(nameLabel.getY() - 8);
+                nameLabel.setLayoutY(35);
             }
         }
         nameLabel.setFont(new Font("DejaVu Sans Bold", fontSize));

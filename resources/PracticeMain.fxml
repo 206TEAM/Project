@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="900.0" style="-fx-background-color: #d9d9d9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.PracticeMainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="900.0" style="-fx-background-color: #d9d9d9;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.PracticeMainController">
    <children>
       <Pane layoutX="50.0" layoutY="80.0" prefHeight="320.0" prefWidth="200.0" scaleX="1.5" scaleY="1.5">
          <children>
@@ -26,7 +26,7 @@
       </Pane>
       <Pane layoutX="400.0" layoutY="18.0" prefHeight="72.0" prefWidth="400.0" scaleX="1.5" scaleY="1.5">
          <children>
-            <Text fx:id="nameLabel" fill="#ff9900" layoutX="45.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select a Name" wrappingWidth="283.4248046875">
+            <Text fx:id="nameLabel" fill="#ff9900" layoutX="45.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" wrappingWidth="283.4248046875">
                <font>
                   <Font name="DejaVu Sans Bold" size="26.0" />
                </font>
@@ -46,7 +46,7 @@
             </ImageView>
             <Button fx:id="goodButton" disable="true" layoutX="357.0" layoutY="32.0" mnemonicParsing="false" onAction="#goodAction" prefHeight="15.0" prefWidth="24.0" style="-fx-background-radius: 0; -fx-background-color: #00cc00;" text="✔️" textFill="#014a01" />
             <Button fx:id="badButton" disable="true" layoutX="329.0" layoutY="32.0" mnemonicParsing="false" onAction="#badAction" prefHeight="26.0" prefWidth="0.0" style="-fx-background-radius: 0; -fx-background-color: #cc0000;" text="❌" textFill="#400000" />
-            <Text fx:id="fileLabel" fill="#6f675a" layoutX="39.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" wrappingWidth="383.1552734375">
+            <Text fx:id="fileLabel" fill="#6f675a" layoutX="16.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="--" wrappingWidth="383.1552734375">
                <font>
                   <Font name="Lucida Sans Regular" size="12.0" />
                </font>
