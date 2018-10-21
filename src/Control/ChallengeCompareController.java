@@ -128,6 +128,8 @@ public class ChallengeCompareController extends ParentController implements Medi
      * @param rating
      */
     private void processRating(Boolean rating) {
+        stopPlaying(originalProgressBar, playOriginal);
+        stopPlaying(practiceProgressBar, playChallenge);
         String name = _session.getCurrentName();
         String fileName = _session.getChallengeFile(name);
         ChallengeRatings.getInstance().setRating(name, fileName, rating);
