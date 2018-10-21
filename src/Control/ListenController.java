@@ -14,53 +14,52 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-/**
- * this class
- */
-public class ListenController extends Controller {
-    @FXML
-    public TextField search;
-    @FXML
-    public ListView<String> listView, challengeListView, originalListView;
-    @FXML
-    public Text nameLabel, fileLabel;
-    @FXML
-    public ImageView difficultyStar;
-    @FXML
-    public ProgressBar playProgressBar;
-    @FXML
-    public Button play, delete, goodButton, badButton;
-    @FXML
-    public Label progressText;
+public class ListenController extends Controller implements MediaController {
+	@FXML
+	public TextField search;
+	@FXML
+	public ListView<String> listView, challengeListView, originalListView;
+	@FXML
+	public Text nameLabel, fileLabel, progressText;
+	@FXML
+	public ImageView difficultyStar;
+	@FXML
+	public ProgressBar playProgressBar;
+	@FXML
+	public Button play, delete, goodButton, badButton;
 
-    /*****fields******/
-    private String _selected;
-    private String _type;
-    private boolean _good;
+
+	/*****fields******/
+	private String _selected;
+	private String _type;
+	private boolean _good;
+	private boolean _playState;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //todo add listeners to each table and adjust progressText text accordingly
         difficultyStar.setDisable(true);
-
+		_playState = false;
         List<String> names = _originals.listNames();
 
-        java.util.Collections.sort(names);
-        ObservableList<String> challengeNames = FXCollections.observableArrayList(names);
+		java.util.Collections.sort(names);
+		ObservableList<String> challengeNames = FXCollections.observableArrayList(names);
 
-        FilteredList<String> filteredList = new FilteredList<>(challengeNames, s -> true);
-        listView.setItems(filteredList);listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		FilteredList<String> filteredList = new FilteredList<>(challengeNames, s -> true);
+		listView.setItems(filteredList);
+		listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        search.textProperty().addListener(((observable, oldValue, newValue) -> {
-        	searchListener(filteredList, newValue, listView);
-        }));
-    }
+		search.textProperty().addListener(((observable, oldValue, newValue) -> {
+			searchListener(filteredList, newValue, listView);
+		}));
+	}
 
     @FXML
     public void selectName(MouseEvent event) {
@@ -77,47 +76,47 @@ public class ListenController extends Controller {
         populateSubLists();
     }
 
-    /**
-     * this method populates the original list and challenge list with files from the model
-     */
-    public void populateSubLists() {
+	/**
+	 * this method populates the original list and challenge list with files from the model
+	 */
+	public void populateSubLists() {
 
-        String name = _mediator.getCurrentName();
+		String name = _mediator.getCurrentName();
 
-        ObservableList<String> originals = FXCollections.observableArrayList(_originals.getFileName(name));
-        originalListView.setItems(originals); //todo
-        originalListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		ObservableList<String> originals = FXCollections.observableArrayList(_originals.getFileName(name));
+		originalListView.setItems(originals); //todo
+		originalListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        if (Challenges.getInstance().listChallenges(name) != null) {
-            ObservableList<String> challenges = FXCollections.observableArrayList(Challenges.getInstance().listChallenges(name));
-            challengeListView.setItems(challenges);
-        } else {
-            challengeListView.getItems().clear();
-        }
-    }
+		if (Challenges.getInstance().listChallenges(name) != null) {
+			ObservableList<String> challenges = FXCollections.observableArrayList(Challenges.getInstance().listChallenges(name));
+			challengeListView.setItems(challenges);
+		} else {
+			challengeListView.getItems().clear();
+		}
+	}
 
-    /**
-     * Method for when user selects a challenge name.
-     *
-     * @param event
-     */
-    @FXML
-    public void selectNameChallenge(MouseEvent event) { //todo selecting original and challenge is very similar - refactor
-        String fileName = challengeListView.getSelectionModel().getSelectedItem();
-        String name = listView.getSelectionModel().getSelectedItem();
+	/**
+	 * Method for when user selects a challenge name.
+	 *
+	 * @param event
+	 */
+	@FXML
+	public void selectNameChallenge(MouseEvent event) { //todo selecting original and challenge is very similar - refactor
+		String fileName = challengeListView.getSelectionModel().getSelectedItem();
+		String name = listView.getSelectionModel().getSelectedItem();
 
-        if (fileName != null) {
-            _selected = fileName;
-            _type = "challenge";
-            fileLabel.setText(fileName + ".wav");
+		if (fileName != null) {
+			_selected = fileName;
+			_type = "challenge";
+			fileLabel.setText(fileName + ".wav");
 
-            //Challenge challenge = Challenges.getInstance().getChallenge(name, fileName);
-            //todo do we want to get the rating?
-            play.setDisable(false);
-        } else {
-            play.setDisable(true);
-        }
-    }
+			//Challenge challenge = Challenges.getInstance().getChallenge(name, fileName);
+			//todo do we want to get the rating?
+			play.setDisable(false);
+		} else {
+			play.setDisable(true);
+		}
+	}
 
     /**
      * when user selects an original file name, they can play it
@@ -142,7 +141,7 @@ public class ListenController extends Controller {
         _selected = fileName;
         _type = "original";
 
-        //clearRatings();
+		//clearRatings();
 
         Original original = getOriginal(fileName, name, _originals.getFileName(name).size());
         loadRating(original);
@@ -172,63 +171,53 @@ public class ListenController extends Controller {
         }
     }
 
-    @FXML
-    public void play(ActionEvent event) {
-        String name = _mediator.getCurrentName(); //getting the name
+	@FXML
+	public void play(ActionEvent event) {
+		disableTables(true);
+		String name = _mediator.getCurrentName(); //getting the name
+		if (_playState) {
+			stopPlaying(playProgressBar, play);
+			_playState = false;
+		} else {
+			String dir;
+			Media media;
+			if (_type.equals("original")) {
+				Original original = getOriginal(_selected, name, _originals.getFileName(name).size());
+				dir = "Names/" + name + "/Original/" + original.getFileName();
+				media = new Media(original);
+			} else {
+				Challenge challenge = Challenges.getInstance().getChallenge(name, _selected);
+				dir = "Names/" + name + "/Challenge/" + challenge.getFileName() + ".wav";
+				media = new Media(challenge);
+			}
+			playFile(this, progressText, play, playProgressBar, dir, media);
+			_playState = true;
+		}
+	}
 
-        Task<Void> task = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                //generates file which adds to creation list
-                Media media;
-                if (_type.equals("original")) { //if type is original
+	@FXML
+	public void delete(ActionEvent actionEvent) {
+		//todo popup "Are you sure?", then delete challenge recording
+		if (_type.equals("challenge")) {
+			String name = _mediator.getCurrentName();
+			if (name != null) {
+				Challenges.getInstance().deleteChallenge(name, _selected);
+				challengeListView.getItems().remove(_selected);
+				if (challengeListView.getItems().size() < 1) {
+					//deleteButton_3.setDisable(true);
+					//playButton_3.setDisable(true);
+				}
+			}
+		}
+	}
 
-                    Original original = getOriginal(_selected, name, _originals.getFileName(name).size());
-
-                    media = new Media(original);
-                } else { //type is challenge
-                    media = new Media(Challenges.getInstance().getChallenge(name, _selected));
-                }
-                media.play();
-                return null;
-            }
-        };
-
-        //after creating the creation, user reviews the audio
-        task.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED, e -> {
-            progressText.setText("Play.");
-        });
-
-        progressText.setText("Playing...");
-        Thread thread = new Thread(task);
-        thread.setDaemon(true);
-        thread.start();
-
-    }
-
-    @FXML
-    public void delete(ActionEvent actionEvent) {
-        //todo popup "Are you sure?", then delete challenge recording
-        if (_type.equals("challenge")) {
-            String name = _mediator.getCurrentName();
-            if (name != null) {
-                Challenges.getInstance().deleteChallenge(name, _selected);
-                challengeListView.getItems().remove(_selected);
-                if (challengeListView.getItems().size() < 1) {
-                    //deleteButton_3.setDisable(true);
-                    //playButton_3.setDisable(true);
-                }
-            }
-        }
-    }
-
-    private void ratingHandler() {
-        String fileName = originalListView.getSelectionModel().getSelectedItem();
-        String name = listView.getSelectionModel().getSelectedItem();
+	private void ratingHandler() {
+		String fileName = originalListView.getSelectionModel().getSelectedItem();
+		String name = listView.getSelectionModel().getSelectedItem();
 
         if (fileName != null) {
 	        Original original = getOriginal(fileName, name, _originals.getFileName(name).size());
-            if (_good == false) { ;
+            if (!_good) {
                 _originals.setRating(original, "&bad&");
             } else {
                 _originals.setRating(original, "&good&");
@@ -271,5 +260,28 @@ public class ListenController extends Controller {
         badButton.setDisable(true);
     }
 
+	private void disableTables(boolean disable) {
+		listView.setDisable(disable);
+		challengeListView.setDisable(disable);
+		originalListView.setDisable(disable);
+	}
 
+	@Override
+	public void stopPlaying(ProgressBar progressBar, Button playButton) {
+		stopProgress();
+		disableTables(false);
+		progressBar.setProgress(0.0);
+		playButton.setText("▶️️");
+		playButton.setTextFill(Color.LIME);
+		progressText.setText("Play");
+		if (_playState) {
+			_playState = false;
+		}
+	}
+
+	@Override
+	public void finish() {
+		disableTables(false);
+		progressText.setText("Play");
+	}
 }

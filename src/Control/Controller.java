@@ -18,6 +18,7 @@ import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -39,6 +40,8 @@ abstract class Controller implements Initializable {
 	public Mediator _mediator = Mediator.getInstance();
 	protected Originals _originals = Originals.getInstance();
 	protected List<String> _allNames = _originals.listNames();
+
+	private Timeline _progressTimeline;
 
 	protected ButtonType _yes;
 
@@ -89,13 +92,17 @@ abstract class Controller implements Initializable {
 	 * @param dir the directory of file (e.g Names/Ahn/Challenge/AhnChallenge1.wav).
 	 * @param media the {@code Media} to play.
 	 */
-	public void playFile(Text progressText, Button playButton, ProgressBar progressBar, String dir, Media media) {
+	public void playFile(MediaController controller, Text progressText, Button playButton, ProgressBar progressBar, String dir, Media media) {
 		EventHandler<ActionEvent> doAfter = event -> {
 			progressText.setText("Done");
-			playButton.setDisable(false);
+			playButton.setText("▶️");
+			playButton.setTextFill(Color.LIME);
+			controller.stopPlaying(progressBar, playButton);
+			controller.finish();
 		};
 		progressText.setText("Playing...");
-		playButton.setDisable(true);
+		playButton.setText("◼️");
+		playButton.setTextFill(Color.RED);
 		if (_mediator.praticeNotNull()) {
 			_mediator.fireDisableTable(PracticeMainController.TableType.PRACTICE, PracticeMainController.TableType.VERSION, true);
 		}
@@ -116,7 +123,7 @@ abstract class Controller implements Initializable {
 	 * @param name the name of the {@code Original}.
 	 * @param numVersions the number of versions the {@code Original} has.
 	 */
-	public void playFile(Text progressText, Button playButton, ProgressBar progressBar, String fileName, String name,
+	public void playFile(MediaController controller, Text progressText, Button playButton, ProgressBar progressBar, String fileName, String name,
 	                     int numVersions) {
 		Original original;
 		String dir;
@@ -127,7 +134,7 @@ abstract class Controller implements Initializable {
 			original = getOriginal(fileName, name, numVersions);
 			dir = "Names/" + name + "/Original/" + fileName;
 		}
-		playFile(progressText, playButton, progressBar, dir, new Media(original));
+		playFile(controller, progressText, playButton, progressBar, dir, new Media(original));
 	}
 
 	/**
@@ -257,12 +264,21 @@ abstract class Controller implements Initializable {
 			e.printStackTrace();
 		}
 
-		Timeline timeLine = new Timeline(
+		_progressTimeline = new Timeline(
 				new KeyFrame(Duration.ZERO, new KeyValue(progress.progressProperty(), 0)),
 				new KeyFrame(Duration.seconds(duration), event,
 						new KeyValue(progress.progressProperty(), 1)));
-		timeLine.setCycleCount(1);
-		timeLine.play();
+		_progressTimeline.setCycleCount(1);
+		_progressTimeline.play();
+	}
+
+	protected void stopProgress() {
+		_progressTimeline.stop();
+		Media.cancel();
+	}
+
+	protected long getDuration() {
+		return (long) _progressTimeline.getTotalDuration().toMillis();
 	}
 
 	/**

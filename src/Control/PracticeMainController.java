@@ -47,7 +47,7 @@ public class PracticeMainController extends ParentController {
 
 	@FXML
 	public void add(ActionEvent actionEvent) {
-		_mediator.loadPane(Type.HEADER, "Practice1");
+		_mediator.loadPane(Type.HEADER, "SelectPractices");
 	}
 
 	@FXML
@@ -55,36 +55,7 @@ public class PracticeMainController extends ParentController {
 		String name = practiceListView.getSelectionModel().getSelectedItem();
 		_mediator.setCurrentName(name);
 		updateStar(name);
-		if (name != null) {
-			List<String> versions = _originals.getFileName(name);
-			ObservableList<String> versionsToDisplay;
-
-			if (versions.size() == 0) {
-				versions = new ArrayList<>();
-				versions.add(_originals.getConcatFileName(name));
-			}
-
-			versionsToDisplay = FXCollections.observableArrayList(versions);
-			versionListView.setItems(versionsToDisplay);
-			nameLabel.setText(name);
-			textSizeHandler(nameLabel, name);
-			String fileName;
-
-			if (versionsToDisplay.size() == 1) {
-				versionListView.getSelectionModel().selectFirst();
-				 fileName = versionListView.getSelectionModel().getSelectedItem();
-			} else {
-				fileName = pickBestOriginal(name);
-				for (int i = 0; i < versions.size(); i++) {
-					if (versions.get(i).equals(fileName)) {
-						versionListView.getSelectionModel().select(i);
-						break;
-					}
-				}
-			}
-			notifyObserver(name, fileName, versionListView.getItems().size());
-			ratingHandler(fileName, name);
-		}
+		setSelected(name);
 	}
 
 	@FXML
@@ -130,6 +101,39 @@ public class PracticeMainController extends ParentController {
 			Boolean difficulty = DifficultyRatings.getInstance().getRating(name);
 			starOn(difficultyStar, !difficulty);
 			DifficultyRatings.getInstance().setRating(name, !difficulty);
+		}
+	}
+
+	private void setSelected(String name) {
+		if (name != null) {
+			List<String> versions = _originals.getFileName(name);
+			ObservableList<String> versionsToDisplay;
+
+			if (versions.size() == 0) {
+				versions = new ArrayList<>();
+				versions.add(_originals.getConcatFileName(name));
+			}
+
+			versionsToDisplay = FXCollections.observableArrayList(versions);
+			versionListView.setItems(versionsToDisplay);
+			nameLabel.setText(name);
+			textSizeHandler(nameLabel, name);
+			String fileName;
+
+			if (versionsToDisplay.size() == 1) {
+				versionListView.getSelectionModel().selectFirst();
+				fileName = versionListView.getSelectionModel().getSelectedItem();
+			} else {
+				fileName = pickBestOriginal(name);
+				for (int i = 0; i < versions.size(); i++) {
+					if (versions.get(i).equals(fileName)) {
+						versionListView.getSelectionModel().select(i);
+						break;
+					}
+				}
+			}
+			notifyObserver(name, fileName, versionListView.getItems().size());
+			ratingHandler(fileName, name);
 		}
 	}
 
@@ -180,6 +184,8 @@ public class PracticeMainController extends ParentController {
 	public void setTableValues(List<String> practiceList) {
 		ObservableList<String> practices = FXCollections.observableArrayList(practiceList);
 		practiceListView.setItems(practices);
+		practiceListView.getSelectionModel().selectFirst();
+		setSelected(practiceListView.getSelectionModel().getSelectedItem());
 	}
 
 	private void loadRating(Original original) {
@@ -212,8 +218,14 @@ public class PracticeMainController extends ParentController {
 	 * @see #addObserver(Observer)
 	 */
 	private void notifyObserver(String name, String fileName, int numberOfVersions) {
-		Practice practice = new Practice(name);
-		_mediator.setCurrent(name, fileName, numberOfVersions, practice);
-		_observer.update(name, fileName, numberOfVersions, practice);
+		if (_observer != null) {
+			Practice practice = new Practice(name);
+			_mediator.setCurrent(name, fileName, numberOfVersions, practice);
+			_observer.update(name, fileName, numberOfVersions, practice);
+		}
+	}
+
+	public void updateOnRequest() {
+		setSelected(practiceListView.getSelectionModel().getSelectedItem());
 	}
 }

@@ -120,10 +120,6 @@ public class Media {
 					"dB\" Temp/_normalized" + num + ".wav";
 
 			process(applyAdjusmentCommand, CURRENT_DIRECTORY);
-
-			// Normalize even more
-			String normalizeAgain = "ffmpeg -i Temp/_normalized" + num + ".wav -filter:a loudnorm Temp/_finalNormalized" + num + ".wav";
-			process(normalizeAgain, CURRENT_DIRECTORY);
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}

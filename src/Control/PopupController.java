@@ -16,10 +16,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class PopupController implements Initializable {
+public class PopupController extends Controller {
     private Stage stage = null;
     private ChallengeSession _session;
     private Mediator _mediator;
@@ -39,7 +40,8 @@ public class PopupController implements Initializable {
      */
     private void closeStage() {
         if (stage != null) {
-            Mediator.getInstance().loadPane(ParentController.Type.MAIN, "MainMenu");
+            _mediator.loadPane(ParentController.Type.MAIN, "MainMenu");
+            _mediator.setPracticeMainList(new ArrayList<>());
             stage.close();
         }
     }

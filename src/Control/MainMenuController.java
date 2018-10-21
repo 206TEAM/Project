@@ -38,7 +38,7 @@ public class MainMenuController extends ParentController implements MicTesterCon
 
 	@FXML
 	public void practice(ActionEvent actionEvent) {
-		loadNextPane("Practice1", PageType.PRACTICE);
+		loadNextPane("SelectPractices", PageType.PRACTICE);
 	}
 
 	@FXML
