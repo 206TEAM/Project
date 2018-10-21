@@ -72,8 +72,6 @@ public class SelectPracticeController extends Controller {
 		_delayedPreviewList = new ArrayList<>();
 		_clicked = false;
 
-		_mediator.setPracticeMainList(new ArrayList<>());
-
 		if (_allNames.size() == 0) {
 			selectListView.setVisible(false);
 		} else {
@@ -162,6 +160,18 @@ public class SelectPracticeController extends Controller {
 		String selectedItem = selectListView.getSelectionModel().getSelectedItem();
 		if (selectedItem != null) {
 			int clickCount = mouseEvent.getClickCount();
+			if (clickCount == 1) {
+				if (!previewList.getItems().contains(selectedItem)) {
+					if (_clicked) {
+						_delayedPreviewList.addAll(previewList.getItems());
+						_clicked = false;
+					}
+					previewList.getItems().add(selectedItem);
+					_selectedOrder.add(selectedItem);
+					_clicked = true;
+				}
+				disableButtons(false);
+			}
 			if (clickCount == 2) {
 
 				String currString = concatNameText.getText();
@@ -178,21 +188,11 @@ public class SelectPracticeController extends Controller {
 				concatNameText.setText(currString + " ");
 				setLabelText(currString);
 
-				if (!_delayedPreviewList.contains(selectedItem) && !_clicked) {
+				if (!_delayedPreviewList.contains(selectedItem) && !
+						_clicked) {
 					previewList.getItems().remove(selectedItem);
 				}
 
-			} else if (clickCount == 1) {
-				if (!previewList.getItems().contains(selectedItem)) {
-					if (_clicked) {
-						_delayedPreviewList.addAll(previewList.getItems());
-						_clicked = false;
-					}
-					previewList.getItems().add(selectedItem);
-					_selectedOrder.add(selectedItem);
-					_clicked = true;
-				}
-				disableButtons(false);
 			}
 		}
 		searchOpacity(true);

@@ -43,6 +43,10 @@ public class PracticeRecordController extends PracticeMainController implements 
 		_autoClicked = false;
 		_mediator.addObserver(this);
 		_mediator.requestUpdate();
+
+		if (_mediator.getPracticeMainList().size() == 1) {
+			next.setText("Done");
+		}
 	}
 
 	@FXML
