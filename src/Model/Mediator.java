@@ -25,6 +25,7 @@ public class Mediator {
     private Boolean _inChallengeSession;
     private List<String> _missingNames;
     private String _missingListFile;
+    private Boolean _inChallengeCompareSession;
 
 	public void addObserver(Observer o) {
 		_practiceMain.addObserver(o);
@@ -112,6 +113,7 @@ public class Mediator {
 
     public void setPageType(ParentController.PageType type) {
     	_currentPage = type;
+        System.out.println(type);
     }
 
     public void loadPane(ParentController.Type parent, String page) {

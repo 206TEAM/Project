@@ -47,25 +47,26 @@ public class HeaderController extends ParentController {
 	@FXML
 	public void home(MouseEvent mouseEvent) {
 
-        //Boolean inSession = _mediator.getChallengeStatus();
-
-		if (_page == PageType.CHALLENGE || _page == PageType.PRACTICE) {
+		if ((_page == PageType.CHALLENGE && _mediator.getChallengeSession()!=null) || _page == PageType.PRACTICE || _page == PageType.CHALLENGECOMPARE) {
 			String text;
 			if (_page == PageType.PRACTICE) {
 				text = "Your playlist will be lost";
 			} else {
 				text = "The Challenge list will be lost";
 			}
+
             boolean confirmAction = false;
             confirmAction = confirmAction(text);
 
             // If the user confirms, delete it
             if (confirmAction) {
-                ChallengeSession _session =_mediator.getChallengeSession();
-                if (_session!=null) {
-					_session.abortSession(); //gets rid of challenges
+
+            	if (_page == PageType.CHALLENGE) {
+					ChallengeSession _session = _mediator.getChallengeSession();
+					if (_session != null) {
+						_session.abortSession(); //gets rid of challenges
+					}
 				}
-                _mediator.removeInChallengeSession();
                 _mediator.loadPane(Type.MAIN, "MainMenu");
 				_mediator.setPracticeMainList(new ArrayList<>());
             }
@@ -107,6 +108,8 @@ public class HeaderController extends ParentController {
 			text = "Challenge";
 		} else if (pageType == PageType.LISTEN) {
 			text = "Listen";
+		} else if (pageType == PageType.CHALLENGECOMPARE){
+			text = "TEST";
 		} else {
 			text = "Stats";
 		}

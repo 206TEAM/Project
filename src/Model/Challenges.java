@@ -120,6 +120,7 @@ public class Challenges {
             Challenge challengeDelete = getChallenge(nameKey, fileName);
             challengeDelete.delete(); // delete the challenge
             _challenges.get(nameKey).remove(challengeDelete); //not sure if this works yet (needs testing)
+            _existingChallenges.remove(challengeDelete);
         }
     }
 

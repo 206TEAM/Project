@@ -1,9 +1,6 @@
 package Ratings;
 
-import Model.Challenge;
-import Model.Challenges;
-import Model.Original;
-import Model.Originals;
+import Model.*;
 import Save.Saving;
 
 import java.io.BufferedReader;

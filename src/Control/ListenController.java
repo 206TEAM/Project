@@ -230,13 +230,13 @@ public class ListenController extends Controller implements MediaController {
     private void loadRating(Original original) {
         String rating = _originals.getRating(original);
         if (rating.equals("&bad&")){
-            badButton.setStyle("-fx-background-color: #FF0000; ");
-            goodButton.setStyle("-fx-background-color: #8FBC8F; ");
+            badButton.setOpacity(1.0);
+            goodButton.setOpacity(0.5);
 
 
         } else {
-            goodButton.setStyle("-fx-background-color: #228B22; ");
-            badButton.setStyle("-fx-background-color: #FF9999; ");
+            goodButton.setOpacity(1.0);
+            badButton.setOpacity(0.5);
         }
     }
 
