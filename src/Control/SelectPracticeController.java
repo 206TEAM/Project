@@ -143,6 +143,7 @@ public class SelectPracticeController extends Controller {
 		_mediator.setPracticeMainList(new ArrayList<>());
 		previewList.getItems().clear();
 		_selectedOrder.clear();
+		_delayedPreviewList.clear();
 
 		disableButtons(true);
 		searchOpacity(true);
