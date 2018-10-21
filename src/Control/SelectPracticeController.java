@@ -188,8 +188,7 @@ public class SelectPracticeController extends Controller {
 				concatNameText.setText(currString + " ");
 				setLabelText(currString);
 
-				if (!_delayedPreviewList.contains(selectedItem) && !
-						_clicked) {
+				if (!_delayedPreviewList.contains(selectedItem) && !_clicked) {
 					previewList.getItems().remove(selectedItem);
 				}
 
