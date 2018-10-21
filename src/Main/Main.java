@@ -1,6 +1,7 @@
 package Main;
 
 import Control.ParentController;
+import Model.Challenges;
 import Model.Mediator;
 import Model.Originals;
 import Ratings.ChallengeRatings;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -62,12 +64,12 @@ public class Main extends Application {
 
             Optional<ButtonType> result = confirm.showAndWait();
             if (result.get() == saveQuit) {
-                //todo "save" the work
                 ChallengeRatings.getInstance().saveSession();
                 DifficultyRatings.getInstance().saveSession();
             } else if (result.get() == cancel) {
                 event.consume();
                 primaryStage.show();
+            } else {
             }
         });
     }
