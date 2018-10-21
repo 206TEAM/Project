@@ -259,9 +259,9 @@ abstract class Controller implements Initializable {
      * 0 to 100 to be the length that the audio file it is
      * playing plays for.
      *
-     * The {@code Timeline} for the {@code ProgressIndicator} was retrieved from
+     * The {@code Timeline} for the {@code ProgressIndicator} was retrieved from:
      * <a href="https://stackoverflow.com/questions/38773124/how-to-get-javafx-timeline-to-increase-by-second-and-to-bind-to-a-progressbar">
-     * "https://stackoverflow.com/questions/38773124/how-to-get-javafx-timeline-to-increase-by-second-and-to-bind-to-a-progressbar"</a>
+     * https://stackoverflow.com/questions/38773124/how-to-get-javafx-timeline-to-increase-by-second-and-to-bind-to-a-progressbar</a>
      *
      * @param progress the {@code ProgressIndicator} being displayed
      * @param dir      whether it is an {@code Original} or a {@code Challenge}
@@ -294,10 +294,6 @@ abstract class Controller implements Initializable {
         Media.cancel();
     }
 
-    protected long getDuration() {
-        return (long) _progressTimeline.getTotalDuration().toMillis();
-    }
-
     /**
      * Closes the window of the {@code Stage} which the given {@code Pane}
      * is in.
@@ -307,7 +303,15 @@ abstract class Controller implements Initializable {
         stage.close();
     }
 
-    protected void textSizeHandler(Text nameLabel, String name) {
+	/**
+	 * Adjusts the size of the text displaying the selected Name to play.
+	 * It uses an algorithm depending on the length of the Name, making it
+	 * smaller so that it can fit longer names.
+	 *
+	 * @param nameLabel the JavaFX element to adjust the size of.
+	 * @param name      the selected Name.
+	 */
+	protected void textSizeHandler(Text nameLabel, String name) {
     	nameLabel.setLayoutY(43);
         int numChars = name.length();
         int fontSize = 26;
@@ -325,7 +329,15 @@ abstract class Controller implements Initializable {
         nameLabel.setFont(new Font("DejaVu Sans Bold", fontSize));
     }
 
-    protected void starOn(ImageView star, boolean on) {
+	/**
+	 * Adjusts the color of the difficulty star to be either yellow,
+	 * which is the color of the image, or grey, to indicate that it
+	 * has not been selected.
+	 *
+	 * @param star the image of the star to adjust colors of.
+	 * @param on whether or not the star has been selected to be on or not.
+	 */
+	protected void starOn(ImageView star, boolean on) {
         ColorAdjust color = new ColorAdjust(0, 0, 0, 0);
         if (!on) {
             color.setSaturation(-1);
@@ -334,7 +346,18 @@ abstract class Controller implements Initializable {
         star.setEffect(color);
     }
 
-    protected void micTester(MicTesterController controller) {
+	/**
+	 * Captures input from the microphone of the user, and invokes
+	 * {@link MicTestController#setMicLevel(float)} after getting the
+	 * calculated root mean squared value.
+	 *
+	 * This code segment was retrieved from:
+	 * <a href="https://stackoverflow.com/questions/26574326/how-to-calculate-the-level-amplitude-db-of-audio-signal-in-java">
+	 *     https://stackoverflow.com/questions/26574326/how-to-calculate-the-level-amplitude-db-of-audio-signal-in-java</a>
+	 *
+	 * @param controller
+	 */
+	protected void micTester(MicTesterController controller) {
         AudioFormat af = new AudioFormat(44100f, 16, 1, true, false);
         TargetDataLine dataLine = null;
         try {
@@ -364,7 +387,7 @@ abstract class Controller implements Initializable {
             }
             rms = (float) Math.sqrt(rms / samples.length);
             rms = Math.abs(rms);
-            controller.setMicLevel(rms);
+            controller.setMicLevel(rms); // Do something with the rms in the controller
         }
     }
 }
