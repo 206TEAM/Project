@@ -1,14 +1,9 @@
 package Ratings;
 
-import Model.Challenge;
-import Model.Challenges;
-import Model.Original;
-import Model.Originals;
+import Model.*;
 import Save.Saving;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -85,6 +80,7 @@ public class ChallengeRatings extends Saving {
     private void updateModel() {
         try {
             _noOfSessions = Integer.parseInt(getSaved(SESSIONFILE, "_noOfSessions"));
+            System.out.println(_noOfSessions);
             _overallScore = Integer.parseInt(getSaved(SESSIONFILE, "_overallScore"));
             _progress = Integer.parseInt(getSaved(SESSIONFILE, "_progress"));
             _goodNames = getList(SESSIONFILE, "_goodNames");
@@ -214,7 +210,6 @@ public class ChallengeRatings extends Saving {
      * public method that writes all the fields and values to a text file
      */
     public void saveSession() {
-
         List<String> params = new ArrayList<String>();
         params.add("_noOfSessions &" + _noOfSessions + "&");
         params.add("_overallScore &" + _overallScore + "&");
@@ -236,7 +231,7 @@ public class ChallengeRatings extends Saving {
     /**
      * this method resets all the fields and variables to the default settings
      */
-    public void reset() {
+    public void reset() throws FileNotFoundException {
         _noOfSessions = 0;
         _overallScore = 0;
         _progress = 0;
@@ -250,5 +245,6 @@ public class ChallengeRatings extends Saving {
             _challengesRating.put(name, -1); //adding names
             _notAttemptedNames.add(name);
         }
+        deleteTextFile(SESSIONFILE);
     }
 }

@@ -1,5 +1,7 @@
 package Control;
 
+import Model.ChallengeSession;
+import Model.Mediator;
 import Ratings.ChallengeRatings;
 import Ratings.DifficultyRatings;
 import javafx.event.ActionEvent;
@@ -31,7 +33,7 @@ public class MainMenuController extends ParentController implements MicTesterCon
 		progressLabel.setText("Progress is: " + progress + "%");
 
 		Thread thread = new Thread(() -> micTester(instance));
-
+		Mediator.getInstance().setChallengeSession(null); //reset if main menu
 		thread.setDaemon(true);
 		thread.start();
 	}
@@ -100,11 +102,6 @@ public class MainMenuController extends ParentController implements MicTesterCon
 
 	public void settingsExited(MouseEvent mouseEvent) {
 		settingsLabel.setVisible(false);
-	}
-
-
-	public void save(ActionEvent actionEvent) {
-		//todo refactor the HeaderController method to do the same thing as this
 	}
 
 	public void quit(ActionEvent actionEvent) {

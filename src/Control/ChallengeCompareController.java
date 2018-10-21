@@ -60,6 +60,8 @@ public class ChallengeCompareController extends ParentController implements Medi
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+     //
         _mediator.setParent(this);
         _mainPlayState = false;
         _challengePlayState = false;
@@ -71,7 +73,6 @@ public class ChallengeCompareController extends ParentController implements Medi
         challengeListView.setItems(practiceList);
         playChallenge.setDisable(true);
         playOriginal.setDisable(true);
-        difficultyStar.setDisable(true);
 
         challengeListView.getSelectionModel().selectFirst();
         nameSelected(challengeListView.getSelectionModel().getSelectedItem());
@@ -150,7 +151,6 @@ public class ChallengeCompareController extends ParentController implements Medi
 
     @FXML
     public void nameSelected(MouseEvent mouseEvent) {
-        difficultyStar.setDisable(false);
         String name = challengeListView.getSelectionModel().getSelectedItem();
         updateStar(name);
         if (name != null) {

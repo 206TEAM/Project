@@ -88,6 +88,7 @@ public class ChallengePlayController implements Initializable{
             _mediator.setPracticeMainList(_challengeList);
             _mediator.loadPane(ParentController.Type.MAIN, "Header");
             _mediator.loadPane(ParentController.Type.HEADER, "ChallengeMain");
+            _mediator.setPageType(ParentController.PageType.CHALLENGECOMPARE);
         } else {
             nextName();
         }

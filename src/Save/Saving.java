@@ -1,6 +1,9 @@
 package Save;
+
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -28,6 +31,7 @@ public abstract class Saving {
         try {
             List<String> fileContents = new ArrayList<>(Files.readAllLines(Paths.get(fileName)));
             for (String param : params) {
+                param = param + "\n";
                 Files.write(Paths.get(fileName), param.getBytes(), StandardOpenOption.APPEND);
             }
         } catch (IOException e) {
@@ -46,6 +50,7 @@ public abstract class Saving {
             for (int i = 0; i < fileContents.size(); i++) {
                 String output;
                 if (fileContents.get(i).startsWith(key)) {
+
                     Pattern pattern = Pattern.compile("&+[a-zA-Z_0-9]+&"); //todo
                     Matcher matcher = pattern.matcher(fileContents.get(i));
                     if (matcher.find()) {
@@ -62,8 +67,9 @@ public abstract class Saving {
 
     /**
      * this method gets the saved value encoded &value& from the corresponding key and fileName
+     *
      * @param fileName the name of file to be read from
-     * @param key the key of the value to be retrieved
+     * @param key      the key of the value to be retrieved
      * @return value
      */
     protected String getSaved(String fileName, String key) {
@@ -71,13 +77,14 @@ public abstract class Saving {
         try {
             List<String> fileContents = new ArrayList<String>(Files.readAllLines(Paths.get(fileName)));
 
+
             for (int i = 0; i < fileContents.size(); i++) {
                 if (fileContents.get(i).startsWith(key)) {
                     Pattern pattern = Pattern.compile("&+[a-zA-Z_0-9]+&"); //todo
                     Matcher matcher = pattern.matcher(fileContents.get(i));
                     if (matcher.find()) {
                         output = matcher.group(0);
-                       return getFieldsString(output, fileName);
+                        return getFieldsString(output, fileName);
                     }
                 }
             }
@@ -89,6 +96,7 @@ public abstract class Saving {
 
     /**
      * Helper method that gets the value from the decoded value.
+     *
      * @param param
      * @param fileName
      * @return
@@ -96,11 +104,12 @@ public abstract class Saving {
     private String getFieldsString(String param, String fileName) {
         int paramLength = param.length();
 
-        return param.substring(1, paramLength-1);
+        return param.substring(1, paramLength - 1);
     }
 
     /**
      * method that creates the text file for saving
+     *
      * @param fileName name of file to be used
      */
     protected void createTextFile(String fileName) {
@@ -111,6 +120,18 @@ public abstract class Saving {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    protected void deleteTextFile(String fileName) {
+        File f = new File(fileName);
+        if (f.exists()) {
+            f.delete();
+            try {
+                f.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
