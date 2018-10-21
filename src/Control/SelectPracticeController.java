@@ -160,18 +160,6 @@ public class SelectPracticeController extends Controller {
 		String selectedItem = selectListView.getSelectionModel().getSelectedItem();
 		if (selectedItem != null) {
 			int clickCount = mouseEvent.getClickCount();
-			if (clickCount == 1) {
-				if (!previewList.getItems().contains(selectedItem)) {
-					if (_clicked) {
-						_delayedPreviewList.addAll(previewList.getItems());
-						_clicked = false;
-					}
-					previewList.getItems().add(selectedItem);
-					_selectedOrder.add(selectedItem);
-					_clicked = true;
-				}
-				disableButtons(false);
-			}
 			if (clickCount == 2) {
 
 				String currString = concatNameText.getText();
@@ -192,6 +180,17 @@ public class SelectPracticeController extends Controller {
 					previewList.getItems().remove(selectedItem);
 				}
 
+			} else if (clickCount == 1) {
+				if (!previewList.getItems().contains(selectedItem)) {
+					if (_clicked) {
+						_delayedPreviewList.addAll(previewList.getItems());
+						_clicked = false;
+					}
+					previewList.getItems().add(selectedItem);
+					_selectedOrder.add(selectedItem);
+					_clicked = true;
+				}
+				disableButtons(false);
 			}
 		}
 		searchOpacity(true);
@@ -340,11 +339,6 @@ public class SelectPracticeController extends Controller {
 								if (entered.equals(confirmed.toString().toUpperCase())) {
 									_newName = confirmed.toString();
 									concatNames(true);
-									try {
-										_thread.join();
-									} catch (InterruptedException e) {
-										e.printStackTrace();
-									}
 								}
 							} else {
 								if (!name.equals("")) {
@@ -361,6 +355,7 @@ public class SelectPracticeController extends Controller {
 				}
 			};
 			task.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED, event -> {
+				List<String> concatNames = _originals.getConcats();
 				if (uploadedNames.size() > 0) {
 					disableButtons(false);
 					previewList.getItems().addAll(uploadedNames);
@@ -370,6 +365,11 @@ public class SelectPracticeController extends Controller {
 					String missingListFile = file.getName();
 					_mediator.setMissingNames(missingNames, missingListFile);
 					createPopUp("NoNameWarning", "WARNING: Names not found", 505, 462);
+				}
+				if (!concatNames.isEmpty()) {
+					for (String name : concatNames) {
+						addValue(name);
+					}
 				}
 				setLoading(false);
 			});
@@ -425,59 +425,44 @@ public class SelectPracticeController extends Controller {
 	private void concatNames(boolean uploaded) {
 		String newFileName = _newName.replace(' ', '_');
 		if (Files.notExists(Paths.get("Temp/" + newFileName + ".wav"))) {
-			Task<Void> task = new Task<Void>() {
-				@Override
-				protected Void call() throws Exception {
-					setLoading(true);
-					try {
-						final File tempFolder = new File("Temp");
-						// Only delete temp files (Not concatenated name files)
-						final File[] tempFiles = tempFolder.listFiles((dir, name) -> name.matches("^_.*"));
-						if (tempFiles != null) {
-							for (final File file : tempFiles) {
-								if (!file.delete()) {
-									System.err.println("File " + file.getName() + " could not be deleted");
-								}
-							}
+			setLoading(true);
+			try {
+				final File tempFolder = new File("Temp");
+				// Only delete temp files (Not concatenated name files)
+				final File[] tempFiles = tempFolder.listFiles((dir, name) -> name.matches("^_.*"));
+				if (tempFiles != null) {
+					for (final File file : tempFiles) {
+						if (!file.delete()) {
+							System.err.println("File " + file.getName() + " could not be deleted");
 						}
-						Files.deleteIfExists(Paths.get("list.txt"));
-						Files.createFile(Paths.get("list.txt"));
-						for (int i = 0; i < _names.size(); i++) {
-							String name = _names.get(i);
-							String fileName = pickBestOriginal(name);
-
-							String dir = "Names/" + name + "/Original/" + fileName;
-							String line = "file 'Temp/_normalized" + i + ".wav'\n";
-
-							Files.write(Paths.get("list.txt"), line.getBytes(), StandardOpenOption.APPEND);
-							Media.normalizeVolume(dir, i);
-						}
-
-					} catch (IOException e) {
-						e.printStackTrace();
 					}
-
-					Media.concatNames(newFileName);
-					_originals.addConcat(new Original(_newName, newFileName + ".wav"));
-					return null;
 				}
-			};
 
-			task.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED, event -> {
-				try {
-					if (!uploaded) {
-						_thread.join();
-						setLoading(false);
-					}
-					addValue(_newName);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+				Files.deleteIfExists(Paths.get("list.txt"));
+				Files.createFile(Paths.get("list.txt"));
+				for (int i = 0; i < _names.size(); i++) {
+					String name = _names.get(i);
+					String fileName = pickBestOriginal(name);
+
+					String dir = "Names/" + name + "/Original/" + fileName;
+					String line = "file 'Temp/_normalized" + i + ".wav'\n";
+
+					Files.write(Paths.get("list.txt"), line.getBytes(), StandardOpenOption.APPEND);
+					Media.normalizeVolume(dir, i);
 				}
-			});
 
-			_thread = new Thread(task);
-			_thread.setDaemon(true);
-			_thread.start();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			Media.concatNames(newFileName);
+			_originals.addConcat(new Original(_newName, newFileName + ".wav"));
+
+			if (!uploaded) {
+				setLoading(false);
+				addValue(_newName);
+			}
+
 		}
 	}
 

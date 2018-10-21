@@ -355,6 +355,14 @@ public class Originals {
 		_concats.add(concat);
 	}
 
+	public List<String> getConcats() {
+		List<String> output = new ArrayList<>();
+		for (Original concat : _concats) {
+			output.add(concat.getName());
+		}
+		return output;
+	}
+
 	public String getConcatFileName(String name) {
 		for (Original original : _concats) {
 			if (original.getName().equals(name)) {

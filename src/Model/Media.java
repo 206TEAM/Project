@@ -126,8 +126,7 @@ public class Media {
 	}
 
 	private static void removeSilence(String file) {
-		String command = "ffmpeg -y -i Temp/_output.wav -af silenceremove=0:0:0:-1:1:-50dB:1 " +
-				"Temp/" + file + ".wav";
+		String command = "ffmpeg -y -i Temp/_output.wav -af silenceremove=0:0:0:-1:1:-50dB:1 " + "Temp/" + file + ".wav";
 		process(command, CURRENT_DIRECTORY);
 	}
 
