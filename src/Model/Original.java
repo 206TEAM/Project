@@ -40,7 +40,6 @@ public class Original {
 	 * @throws FileNotFoundException if the requested file doesn't exist.
 	 * @throws InvalidNameException  if the fileName has a user-friendly name that contains
 	 *                               characters that are not alphabet letters or spaces.
-	 * @see #extractName()
 	 */
 	public Original(String fileName) throws FileNotFoundException, InvalidNameException {
 		// Find the file with the entered filename
@@ -52,6 +51,11 @@ public class Original {
 		}
 	}
 
+	/**
+	 * Constructor for a concatenated {@code Original}. The difference is that
+	 * this references files stored in <dir>Temp</dir>, which is a temporary
+	 * directory.
+	 */
 	public Original(String name, String fileName) {
 		if (Files.exists(Paths.get("Temp/" + fileName))) {
 			_fileName = fileName;
@@ -115,6 +119,11 @@ public class Original {
 		return _name + _version;
 	}
 
+	/**
+	 * Adds the version number to the file name without directly changing the file.
+	 *
+	 * @return new file name in the format <q>(user code)_(date)_(hh-mm-ss)_(name)(version).wav</q>
+	 */
 	public String getFileNameWithVersion() {
 		StringBuilder fileName = new StringBuilder(_fileName);
 		fileName.setLength(fileName.length() - 4);
