@@ -29,8 +29,9 @@ public class Originals {
 
 	/**
 	 * Upon construction, <dir>Recordings</dir> will be scanned
-	 * to populate {@link #_originals} and <dir>Ratings.txt</dir>
-	 * is created if it does not already exist.
+	 * to populate {@link #_originals} and creates <dir>Ratings.txt</dir>,
+	 * which stores information on the quality of files that the user
+	 * has rated as either good or bad.
 	 */
 	private Originals() {
 		updateModel();
@@ -49,14 +50,16 @@ public class Originals {
 	 * and creates <dir>Names/(name)</dir> if such folders do not already exist.
 	 *
 	 * <p> Each {@code Original} of unique name gets its own sub-folders where
-	 * the {@code Original} and {@code Practice} are stored.</p>
+	 * the {@code Original} and {@code Challenge} are stored. A Names folder is
+	 * created to better organise the database and make changes without tampering
+	 * with the database files.</p>
 	 *
 	 * <p> Should there be multiple {@code Original} files of the same name (not file name),
 	 * then multiple recordings will be stored in the same directory,
 	 * but will have a number at the end indicating which
 	 * version it is. For example
-	 * <dir>John Smith1.wav</dir>
-	 * <dir>John Smith2.wav</dir>.</p>
+	 * <dir>Smith1.wav</dir>
+	 * <dir>Smith2.wav</dir>.</p>
 	 */
 	public void populateFolders() {
 		try {
@@ -77,6 +80,7 @@ public class Originals {
 				String creation = fileNames.get(i);
 				String name = names.get(i);
 				String finalName = creation;
+
 				// Insert an int n for the nth version of that Original.
 				if (names.lastIndexOf(name) != names.indexOf(name)) {
 					Integer version = 0;
@@ -92,6 +96,7 @@ public class Originals {
 
 					finalName = tempName.toString();
 				}
+				// Move the file from the database into the Names directory
 				if (Files.notExists(Paths.get("Names/" + name + "/Original/" + finalName)))
 					Files.copy(Paths.get("Recordings/" + creation),
 							Paths.get("Names/" + name + "/Original/" + finalName),
@@ -143,6 +148,12 @@ public class Originals {
 		return names;
 	}
 
+	/**
+	 * Finds all unique names from the database by scanning through the more organised
+	 * Names directory.
+	 *
+	 * @return the list of unique names.
+	 */
 	public List<String> listNames() {
 		List<String> names = new ArrayList<>();
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get("Names"))) {
@@ -195,6 +206,12 @@ public class Originals {
 		return fileNames;
 	}
 
+	/**
+	 * Finds the corresponding {@code Original} with the entered fileName.
+	 *
+	 * @return {@code Original} with the entered file name. If no {@code Original}
+	 *         exists with that file name, returns {@code null}.
+	 */
 	public Original getOriginal(String fileName) {
 		for (Original original : _originals) {
 			if (original.getFileName().equals(fileName)) {
@@ -204,6 +221,11 @@ public class Originals {
 		return null;
 	}
 
+	/**
+	 * Finds the {@code Original} given the name and version number.
+	 *
+	 * @return the corresponding {@code Original} with the entered name and version.
+	 */
 	private Original getOriginal(String name, String version) {
 		for (Original original : _originals) {
 			if (original.getName().equals(name) && original.getVersion().equals(version)) {
@@ -213,11 +235,25 @@ public class Originals {
 		return null;
 	}
 
+	/**
+	 * Find the {@code Original} with the matching fileName and name that
+	 * has more than one version.
+	 *
+	 * @return the corresponding {@code Original} with the entered file name and name.
+	 */
 	public Original getOriginalWithVersions(String fileName, String name) {
 		String version = extractVersion(fileName);
 		return getOriginal(name, version);
 	}
 
+	/**
+	 * Takes a file name and extracts the version of the {@code Original}
+	 * that the fileName represents.
+	 *
+	 * @param fileName name of file to extract version from.
+	 * @return the version that was extract. the String is a number
+	 *         in string form ex: returns {@code "1"}.
+	 */
 	private String extractVersion(String fileName) {
 		StringBuilder version = new StringBuilder();
 		String output = null;
@@ -237,7 +273,7 @@ public class Originals {
 	 * Gets all versions of {@code Original}'s corresponding
 	 * to the same name.
 	 *
-	 * @param name the name of {@code Original} to get versions from
+	 * @param name the name of {@code Original} to get versions from.
 	 * @return a List of all {@code Original}'s that correspond to the name.
 	 */
 	public List<Original> getAllVersions(String name) {
@@ -260,7 +296,8 @@ public class Originals {
 	/**
 	 * Sets the rating of an {@code Original} by writing
 	 * it into <dir>Rating.txt</dir> in the format
-	 * <q>Name: x</q> for any integer x.
+	 * <q>Name: &good&</q> or <q>Name: &bad&</q> depending
+	 * on the input from the user.
 	 *
 	 * @param original name of the {@code Original}.
 	 * @param rating rating to set.
@@ -351,18 +388,20 @@ public class Originals {
 		return -1;
 	}
 
+	/**
+	 * Adds a name that contains spaces to a separate list from
+	 * {@link #_originals} since concatenated names are only stored
+	 * temporarily.
+	 *
+	 * @param concat the concatenated {@code Original} to add.
+	 */
 	public void addConcat(Original concat) {
 		_concats.add(concat);
 	}
 
-	public List<String> getConcats() {
-		List<String> output = new ArrayList<>();
-		for (Original concat : _concats) {
-			output.add(concat.getName());
-		}
-		return output;
-	}
-
+	/**
+	 * Gets the file name of the concatenated {@code Original} given the name.
+	 */
 	public String getConcatFileName(String name) {
 		for (Original original : _concats) {
 			if (original.getName().equals(name)) {
@@ -372,6 +411,9 @@ public class Originals {
 		return null;
 	}
 
+	/**
+	 * Finds the concatenated {@code Original} given the name.
+	 */
 	public Original getConcatOriginal(String name) {
 		for (Original original : _concats) {
 			if (original.getName().equals(name)) {
