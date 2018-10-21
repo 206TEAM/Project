@@ -11,6 +11,7 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.Files;
@@ -71,19 +72,15 @@ public abstract class ParentController extends Controller {
 	 * deletes challenges
 	 */
 	@FXML
-	protected void reset(){
+	protected void reset() {
 		Challenges.getInstance().reset();
-		ChallengeRatings.getInstance().reset();
+		try {
+			ChallengeRatings.getInstance().reset();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		DifficultyRatings.getInstance().reset();
 		_mediator.loadPane(Type.MAIN, "MainMenu");
-		try {
-			Files.deleteIfExists(Paths.get("Ratings.txt"));
-			Files.deleteIfExists(Paths.get("NameRatings.txt"));
-		} catch (Exception e){
-			//todo
-		}
-
-
 
 	}
 }

@@ -104,11 +104,6 @@ public class MainMenuController extends ParentController implements MicTesterCon
 		settingsLabel.setVisible(false);
 	}
 
-
-	public void save(ActionEvent actionEvent) {
-		//todo refactor the HeaderController method to do the same thing as this
-	}
-
 	public void quit(ActionEvent actionEvent) {
 	}
 
