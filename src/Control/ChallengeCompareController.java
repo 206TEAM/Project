@@ -11,10 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -22,10 +19,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -128,6 +128,8 @@ public class ChallengeCompareController extends ParentController implements Medi
      * @param rating
      */
     private void processRating(Boolean rating) {
+        stopPlaying(originalProgressBar, playOriginal);
+        stopPlaying(practiceProgressBar, playChallenge);
         String name = _session.getCurrentName();
         String fileName = _session.getChallengeFile(name);
         ChallengeRatings.getInstance().setRating(name, fileName, rating);
@@ -247,10 +249,19 @@ public class ChallengeCompareController extends ParentController implements Medi
             }
             popupStage.initModality(Modality.WINDOW_MODAL);
             popupStage.setScene(scene);
+            popupStage.setOnCloseRequest((WindowEvent event) -> {
+                _mediator.loadPane(ParentController.Type.MAIN, "MainMenu");
+                _mediator.setPracticeMainList(new ArrayList<>());
+            });
             popupStage.showAndWait();
+
         } catch (IOException error) {
             error.printStackTrace();
         }
+
+
+
+
     }
 
     /**

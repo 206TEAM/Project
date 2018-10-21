@@ -1,5 +1,8 @@
 package Main;
 
+import Control.ParentController;
+import Model.Challenges;
+import Model.Mediator;
 import Model.Originals;
 import Ratings.ChallengeRatings;
 import Ratings.DifficultyRatings;
@@ -15,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,21 +32,14 @@ public class Main extends Application {
         return primaryStage;
     }
 
-	@Override
-	public void start(Stage primaryStage) {
-		Originals.getInstance().populateFolders();
-		try {
-			if (Files.exists(Paths.get("Temp"))) {
-				// Delete All contents of Temp folder
-				Files.walk(Paths.get("Temp")).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
-			}
-			Files.createDirectory(Paths.get("Temp"));
-			if (Files.notExists(Paths.get("Recordings"))) {
-				Files.createDirectory(Paths.get("Recordings"));
-			}
-			if (Files.notExists(Paths.get("Names"))) {
-				Files.createDirectory(Paths.get("Names"));
-			}
+    @Override
+    public void start(Stage primaryStage) {
+        Originals.getInstance().populateFolders();
+        try {
+            if (Files.exists(Paths.get("Temp"))) {
+                Files.walk(Paths.get("Temp")).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
+            }
+            Files.createDirectory(Paths.get("Temp"));
 
             Parent root = FXMLLoader.load(getClass().getResource("/MainMenu.fxml"));
             Scene scene = new Scene(root);
@@ -67,12 +64,12 @@ public class Main extends Application {
 
             Optional<ButtonType> result = confirm.showAndWait();
             if (result.get() == saveQuit) {
-                //todo "save" the work
                 ChallengeRatings.getInstance().saveSession();
                 DifficultyRatings.getInstance().saveSession();
             } else if (result.get() == cancel) {
                 event.consume();
                 primaryStage.show();
+            } else {
             }
         });
     }

@@ -14,6 +14,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class PopupController extends Controller {
             stage.close();
         }
     }
+
 
     @FXML
     private void add(ActionEvent event) { //todo make it so that it redos the stuff the user has selected
@@ -90,7 +92,5 @@ public class PopupController extends Controller {
         if (wrongList.size() > 0) {
             wrongListView.setItems(wrongList);
         }
-
-
     }
 }
