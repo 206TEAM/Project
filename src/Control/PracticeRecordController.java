@@ -88,6 +88,7 @@ public class PracticeRecordController extends PracticeMainController implements 
 	@FXML
 	public void autoCompare(ActionEvent actionEvent) {
 		_autoClicked = true;
+		compare.setDisable(true);
 		playOriginal();
 	}
 
@@ -140,6 +141,8 @@ public class PracticeRecordController extends PracticeMainController implements 
 		if (_autoClicked) {
 			_autoClicked = false;
 			playAttempt();
+		} else {
+			compare.setDisable(false);
 		}
 	}
 

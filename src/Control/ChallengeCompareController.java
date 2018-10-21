@@ -134,6 +134,7 @@ public class ChallengeCompareController extends ParentController implements Medi
     @FXML
     public void autoCompare(ActionEvent actionEvent) {
     	_autoClicked = true;
+    	compare.setDisable(true);
     	playOriginal();
     }
 
@@ -281,6 +282,8 @@ public class ChallengeCompareController extends ParentController implements Medi
 		if (_autoClicked) {
 			_autoClicked = false;
 			playChallenge();
+		} else {
+			compare.setDisable(false);
 		}
 	}
 }

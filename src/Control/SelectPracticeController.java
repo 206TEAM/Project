@@ -72,6 +72,8 @@ public class SelectPracticeController extends Controller {
 		_delayedPreviewList = new ArrayList<>();
 		_clicked = false;
 
+		_mediator.setPracticeMainList(new ArrayList<>());
+
 		if (_allNames.size() == 0) {
 			selectListView.setVisible(false);
 		} else {
