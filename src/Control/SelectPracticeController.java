@@ -2,9 +2,6 @@ package Control;
 
 import Model.Media;
 import Model.Original;
-import javafx.animation.PauseTransition;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -13,10 +10,6 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -25,18 +18,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import javafx.util.Duration;
 
-import java.awt.*;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
+import java.util.concurrent.CountDownLatch;
 import java.util.stream.Stream;
 
 public class SelectPracticeController extends Controller {
@@ -61,15 +54,16 @@ public class SelectPracticeController extends Controller {
 	public ProgressIndicator loadingCircle;
 	@FXML
 	public Text loadingText;
+	@FXML
+	public ToggleButton toggle;
 
 	private static SelectPracticeController _INSTANCE;
 
 	private List<String> _selectedOrder;
-	private List<String> _currentPreviewList, _delayedPreviewList;
-	private List<String> _names;
+	private List<String> _currentPreviewList;
+	private List<String> _names, _uploadConcat;
 	private String _newName;
-	private boolean _clicked, _selected;
-	private String _previousItem;
+	private Thread _thread;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -77,9 +71,6 @@ public class SelectPracticeController extends Controller {
 		disableButtons(true);
 		_selectedOrder = new ArrayList<>();
 		_currentPreviewList = new ArrayList<>();
-		_delayedPreviewList = new ArrayList<>();
-		_clicked = false;
-		_selected = false;
 
 		if (_allNames.size() == 0) {
 			selectListView.setVisible(false);
@@ -143,7 +134,6 @@ public class SelectPracticeController extends Controller {
 		_mediator.setPracticeMainList(new ArrayList<>());
 		previewList.getItems().clear();
 		_selectedOrder.clear();
-		_delayedPreviewList.clear();
 
 		disableButtons(true);
 		searchOpacity(true);
@@ -164,13 +154,24 @@ public class SelectPracticeController extends Controller {
 		searchOpacity(true);
 	}
 
+	@FXML
+	public void toggle(ActionEvent actionEvent) {
+		if (toggle.isSelected()) {
+			toggle.setTextFill(Paint.valueOf("#1e1e1e"));
+			toggle.setStyle("-fx-background-color: LIME");
+			concatNameText.setPromptText("Select names from list...");
+		} else {
+			toggle.setTextFill(Paint.valueOf("#ff9900"));
+			toggle.setStyle("-fx-background-color: #1e1e1e");
+			concatNameText.setPromptText("Enter names here...");
+		}
+	}
 
 	@FXML
 	public void listViewSelected(MouseEvent mouseEvent) {
 		String selectedItem = selectListView.getSelectionModel().getSelectedItem();
 		if (selectedItem != null) {
-			int clickCount = mouseEvent.getClickCount();
-			if (clickCount == 2) {
+			if (toggle.isSelected()) {
 				String currString = concatNameText.getText();
 
 				if (currString.contains(" ") || currString.isEmpty()) {
@@ -184,33 +185,15 @@ public class SelectPracticeController extends Controller {
 				}
 				concatNameText.setText(currString + " ");
 				setLabelText(currString);
-
-				removeFromList(selectedItem);
 			} else {
 				if (!previewList.getItems().contains(selectedItem)) {
-					if (_clicked) {
-						_delayedPreviewList.add(_previousItem);
-						_clicked = false;
-						_previousItem = selectedItem;
-					}
 					previewList.getItems().add(selectedItem);
 					_selectedOrder.add(selectedItem);
-					if (!_clicked) {
-						_previousItem = selectedItem;
-						_clicked = true;
-					}
 				}
 				disableButtons(false);
 			}
 		}
 		searchOpacity(true);
-	}
-
-	private void removeFromList(String selectedItem) {
-		if (!_delayedPreviewList.contains(selectedItem)) {
-			previewList.getItems().remove(selectedItem);
-			_selectedOrder.remove(selectedItem);
-		}
 	}
 
 	@FXML
@@ -309,7 +292,7 @@ public class SelectPracticeController extends Controller {
 
 	public void upload(ActionEvent actionEvent) {
 		concatNameText.setText("");
-		setLoading(true);
+		_uploadConcat = new ArrayList<>();
 		List<String> missingNames = new ArrayList<>();
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Upload a List");
@@ -320,73 +303,76 @@ public class SelectPracticeController extends Controller {
 		List<String> uploadedNames = new ArrayList<>();
 
 		if (file != null) {
+			setLoading(true);
 			List<String> currentItems = previewList.getItems();
-			Task<Void> task = new Task<Void>() {
-				@Override
-				protected Void call() throws Exception {
-					try (Stream<String> stream = Files.lines(file.toPath())) {
-						stream.forEach(name -> {
-							if (containsName(name, _allNames) && !containsName(name, currentItems)) {
-								name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
-								uploadedNames.add(name);
-							} else if (name.contains(" ") || name.contains("-")) {
-								String[] diffNames = name.split("[ -]");
-								List<Character> splits = extractSplits(name);
-								StringBuilder confirmed = new StringBuilder();
-								_names = new ArrayList<>();
+			try (Stream<String> stream = Files.lines(file.toPath())) {
+				stream.forEach(name -> {
+					if (containsName(name, _allNames) && !containsName(name, currentItems)) {
+						name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+						uploadedNames.add(name);
+					} else if (name.contains(" ") || name.contains("-")) {
+						String[] diffNames = name.split("[ -]");
+						List<Character> splits = extractSplits(name);
+						StringBuilder confirmed = new StringBuilder();
+						_names = new ArrayList<>();
 
-								for (int i = 0; i < diffNames.length; i++) {
-									String singleName = diffNames[i];
-									if (containsName(singleName, _allNames)) {
-										singleName = singleName.substring(0, 1).toUpperCase() + singleName.substring(1).toLowerCase();
-										confirmed.append(singleName);
-										_names.add(singleName);
+						for (int i = 0; i < diffNames.length; i++) {
+							String singleName = diffNames[i];
+							if (containsName(singleName, _allNames)) {
+								singleName = singleName.substring(0, 1).toUpperCase() + singleName.substring(1).toLowerCase();
+								confirmed.append(singleName);
+								_names.add(singleName);
 
-										if (i >= splits.size()) {
-											confirmed.append(" ");
-										} else {
-											confirmed.append(splits.get(i));
-										}
-									} else {
-										missingNames.add("\"" + singleName + "\" from: \"" + name + "\"");
-									}
-								}
-
-								String entered = name.toUpperCase() + " ";
-								if (entered.equals(confirmed.toString().toUpperCase())) {
-									_newName = confirmed.toString();
-									concatNames(true);
+								if (i >= splits.size()) {
+									confirmed.append(" ");
+								} else {
+									confirmed.append(splits.get(i));
 								}
 							} else {
-								if (!name.equals("")) {
-									if (!containsName(name, _allNames)) {
-										missingNames.add(name);
-									}
-								}
+								missingNames.add("\"" + singleName + "\" from: \"" + name + "\"");
 							}
-						});
-					} catch (IOException e) {
-						e.printStackTrace();
+						}
+
+						String entered = name.toUpperCase() + " ";
+						if (entered.equals(confirmed.toString().toUpperCase())) {
+							_newName = confirmed.toString();
+							_uploadConcat.add(_newName);
+						}
+					} else {
+						if (!name.equals("")) {
+							if (!containsName(name, _allNames)) {
+								missingNames.add(name);
+							}
+						}
+					}
+				});
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			if (uploadedNames.size() > 0) {
+				disableButtons(false);
+				previewList.getItems().addAll(uploadedNames);
+				_selectedOrder.addAll(uploadedNames);
+			}
+			if (missingNames.size() > 0) {
+				String missingListFile = file.getName();
+				_mediator.setMissingNames(missingNames, missingListFile);
+				createPopUp("NoNameWarning", "WARNING: Names not found", 505, 462);
+			}
+
+			Task task = new Task() {
+				@Override
+				protected Object call() throws Exception {
+					for (String name : _uploadConcat) {
+						_newName = name;
+						concatNames();
 					}
 					return null;
 				}
 			};
-			task.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED, event -> {
-				List<String> concatNames = _originals.getConcats();
-				if (uploadedNames.size() > 0) {
-					disableButtons(false);
-					previewList.getItems().addAll(uploadedNames);
-					_selectedOrder.addAll(uploadedNames);
-				}
-				if (missingNames.size() > 0) {
-					String missingListFile = file.getName();
-					_mediator.setMissingNames(missingNames, missingListFile);
-					createPopUp("NoNameWarning", "WARNING: Names not found", 505, 462);
-				}
-				if (!concatNames.isEmpty()) {
-					for (String name : concatNames) {
-						addValue(name);
-					}
+			task.setOnSucceeded(event -> {
+				for (String name : _uploadConcat) {
+					addValue(name);
 				}
 				setLoading(false);
 			});
@@ -439,22 +425,20 @@ public class SelectPracticeController extends Controller {
 		}
 	}
 
-	private void concatNames(boolean uploaded) {
+	private void concatNames() {
 		String newFileName = _newName.replace(' ', '_');
 		if (Files.notExists(Paths.get("Temp/" + newFileName + ".wav"))) {
-			setLoading(true);
-			try {
-				final File tempFolder = new File("Temp");
-				// Only delete temp files (Not concatenated name files)
-				final File[] tempFiles = tempFolder.listFiles((dir, name) -> name.matches("^_.*"));
-				if (tempFiles != null) {
-					for (final File file : tempFiles) {
-						if (!file.delete()) {
-							System.err.println("File " + file.getName() + " could not be deleted");
-						}
+			final File tempFolder = new File("Temp");
+			// Only delete temp files (Not concatenated name files)
+			final File[] tempFiles = tempFolder.listFiles((dir, name) -> name.matches("^_.*"));
+			if (tempFiles != null) {
+				for (final File file : tempFiles) {
+					if (!file.delete()) {
+						System.err.println("File " + file.getName() + " could not be deleted");
 					}
 				}
-
+			}
+			try {
 				Files.deleteIfExists(Paths.get("list.txt"));
 				Files.createFile(Paths.get("list.txt"));
 				for (int i = 0; i < _names.size(); i++) {
@@ -467,25 +451,32 @@ public class SelectPracticeController extends Controller {
 					Files.write(Paths.get("list.txt"), line.getBytes(), StandardOpenOption.APPEND);
 					Media.normalizeVolume(dir, i);
 				}
-
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				e.printStackTrace();
 			}
-
 			Media.concatNames(newFileName);
 			_originals.addConcat(new Original(_newName, newFileName + ".wav"));
-
-			if (!uploaded) {
-				setLoading(false);
-				addValue(_newName);
-			}
-
 		}
 	}
 
 	public void concatAdd(ActionEvent actionEvent) {
 		if (!concatNameText.getText().isEmpty()) {
-			concatNames(false);
+			setLoading(true);
+			Task task = new Task() {
+				@Override
+				protected Object call() throws Exception {
+					concatNames();
+					return null;
+				}
+			};
+			task.setOnSucceeded(event -> {
+				concatNameText.setText("");
+				setLoading(false);
+			});
+			Thread thread = new Thread(task);
+			thread.setDaemon(true);
+			thread.start();
 		}
 	}
 

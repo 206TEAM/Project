@@ -8,6 +8,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
@@ -71,12 +72,12 @@
                   <Font size="12.0" />
                </font>
             </Button>
-            <Label fx:id="nameText" alignment="TOP_CENTER" layoutX="310.0" layoutY="86.0" prefHeight="101.0" prefWidth="280.0" text="Enter or double click two or more names to combine them" textAlignment="CENTER" textFill="BLACK" wrapText="true">
+            <Label fx:id="nameText" alignment="TOP_CENTER" layoutX="306.0" layoutY="87.0" prefHeight="101.0" prefWidth="288.0" text="Enter or toggle and select two or more names to combine them" textAlignment="CENTER" textFill="BLACK" wrapText="true">
                <font>
                   <Font name="System Italic" size="17.0" />
                </font>
             </Label>
-            <TextField fx:id="concatNameText" layoutX="330.0" layoutY="17.0" onKeyPressed="#addNameFromSearch" onMouseClicked="#searchClicked" prefHeight="26.0" prefWidth="233.0" promptText="Enter names here..." style="-fx-background-color: WHITE; -fx-prompt-text-fill: #ff9900; -fx-text-fill: #1e1e1e; -fx-background-radius: 0;" />
+            <TextField fx:id="concatNameText" layoutX="330.0" layoutY="17.0" onKeyPressed="#addNameFromSearch" onMouseClicked="#searchClicked" prefHeight="26.0" prefWidth="174.0" promptText="Enter names here..." style="-fx-background-color: WHITE; -fx-prompt-text-fill: #ff9900; -fx-text-fill: #1e1e1e; -fx-background-radius: 0;" />
             <Button fx:id="concatAdd" disable="true" layoutX="388.0" layoutY="53.0" mnemonicParsing="false" onAction="#concatAdd" prefHeight="26.0" prefWidth="62.0" style="-fx-background-radius: 0; -fx-background-color: #1e1e1e;" text="Add" textFill="#ff9900">
                <font>
                   <Font size="12.0" />
@@ -88,6 +89,7 @@
                </font>
             </Button>
             <Line endX="-9.0" endY="109.0" layoutX="459.0" layoutY="-29.0" startX="-9.0" startY="83.0" stroke="#ff9900" />
+            <ToggleButton fx:id="toggle" layoutX="503.0" layoutY="17.0" mnemonicParsing="false" onAction="#toggle" style="-fx-background-color: #1e1e1e;" text="Toggle" textFill="#ff9900" />
          </children>
       </AnchorPane>
       <ProgressIndicator fx:id="loadingCircle" layoutX="334.0" layoutY="89.0" prefHeight="228.0" prefWidth="233.0" visible="false">
