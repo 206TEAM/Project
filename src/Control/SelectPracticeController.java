@@ -57,10 +57,11 @@ public class SelectPracticeController extends Controller {
 	private static SelectPracticeController _INSTANCE;
 
 	private List<String> _selectedOrder;
-	private List<String> _currentPreviewList;
+	private List<String> _currentPreviewList, _delayedPreviewList;
 	private List<String> _names;
 	private String _newName;
 	private Thread _thread;
+	private boolean _clicked;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -68,6 +69,8 @@ public class SelectPracticeController extends Controller {
 		disableButtons(true);
 		_selectedOrder = new ArrayList<>();
 		_currentPreviewList = new ArrayList<>();
+		_delayedPreviewList = new ArrayList<>();
+		_clicked = false;
 
 		if (_allNames.size() == 0) {
 			selectListView.setVisible(false);
@@ -157,7 +160,8 @@ public class SelectPracticeController extends Controller {
 		String selectedItem = selectListView.getSelectionModel().getSelectedItem();
 		if (selectedItem != null) {
 			int clickCount = mouseEvent.getClickCount();
-			if (clickCount == 1) {
+			if (clickCount == 2) {
+
 				String currString = concatNameText.getText();
 
 				if (currString.contains(" ") || currString.isEmpty()) {
@@ -172,18 +176,19 @@ public class SelectPracticeController extends Controller {
 				concatNameText.setText(currString + " ");
 				setLabelText(currString);
 
-			} else if (clickCount > 1) {
+				if (!_delayedPreviewList.contains(selectedItem) && !_clicked) {
+					previewList.getItems().remove(selectedItem);
+				}
+
+			} else if (clickCount == 1) {
 				if (!previewList.getItems().contains(selectedItem)) {
+					if (_clicked) {
+						_delayedPreviewList.addAll(previewList.getItems());
+						_clicked = false;
+					}
 					previewList.getItems().add(selectedItem);
 					_selectedOrder.add(selectedItem);
-					String newString = concatNameText.getText().substring(0, concatNameText.getText().length() - selectedItem.length() - 1);
-					concatNameText.setText(newString);
-
-					if (newString.contains(" ")) {
-						setLabelText(newString.substring(0, newString.lastIndexOf(' ')));
-					} else {
-						setLabelText("");
-					}
+					_clicked = true;
 				}
 				disableButtons(false);
 			}
