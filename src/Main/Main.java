@@ -1,8 +1,5 @@
 package Main;
 
-import Control.ParentController;
-import Model.Challenges;
-import Model.Mediator;
 import Model.Originals;
 import Ratings.ChallengeRatings;
 import Ratings.DifficultyRatings;
@@ -18,7 +15,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -41,9 +37,17 @@ public class Main extends Application {
             }
             Files.createDirectory(Paths.get("Temp"));
 
+            if (Files.notExists(Paths.get("Recordings"))) {
+            	Files.createDirectory(Paths.get("Recordings"));
+            }
+            if (Files.notExists(Paths.get("Names"))) {
+            	Files.createDirectory(Paths.get("Names"));
+            }
+
             Parent root = FXMLLoader.load(getClass().getResource("/MainMenu.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
+            primaryStage.setTitle("NameSayer");
             primaryStage.setResizable(false);
             primaryStage.show();
         } catch (Exception e) {
