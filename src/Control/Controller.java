@@ -391,4 +391,12 @@ abstract class Controller implements Initializable {
             controller.setMicLevel(rms); // Do something with the rms in the controller
         }
     }
+
+    protected void colorAdjust(double brightness, ImageView image) {
+        ColorAdjust colorAdjust = new ColorAdjust();
+        colorAdjust.setBrightness(brightness);
+        colorAdjust.setHue(0.2);
+        colorAdjust.setSaturation(1.0);
+        image.setEffect(colorAdjust);
+    }
 }

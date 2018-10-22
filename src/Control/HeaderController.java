@@ -171,14 +171,6 @@ public class HeaderController extends ParentController {
 		}
 	}
 
-	private void colorAdjust(double brightness, ImageView image) {
-		ColorAdjust colorAdjust = new ColorAdjust();
-		colorAdjust.setBrightness(brightness);
-		colorAdjust.setHue(0.2);
-		colorAdjust.setSaturation(1.0);
-		image.setEffect(colorAdjust);
-	}
-
 	@FXML
 	private void help(ActionEvent event){
 		createPopUp("HelperPopup", "Help", 740, 490);

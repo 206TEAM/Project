@@ -6,9 +6,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 
 import java.net.URL;
@@ -21,6 +23,8 @@ public class MainMenuController extends ParentController implements MicTesterCon
 	@FXML public Label averageSuccessLabel, progressLabel;
 	@FXML public MenuButton settings;
 	@FXML public MenuItem save, reset;
+	@FXML public ImageView settingsImage, micImage;
+	public Button micTest;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -87,25 +91,33 @@ public class MainMenuController extends ParentController implements MicTesterCon
 		_mediator.loadPane(Type.HEADER, page);
 	}
 
+	@FXML
 	public void helpHovered(MouseEvent mouseEvent) {
+		help.setTextFill(Color.WHITE);
 		helpLabel.setVisible(true);
 	}
 
+	@FXML
 	public void helpExited(MouseEvent mouseEvent) {
+		help.setTextFill(Paint.valueOf("#ff9900"));
 		helpLabel.setVisible(false);
 	}
 
+	@FXML
 	public void settingsHovered(MouseEvent mouseEvent) {
+		colorAdjust(1.0, settingsImage);
 		settingsLabel.setVisible(true);
 	}
 
+	@FXML
 	public void settingsExited(MouseEvent mouseEvent) {
+		colorAdjust(0, settingsImage);
 		settingsLabel.setVisible(false);
 	}
 
 	@Override
 	public void setMicLevel(float rms) {
-		if ((10*rms) > 0) {
+		if (rms > 0.01) {
 			micTestLabel.setText("Your microphone is good to go!");
 			micTestLabel.setFill(Color.DARKGREEN);
 			micLabel.setText("✔️");
@@ -113,4 +125,13 @@ public class MainMenuController extends ParentController implements MicTesterCon
 		}
 	}
 
+	@FXML
+	public void micHovered(MouseEvent mouseEvent) {
+		colorAdjust(1.0, micImage);
+	}
+
+	@FXML
+	public void micExited(MouseEvent mouseEvent) {
+		colorAdjust(0, micImage);
+	}
 }
