@@ -1,2 +1,6 @@
 file 'Temp/_normalized0.wav'
 file 'Temp/_normalized1.wav'
+file 'Temp/_normalized2.wav'
+file 'Temp/_normalized3.wav'
+file 'Temp/_normalized4.wav'
+file 'Temp/_normalized5.wav'
