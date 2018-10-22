@@ -60,7 +60,7 @@ public class MainMenuController extends ParentController implements MicTesterCon
 
 	@FXML
 	public void help(ActionEvent actionEvent) { //todo HELP POPUP
-		createPopUp("HelperPopup", "Help", 550, 350);
+		createPopUp("HelperPopup", "Help", 740, 490);
 	}
 
 	/**

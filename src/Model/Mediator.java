@@ -113,7 +113,10 @@ public class Mediator {
 
     public void setPageType(ParentController.PageType type) {
     	_currentPage = type;
-        System.out.println(type);
+    }
+
+    public ParentController.PageType getPageType() {
+        return _currentPage;
     }
 
     public void loadPane(ParentController.Type parent, String page) {
