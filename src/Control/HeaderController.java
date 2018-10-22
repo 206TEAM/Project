@@ -29,11 +29,11 @@ import java.util.ResourceBundle;
 
 public class HeaderController extends ParentController {
 
-	@FXML public Text home;
+	@FXML public Button home;
 	@FXML public Button micTest;
 	@FXML public Pane headerPane;
 	@FXML public Text menuLabel;
-	@FXML public ImageView micImage;
+	@FXML public ImageView micImage, settingsImage;
 	@FXML public MenuButton settings;
 	@FXML public MenuItem save, reset, help, quit;
 
@@ -45,7 +45,7 @@ public class HeaderController extends ParentController {
 	}
 
 	@FXML
-	public void home(MouseEvent mouseEvent) {
+	public void home(ActionEvent actionEvent) {
 
 		if ((_page == PageType.CHALLENGE && _mediator.getChallengeSession()!=null) || _page == PageType.PRACTICE || _page == PageType.CHALLENGECOMPARE) {
 			String text;
@@ -108,10 +108,10 @@ public class HeaderController extends ParentController {
 			text = "Challenge";
 		} else if (pageType == PageType.LISTEN) {
 			text = "Listen";
-		} else if (pageType == PageType.CHALLENGECOMPARE){
-			text = "TEST";
-		} else {
+		} else if (pageType == PageType.STATS){
 			text = "Stats";
+		} else {
+			text = "Challenge";
 		}
 		_page = pageType;
 		menuLabel.setText(text);
@@ -129,22 +129,22 @@ public class HeaderController extends ParentController {
 
 	@FXML
 	public void homeHovered(MouseEvent mouseEvent) {
-		home.setFill(Paint.valueOf("#ff9900"));
+		home.setTextFill(Paint.valueOf("#ff9900"));
 	}
 
 	@FXML
 	public void homeExited(MouseEvent mouseEvent) {
-		home.setFill(Color.WHITE);
+		home.setTextFill(Color.WHITE);
 	}
 
 	@FXML
 	public void micHovered(MouseEvent mouseEvent) {
-		colorAdjust(1.0); // Make it white
+		colorAdjust(1.0, micImage); // Make it white
 	}
 
 	@FXML
 	public void micExited(MouseEvent mouseEvent) {
-		colorAdjust(0.0); // Return it to orange
+		colorAdjust(0.0, micImage); // Return it to orange
 	}
 
 	@FXML
@@ -171,12 +171,12 @@ public class HeaderController extends ParentController {
 		}
 	}
 
-	private void colorAdjust(double brightness) {
+	private void colorAdjust(double brightness, ImageView image) {
 		ColorAdjust colorAdjust = new ColorAdjust();
 		colorAdjust.setBrightness(brightness);
 		colorAdjust.setHue(0.2);
 		colorAdjust.setSaturation(1.0);
-		micImage.setEffect(colorAdjust);
+		image.setEffect(colorAdjust);
 	}
 
 	@FXML
@@ -200,5 +200,13 @@ public class HeaderController extends ParentController {
 		}
 	}
 
+	@FXML
+	public void settingsHovered(MouseEvent mouseEvent) {
+		colorAdjust(1.0, settingsImage);
+	}
 
+	@FXML
+	public void settingsExited(MouseEvent mouseEvent) {
+		colorAdjust(0.0, settingsImage);
+	}
 }
