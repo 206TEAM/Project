@@ -61,12 +61,13 @@ public class SelectPracticeController extends Controller {
 	private List<String> _currentPreviewList;
 	private List<String> _names, _uploadConcat;
 	private String _newName;
-	private Thread _thread;
+	private boolean _alphabetical;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		_INSTANCE = this;
 		disableButtons(true);
+		_alphabetical = false;
 		_selectedOrder = new ArrayList<>();
 		_currentPreviewList = new ArrayList<>();
 
@@ -78,7 +79,6 @@ public class SelectPracticeController extends Controller {
 			List<String> previouslySelected = _mediator.getPracticeMainList();
 			if (previouslySelected != null) {
 				if (previouslySelected.size() > 0) {
-					_allNames.removeAll(previouslySelected);
 					ObservableList<String> previewNames = FXCollections.observableArrayList(previouslySelected);
 					previewList.setItems(previewNames);
 					disableButtons(false);
@@ -185,8 +185,7 @@ public class SelectPracticeController extends Controller {
 				setLabelText(currString);
 			} else {
 				if (!previewList.getItems().contains(selectedItem)) {
-					previewList.getItems().add(selectedItem);
-					_selectedOrder.add(selectedItem);
+					addValue(selectedItem);
 				}
 				disableButtons(false);
 			}
@@ -279,12 +278,14 @@ public class SelectPracticeController extends Controller {
 	}
 
 	public void selectedSort(ActionEvent actionEvent) {
+		_alphabetical = false;
 		updatePreview(_selectedOrder);
 	}
 
 	public void alphabeticalSort(ActionEvent actionEvent) {
 		List<String> listDuplicate = new ArrayList<>(previewList.getItems());
 		Collections.sort(listDuplicate);
+		_alphabetical = true;
 		updatePreview(listDuplicate);
 	}
 
@@ -390,6 +391,11 @@ public class SelectPracticeController extends Controller {
 		if (!previewList.getItems().contains(name)) {
 			previewList.getItems().add(name);
 			_selectedOrder.add(name);
+			if (_alphabetical) {
+				List<String> listDuplicate = new ArrayList<>(previewList.getItems());
+				Collections.sort(listDuplicate);
+				updatePreview(listDuplicate);
+			}
 			disableButtons(false);
 		}
 	}
