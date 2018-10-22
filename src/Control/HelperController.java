@@ -1,6 +1,7 @@
 package Control;
 
 import Model.ChallengeSession;
+import Model.ImagesHelper;
 import Model.Mediator;
 import Ratings.ChallengeRatings;
 import javafx.collections.FXCollections;
@@ -11,6 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -30,30 +33,58 @@ public class HelperController extends Controller {
     @FXML
     public AnchorPane pane;
     @FXML
-    TextArea helperContent;
+    Button closeButton, nextButton, backButton;
     @FXML
-    Button closeButton;
+    ImageView imgViewer;
+
+    ImagesHelper _imagesHelper = ImagesHelper.getInstance();
 
     /**
      * Closes the stage of this view
      */
     @FXML
     private void closeStage() {
-         exit(pane);
+        exit(pane);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    	helperContent.setEditable(false);
-        //it reads the instructions file
-        try {
-            Scanner s = new Scanner(new File("instructions.txt"));
-            while (s.hasNextLine()) {
-                String string = s.nextLine();
-                helperContent.appendText(string + "\n");
-            }
-        } catch (FileNotFoundException ex) {
-            System.err.println(ex);
+        _imagesHelper.setImage(Mediator.getInstance().getPageType());
+        Image image = _imagesHelper.getCurrentImage();
+        imgViewer.setImage(image);
+        backButton.setDisable(true);
+    }
+
+    /**
+     * when user clicks on the next button, displays next image
+     * @param event
+     */
+    @FXML
+    private void nextImage(ActionEvent event) {
+        backButton.setDisable(false);
+        Image image = _imagesHelper.nextImage();
+        if (image != null) {
+            imgViewer.setImage(image);
+        }
+        if (_imagesHelper.lastImage()) {
+
+            nextButton.setDisable(true);
+        }
+    }
+
+    /**
+     * when user clicks on back button, displays previous image
+     * @param event
+     */
+    @FXML
+    private void previousImage(ActionEvent event) {
+        nextButton.setDisable(false);
+        Image image = _imagesHelper.previousImage();
+        if (image != null) {
+            imgViewer.setImage(image);
+        }
+        if (_imagesHelper.firstImage()) {
+            backButton.setDisable(true); //when first image, set disable back button
         }
     }
 }

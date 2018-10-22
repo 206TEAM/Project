@@ -151,6 +151,11 @@ public class ChallengeCompareController extends ParentController implements Medi
         }
     }
 
+    /**
+     * when a name is selected from the list, sets name to mediator
+     * updates the difficulty star
+     * @param mouseEvent
+     */
     @FXML
     public void nameSelected(MouseEvent mouseEvent) {
         String name = challengeListView.getSelectionModel().getSelectedItem();
@@ -179,6 +184,10 @@ public class ChallengeCompareController extends ParentController implements Medi
         }
     }
 
+    /**
+     * when user clicks autocompare button, it plays the original file followed by the challenge attempt
+     * @param actionEvent
+     */
     @FXML
     public void autoCompare(ActionEvent actionEvent) {
     	_autoClicked = true;
@@ -186,6 +195,9 @@ public class ChallengeCompareController extends ParentController implements Medi
     	playOriginal();
     }
 
+    /**
+     * when the last thing selected is a challenge file, create a progress bar and plays the original file
+     */
     private void playOriginal() {
     	disableTables(true);
     	if (_mainPlayState) {
@@ -200,6 +212,9 @@ public class ChallengeCompareController extends ParentController implements Medi
 	    }
     }
 
+    /**
+     * when the last thing selected is a challenge file, create a progress bar and plays the challenge attempt
+     */
     private void playChallenge() {
     	if (_challengePlayState) {
     		stopPlaying(practiceProgressBar, playChallenge);
@@ -258,10 +273,6 @@ public class ChallengeCompareController extends ParentController implements Medi
         } catch (IOException error) {
             error.printStackTrace();
         }
-
-
-
-
     }
 
     /**
@@ -298,7 +309,6 @@ public class ChallengeCompareController extends ParentController implements Medi
         return fileName;
     }
 
-
     /**
      * gets the difficulty rating from difficultyratings class, then changes the star colour appropriately.
      *
@@ -324,11 +334,19 @@ public class ChallengeCompareController extends ParentController implements Medi
         }
     }
 
+    /**
+     * this method disables the table list
+     * @param disable
+     */
     private void disableTables(boolean disable) {
     	challengeListView.setDisable(disable);
     	versionListView.setDisable(disable);
     }
 
+    /**
+     * @param progressBar progress bar to reset the progress of.
+     * @param playButton the button to set back to a play triangle after completion or cancellation.
+     */
 	@Override
 	public void stopPlaying(ProgressBar progressBar, Button playButton) {
 		stopProgress();
@@ -343,6 +361,9 @@ public class ChallengeCompareController extends ParentController implements Medi
 		}
 	}
 
+    /**
+     * when the audio is finished, enable the compare button
+     */
 	@Override
 	public void finish() {
 		if (_autoClicked) {

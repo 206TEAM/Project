@@ -181,7 +181,7 @@ public class HeaderController extends ParentController {
 
 	@FXML
 	private void help(ActionEvent event){
-		createPopUp("HelperPopup", "Help", 550, 350);
+		createPopUp("HelperPopup", "Help", 740, 490);
 	}
 
 	@FXML

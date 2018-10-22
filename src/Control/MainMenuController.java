@@ -1,5 +1,4 @@
 package Control;
-
 import Ratings.ChallengeRatings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,7 +20,7 @@ public class MainMenuController extends ParentController implements MicTesterCon
 	@FXML public Text micTestLabel, helpLabel, settingsLabel, micLabel;
 	@FXML public Label averageSuccessLabel, progressLabel;
 	@FXML public MenuButton settings;
-	@FXML public MenuItem save, reset, quit;
+	@FXML public MenuItem save, reset;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -60,7 +59,7 @@ public class MainMenuController extends ParentController implements MicTesterCon
 
 	@FXML
 	public void help(ActionEvent actionEvent) { //todo HELP POPUP
-		createPopUp("HelperPopup", "Help", 550, 350);
+		createPopUp("HelperPopup", "Helper Menu", 740, 490);
 	}
 
 	/**
@@ -102,9 +101,6 @@ public class MainMenuController extends ParentController implements MicTesterCon
 
 	public void settingsExited(MouseEvent mouseEvent) {
 		settingsLabel.setVisible(false);
-	}
-
-	public void quit(ActionEvent actionEvent) {
 	}
 
 	@Override

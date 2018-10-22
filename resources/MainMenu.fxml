@@ -62,7 +62,7 @@
                 <Cursor fx:constant="HAND" />
             </cursor>
         </Button>
-        <Button fx:id="stats" layoutX="371.0" layoutY="473.0" mnemonicParsing="false" onAction="#stats" opacity="0.86" prefHeight="51.0" prefWidth="158.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Stats" textFill="#ff9900">
+        <Button fx:id="stats" layoutX="371.0" layoutY="473.0" mnemonicParsing="false" onAction="#stats" opacity="1.0" prefHeight="51.0" prefWidth="158.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Stats" textFill="#ff9900">
             <font>
                 <Font name="DejaVu Sans Condensed Bold" size="21.0" />
             </font>
@@ -103,8 +103,6 @@
                 <MenuItem fx:id="save" mnemonicParsing="false" onAction="#save" text="Save session" />
                 <MenuItem fx:id="reset" mnemonicParsing="false" onAction="#reset" text="Reset progress" />
                 <SeparatorMenuItem mnemonicParsing="false" />
-                <SeparatorMenuItem mnemonicParsing="false" />
-                <MenuItem fx:id="quit" mnemonicParsing="false" onAction="#quit" text="Quit" />
             </items>
             <graphic>
                 <ImageView fitHeight="32.0" fitWidth="34.0" preserveRatio="true">
