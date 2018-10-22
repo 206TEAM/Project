@@ -67,7 +67,6 @@ public class ListenController extends Controller implements MediaController {
         //todo rating show
         String name = listView.getSelectionModel().getSelectedItem();
         nameLabel.setText(name);
-        textSizeHandler(nameLabel, name);
         _mediator.setCurrentName(name);
         disableButtons();
         updateStar(name);
@@ -84,7 +83,7 @@ public class ListenController extends Controller implements MediaController {
 		String name = _mediator.getCurrentName();
 
 		ObservableList<String> originals = FXCollections.observableArrayList(_originals.getFileName(name));
-		originalListView.setItems(originals); //todo
+		originalListView.setItems(originals);
 		originalListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
 		if (Challenges.getInstance().listChallenges(name) != null) {
@@ -101,9 +100,8 @@ public class ListenController extends Controller implements MediaController {
 	 * @param event
 	 */
 	@FXML
-	public void selectNameChallenge(MouseEvent event) { //todo selecting original and challenge is very similar - refactor
+	public void selectNameChallenge(MouseEvent event) {
 		String fileName = challengeListView.getSelectionModel().getSelectedItem();
-		String name = listView.getSelectionModel().getSelectedItem();
 
 		if (fileName != null) {
 			_selected = fileName;
@@ -127,25 +125,20 @@ public class ListenController extends Controller implements MediaController {
 
         if (fileName != null) {
             fileLabel.setText(fileName);
-            //showRatings(true);
             goodButton.setDisable(false);
             badButton.setDisable(false);
             play.setDisable(false);
-        } else {
-            //playButton_3.setDisable(true);
         }
 
         _selected = fileName;
         _type = "original";
-
-		//clearRatings();
 
         Original original = getOriginal(fileName, name, _originals.getFileName(name).size());
         loadRating(original);
     }
 
     /**
-     * gets the difficulty rating from difficultyratings class, then changes the star colour appropriately.
+     * gets the difficulty rating from {@link DifficultyRatings}, then changes the star colour appropriately.
      * @param name
      */
     private void updateStar(String name){
@@ -160,7 +153,7 @@ public class ListenController extends Controller implements MediaController {
      */
     @FXML
     public void difficult(MouseEvent event) {
-        String name = Mediator.getInstance().getCurrentName();
+        String name = _mediator.getCurrentName();
         if (name != null) {
             Boolean difficulty = DifficultyRatings.getInstance().getRating(name);
             starOn(difficultyStar, !difficulty);
@@ -178,33 +171,24 @@ public class ListenController extends Controller implements MediaController {
 		} else {
 			String dir;
 			Media media;
+
 			if (_type.equals("original")) {
-				Original original = getOriginal(_selected, name, _originals.getFileName(name).size());
-				dir = "Names/" + name + "/Original/" + original.getFileName();
+				List<String> fileNames = _originals.getFileName(name);
+				Original original = getOriginal(_selected, name, fileNames.size());
 				media = new Media(original);
+				if (fileNames.size() == 1) {
+					dir = "Names/" + name + "/Original/" + original.getFileName();
+				} else {
+					dir = "Names/" + name + "/Original/" + original.getFileNameWithVersion();
+				}
 			} else {
 				Challenge challenge = Challenges.getInstance().getChallenge(name, _selected);
 				dir = "Names/" + name + "/Challenge/" + challenge.getFileName() + ".wav";
 				media = new Media(challenge);
 			}
+
 			playFile(this, progressText, play, playProgressBar, dir, media);
 			_playState = true;
-		}
-	}
-
-	@FXML
-	public void delete(ActionEvent actionEvent) {
-		//todo popup "Are you sure?", then delete challenge recording
-		if (_type.equals("challenge")) {
-			String name = _mediator.getCurrentName();
-			if (name != null) {
-				Challenges.getInstance().deleteChallenge(name, _selected);
-				challengeListView.getItems().remove(_selected);
-				if (challengeListView.getItems().size() < 1) {
-					//deleteButton_3.setDisable(true);
-					//playButton_3.setDisable(true);
-				}
-			}
 		}
 	}
 
@@ -229,8 +213,6 @@ public class ListenController extends Controller implements MediaController {
         if (rating.equals("&bad&")){
             badButton.setOpacity(1.0);
             goodButton.setOpacity(0.5);
-
-
         } else {
             goodButton.setOpacity(1.0);
             badButton.setOpacity(0.5);

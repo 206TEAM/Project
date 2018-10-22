@@ -28,7 +28,10 @@
                </font>
             </Button>
             <CheckBox fx:id="shuffle" disable="true" layoutX="415.0" layoutY="206.0" mnemonicParsing="false" onAction="#shuffle" scaleX="1.5" scaleY="1.5" text="Shuffle" textFill="#1e1e1e" />
-            <TextField fx:id="search" layoutX="33.0" layoutY="7.0" onKeyPressed="#addNameFromSearch" onMouseClicked="#searchClicked" prefHeight="26.0" prefWidth="155.0" promptText="Click here to search" scaleX="1.5" scaleY="1.5" style="-fx-background-color: #ff9900; -fx-prompt-text-fill: #1e1e1e; -fx-text-fill: #1e1e1e; -fx-background-radius: 0;" />
+            <TextField fx:id="search" layoutX="33.0" layoutY="7.0" onKeyPressed="#addNameFromSearch" onMouseClicked="#searchClicked" prefHeight="26.0" prefWidth="155.0" promptText="Click here to search" scaleX="1.5" scaleY="1.5" style="-fx-background-color: #ff9900; -fx-prompt-text-fill: #1e1e1e; -fx-text-fill: #1e1e1e; -fx-background-radius: 0;" text="Enter name here...">
+               <font>
+                  <Font size="11.0" />
+               </font></TextField>
             <Rectangle fill="#ff9900" height="26.0" layoutX="50.0" layoutY="449.0" scaleX="1.5" scaleY="1.5" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="198.0" />
             <ListView fx:id="previewList" layoutX="653.0" layoutY="106.0" onMouseClicked="#previewListSelected" prefHeight="269.0" prefWidth="198.0" scaleX="1.5" scaleY="1.5" />
             <Rectangle fill="#ff9900" height="26.0" layoutX="653.0" layoutY="449.0" scaleX="1.5" scaleY="1.5" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="198.0" />
