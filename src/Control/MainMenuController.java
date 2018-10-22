@@ -1,5 +1,6 @@
 package Control;
 
+import Main.Main;
 import Model.ChallengeSession;
 import Model.Mediator;
 import Ratings.ChallengeRatings;
@@ -11,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,6 +24,7 @@ public class MainMenuController extends ParentController implements MicTesterCon
 	@FXML public Label averageSuccessLabel, progressLabel;
 	@FXML public MenuButton settings;
 	@FXML public MenuItem save, reset, quit;
+	@FXML private javafx.scene.control.Button closeButton;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -60,7 +63,7 @@ public class MainMenuController extends ParentController implements MicTesterCon
 
 	@FXML
 	public void help(ActionEvent actionEvent) { //todo HELP POPUP
-		createPopUp("HelperPopup", "Help", 740, 490);
+		createPopUp("HelperPopup", "Helper Menu", 740, 490);
 	}
 
 	/**
@@ -102,9 +105,6 @@ public class MainMenuController extends ParentController implements MicTesterCon
 
 	public void settingsExited(MouseEvent mouseEvent) {
 		settingsLabel.setVisible(false);
-	}
-
-	public void quit(ActionEvent actionEvent) {
 	}
 
 	@Override

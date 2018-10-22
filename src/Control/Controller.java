@@ -191,6 +191,7 @@ abstract class Controller implements Initializable {
             stage.setTitle(title);
             stage.setScene(new Scene(root, width, height));
             stage.show();
+            stage.setResizable(false);
         } catch (IOException e) {
             e.printStackTrace();
         }

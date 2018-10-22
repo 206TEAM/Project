@@ -37,7 +37,6 @@ public class HelperController extends Controller {
     @FXML
     ImageView imgViewer;
 
-    /****Fields*****/
     ImagesHelper _imagesHelper = ImagesHelper.getInstance();
 
     /**
@@ -56,6 +55,10 @@ public class HelperController extends Controller {
         backButton.setDisable(true);
     }
 
+    /**
+     * when user clicks on the next button, displays next image
+     * @param event
+     */
     @FXML
     private void nextImage(ActionEvent event) {
         backButton.setDisable(false);
@@ -67,9 +70,12 @@ public class HelperController extends Controller {
 
             nextButton.setDisable(true);
         }
-
     }
 
+    /**
+     * when user clicks on back button, displays previous image
+     * @param event
+     */
     @FXML
     private void previousImage(ActionEvent event) {
         nextButton.setDisable(false);

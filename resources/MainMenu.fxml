@@ -103,8 +103,6 @@
                 <MenuItem fx:id="save" mnemonicParsing="false" onAction="#save" text="Save session" />
                 <MenuItem fx:id="reset" mnemonicParsing="false" onAction="#reset" text="Reset progress" />
                 <SeparatorMenuItem mnemonicParsing="false" />
-                <SeparatorMenuItem mnemonicParsing="false" />
-                <MenuItem fx:id="quit" mnemonicParsing="false" onAction="#quit" text="Quit" />
             </items>
             <graphic>
                 <ImageView fitHeight="32.0" fitWidth="34.0" preserveRatio="true">
