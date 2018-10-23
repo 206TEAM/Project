@@ -6,6 +6,13 @@ import javafx.scene.image.Image;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * this class handles images for the helper pop up
+ * it loads all the images from the resources folder into an array list which can be
+ * accessed through the instance of the class
+ *
+ * @author: Lucy Chen
+ */
 public class ImagesHelper {
 
     private Image HOME = new Image(getClass().getResourceAsStream("/helperImages/Main1.png"));
@@ -59,7 +66,7 @@ public class ImagesHelper {
     }
 
     /**
-     * gets the current
+     * gets the current image
      * @return
      */
     public Image getCurrentImage() {

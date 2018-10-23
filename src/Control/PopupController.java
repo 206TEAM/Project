@@ -19,6 +19,8 @@ import java.util.ResourceBundle;
  * this controller controls the popup HelperPopup.fxml
  * it has a challengesession instance where it reviews what names were rated bad or good
  * and uses this information to display the names in their corresponding lists of good or bad names
+ *
+ * @author Lucy Chen
  */
 
 public class PopupController extends Controller {
