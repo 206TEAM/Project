@@ -60,8 +60,6 @@ public class ChallengeCompareController extends ParentController implements Medi
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-     //
         _mediator.setParent(this);
         _mainPlayState = false;
         _challengePlayState = false;
@@ -145,7 +143,6 @@ public class ChallengeCompareController extends ParentController implements Medi
             practiceProgressBar.setProgress(0);
             challengeProgressText.setText("Play Your Attempt");
             challengeListView.getSelectionModel().selectFirst();
-
             String originalFileName = nameSelected(challengeListView.getSelectionModel().getSelectedItem());
             _mediator.setOriginalFilename(originalFileName);
         }
@@ -242,7 +239,6 @@ public class ChallengeCompareController extends ParentController implements Medi
     public void loadPane(String page) {
         super.loadPane(page, subPane);
     }
-
 
     /**
      * pop up for when all the challenges have been rated
