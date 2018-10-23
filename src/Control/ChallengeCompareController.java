@@ -141,6 +141,7 @@ public class ChallengeCompareController extends ParentController implements Medi
         } else {
             wrong.setDisable(true);
             correct.setDisable(true);
+            finish();
             originalProgressBar.setProgress(0);
             practiceProgressBar.setProgress(0);
             challengeProgressText.setText("Play Your Attempt");
@@ -371,6 +372,7 @@ public class ChallengeCompareController extends ParentController implements Medi
 			playChallenge();
 		} else {
 			compare.setDisable(false);
+			disableTables(false);
 		}
 	}
 }
