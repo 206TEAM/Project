@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -54,18 +55,15 @@ public class ListenController extends Controller implements MediaController {
         //todo add listeners to each table and adjust progressText text accordingly
         difficultyStar.setDisable(true);
 		_playState = false;
-        List<String> names = _originals.listNames();
 
-		java.util.Collections.sort(names);
-		ObservableList<String> challengeNames = FXCollections.observableArrayList(names);
+		java.util.Collections.sort(_allNames);
+		ObservableList<String> challengeNames = FXCollections.observableArrayList(_allNames);
 
 		FilteredList<String> filteredList = new FilteredList<>(challengeNames, s -> true);
 		listView.setItems(filteredList);
 		listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-		search.textProperty().addListener(((observable, oldValue, newValue) -> {
-			searchListener(filteredList, newValue, listView);
-		}));
+		search.textProperty().addListener(((observable, oldValue, newValue) -> searchListener(filteredList, newValue, listView)));
 	}
 
 	/**
@@ -79,6 +77,7 @@ public class ListenController extends Controller implements MediaController {
         difficultyStar.setDisable(false);
         String name = listView.getSelectionModel().getSelectedItem();
         nameLabel.setText(name);
+        fileLabel.setText("--");
         _mediator.setCurrentName(name);
         disableButtons();
         updateStar(name);
@@ -88,17 +87,20 @@ public class ListenController extends Controller implements MediaController {
 	/**
 	 * this method populates the original list and challenge list with files from the model
 	 */
-	public void populateSubLists() {
+	private void populateSubLists() {
 
 		String name = _mediator.getCurrentName();
+		List<String> challenges = Challenges.getInstance().listChallenges(name);
 
 		ObservableList<String> originals = FXCollections.observableArrayList(_originals.getFileName(name));
 		originalListView.setItems(originals);
 		originalListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-		if (Challenges.getInstance().listChallenges(name) != null) {
-			ObservableList<String> challenges = FXCollections.observableArrayList(Challenges.getInstance().listChallenges(name));
-			challengeListView.setItems(challenges);
+		if (challenges != null) {
+			Collections.sort(challenges);
+			Collections.reverse(challenges);
+			ObservableList<String> challengeDisplay = FXCollections.observableArrayList(challenges);
+			challengeListView.setItems(challengeDisplay);
 		} else {
 			challengeListView.getItems().clear();
 		}
