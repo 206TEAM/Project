@@ -269,7 +269,6 @@ public class ChallengeCompareController extends ParentController implements Medi
                 _mediator.setPracticeMainList(new ArrayList<>());
             });
             popupStage.showAndWait();
-
         } catch (IOException error) {
             error.printStackTrace();
         }
