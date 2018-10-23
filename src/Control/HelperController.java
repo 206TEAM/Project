@@ -1,33 +1,20 @@
 package Control;
 
-import Model.ChallengeSession;
 import Model.ImagesHelper;
 import Model.Mediator;
-import Ratings.ChallengeRatings;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Scanner;
-
 /**
  * this controller controls the helperpopup.fxml file
  * a pop up is displayed containing information about how to use the app
+ *
+ * @author Lucy Chen
  */
 public class HelperController extends Controller {
     @FXML
