@@ -21,6 +21,14 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * this class controls List.fxml file
+ * It handles when the user wants to refer back to a previous challenge attempt
+ * or listen to a particular name from the database. they can rate the quality of an original file
+ *
+ * @author Lucy Chen
+ * @author Eric Pedrido
+ */
 public class ListenController extends Controller implements MediaController {
 	@FXML
 	public TextField search;
@@ -33,8 +41,7 @@ public class ListenController extends Controller implements MediaController {
 	@FXML
 	public ProgressBar playProgressBar;
 	@FXML
-	public Button play, delete, goodButton, badButton;
-
+	public Button play, goodButton, badButton;
 
 	/*****fields******/
 	private String _selected;
@@ -61,17 +68,20 @@ public class ListenController extends Controller implements MediaController {
 		}));
 	}
 
+	/**
+	 * when a name is selected from the list of names, the difficulty star mirrors its
+	 * current difficulty
+	 * the original and challenge list views are populated with the corresponding files
+	 * @param event
+	 */
     @FXML
     public void selectName(MouseEvent event) {
         difficultyStar.setDisable(false);
-        //todo rating show
         String name = listView.getSelectionModel().getSelectedItem();
         nameLabel.setText(name);
         _mediator.setCurrentName(name);
         disableButtons();
         updateStar(name);
-
-        //todo populate sublists
         populateSubLists();
     }
 
@@ -149,7 +159,7 @@ public class ListenController extends Controller implements MediaController {
     }
 
     /**
-     * when user clicks on star
+     * when user clicks on star, sets the difficulty to the opposite to what it current is
      */
     @FXML
     public void difficult(MouseEvent event) {
@@ -161,6 +171,12 @@ public class ListenController extends Controller implements MediaController {
         }
     }
 
+	/**
+	 * when the user clicks the play button.
+	 * depending on which file was last selected (original or challenge), that file is played
+	 * through the Media class
+	 * @param event
+	 */
 	@FXML
 	public void play(ActionEvent event) {
 		disableTables(true);
@@ -187,11 +203,15 @@ public class ListenController extends Controller implements MediaController {
 				media = new Media(challenge);
 			}
 
-			playFile(this, progressText, play, playProgressBar, dir, media);
+			playFile(this, progressText, play, playProgressBar, dir, media); //sets the progress bar
 			_playState = true;
 		}
 	}
 
+	/**
+	 * this method handles the ratings for the original file.
+	 * sets it to good or bad based on what button the user clicks
+	 */
 	private void ratingHandler() {
 		String fileName = originalListView.getSelectionModel().getSelectedItem();
 		String name = listView.getSelectionModel().getSelectedItem();
@@ -207,7 +227,12 @@ public class ListenController extends Controller implements MediaController {
         }
     }
 
-    @FXML
+	/**
+	 * loads the current rating information of the original file and displays the buttons
+	 * that correspond to the rating
+	 * @param original
+	 */
+	@FXML
     private void loadRating(Original original) {
         String rating = _originals.getRating(original);
         if (rating.equals("&bad&")){
@@ -219,34 +244,51 @@ public class ListenController extends Controller implements MediaController {
         }
     }
 
-    @FXML
+	/**
+	 * when clicks the good button for an orignal rating, update
+	 * @param event
+	 */
+	@FXML
     public void goodAction(ActionEvent event) {
-        //todo edit stats of name based on challenge recording success rating
         _good = true;
         ratingHandler();
 
     }
 
+	/**
+	 * when user clicks on the bad button for an original rating, update
+	 * @param actionEvent
+	 */
     @FXML
     public void badAction(ActionEvent actionEvent) {
-        //todo same as correct()
         _good = false;
         ratingHandler();
     }
 
-    public void disableButtons() {
+	/**
+	 * disables all the buttons
+	 */
+	public void disableButtons() {
         goodButton.setDisable(true);
         badButton.setDisable(true);
         play.setDisable(true);
 
     }
 
+	/**
+	 * disables the tables
+	 * @param disable
+	 */
 	private void disableTables(boolean disable) {
 		listView.setDisable(disable);
 		challengeListView.setDisable(disable);
 		originalListView.setDisable(disable);
 	}
 
+	/**
+	 * @param progressBar progress bar to reset the progress of.
+	 * @param playButton the button to set back to a play triangle after completion or cancellation.
+	 */
 	@Override
 	public void stopPlaying(ProgressBar progressBar, Button playButton) {
 		stopProgress();
@@ -260,6 +302,9 @@ public class ListenController extends Controller implements MediaController {
 		}
 	}
 
+	/**
+	 * when file stops playing
+	 */
 	@Override
 	public void finish() {
 		disableTables(false);
