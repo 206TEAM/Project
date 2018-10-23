@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.5" prefWidth="769.5" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524" prefWidth="770" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ListView fx:id="wrongListView" layoutX="84.0" layoutY="220.0" prefHeight="155.0" prefWidth="168.0" scaleX="1.5" scaleY="1.5" />
       <Rectangle fill="#ff9900" height="19.0" layoutX="84.0" layoutY="159.0" scaleX="1.5" scaleY="1.5" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="168.0" />

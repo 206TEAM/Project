@@ -19,6 +19,8 @@ import java.util.ResourceBundle;
  * it adds the good, bad and not attemped names into the list views of the scene
  * it controls how the stats of each name is displayed.
  *
+ * @author: Lucy Chen
+ *
  */
 public class StatsController implements Initializable {
 

@@ -176,6 +176,12 @@ public class HeaderController extends ParentController {
 		createPopUp("HelperPopup", "Help", 740, 490);
 	}
 
+	/**
+	 * when user clicks on the reset button in the header, it prompts the user a warning dialog
+	 * asking if they want to delete their progress.
+	 * their progress is reset or undone depending on what the user selected
+	 * @param actionEvent
+	 */
 	@FXML
 	public void reset(ActionEvent actionEvent) { //todo move to header
 		String title = "Reset Progress";

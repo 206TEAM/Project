@@ -21,7 +21,16 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.*;
 
-public class ChallengePlayController implements Initializable{
+/**
+ * This class controls Challenge2.fxml
+ * it has a challengeSession instance, where it uses the names to update the names list
+ * It allows the user to record their attempt during a timer as well as loading the next
+ * name on the list.
+ *
+ * @author Lucy Chen
+ * @author Eric Pedrido
+ */
+public class ChallengePlayController implements Initializable {
     @FXML
     public Text nameLabel;
     @FXML
@@ -31,6 +40,7 @@ public class ChallengePlayController implements Initializable{
     @FXML
     public Text countdown;
 
+    /***Fields****/
     private int _seconds;
     private int _iteration;
     private List<String> _challengeList;
@@ -38,11 +48,22 @@ public class ChallengePlayController implements Initializable{
     private ChallengeSession _session;
     private Mediator _mediator;
 
-    public void abort(){
+    /**
+     * This method is called when the main menu button is pressed which clears the challenge list as well as
+     * stops the timer from progressing.
+     */
+    public void abort() {
         _timeLine.stop();
         _challengeList.clear();
     }
 
+    /**
+     * The initialisation creates a timeline that counts down over 5 seconds in
+     * which the next name is loaded when the timer = 0
+     *
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         _session = Mediator.getInstance().getChallengeSession();
@@ -55,7 +76,7 @@ public class ChallengePlayController implements Initializable{
                 new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        ChallengePlayController.this.nextName();
+                        ChallengePlayController.this.nextName(); //when the timer = 0, go to the next name
                     }
                 }, new KeyValue(timer.progressProperty(), 1)));
         _timeLine.setCycleCount(_challengeList.size());
@@ -80,6 +101,12 @@ public class ChallengePlayController implements Initializable{
         }, 0, 1000);
     }
 
+    /**
+     * when user clicks the next button, the next name is shown and the timer resets.
+     * changes the scene to the compare challenge one if the button is at "done"
+     *
+     * @param actionEvent
+     */
     @FXML
     public void next(ActionEvent actionEvent) {
         if (next.getText().equals("Done")) {
@@ -94,6 +121,9 @@ public class ChallengePlayController implements Initializable{
         }
     }
 
+    /**
+     * timer method that deals with the timer animation.
+     */
     private void timer() {
         if(Mediator.getInstance().getChallengeStatus()) {
             timer.setProgress(0.0);
@@ -106,6 +136,9 @@ public class ChallengePlayController implements Initializable{
         }
     }
 
+    /**
+     * start recording the next name of the challenge list (a thread)
+     */
     private void record() {
         Thread thread = new Thread(new Task<Void>() {
             @Override
@@ -121,14 +154,21 @@ public class ChallengePlayController implements Initializable{
         thread.start();
     }
 
+    /**
+     * loads the next name and increases the iteration size
+     */
     private void loadName() {
-        if (_challengeList.size()>0) {
+        if (_challengeList.size() > 0) {
             String currentName = _challengeList.get(_iteration);
             nameLabel.setText(currentName);
             _iteration++;
         }
     }
 
+    /**
+     * start recording the next name as well as load name
+     * if at the end of the list, cancel any recording and set the next button text to "done"
+     */
     private void nextName() {
         if (_iteration == _challengeList.size()) {
             Media.cancel();
