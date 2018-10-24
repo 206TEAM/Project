@@ -6,13 +6,13 @@ import Model.Practice;
  * Observer design pattern used for {@link PracticeMainController} to communicate
  * directly to {@link PracticeRecordController}.
  *
- * In this situation {@code PracticeMainController} is the observable class, as it
- * notifies its observers of any selections the user has made.
+ * <p> In this situation {@code PracticeMainController} is the observable class, as it
+ * notifies its observers of any selections the user has made. </p>
  *
- * Initially developed because of previous versions of NameSayer having
+ * <p> Initially developed because of previous versions of NameSayer having
  * multiple {@code SUB_PANE}'s that observed {@code PracticeMainController},
  * however, that was removed in a recent patch. This framework was kept here
- * in case of future development.
+ * in case of future development. </p>
  *
  * @author Eric Pedrido
  */
