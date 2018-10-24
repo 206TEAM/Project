@@ -2,6 +2,7 @@ package Model;
 
 import Ratings.ChallengeRatings;
 import Ratings.DifficultyRatings;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class ChallengeSession {
 
     /**
      * constructor for creating a challengeSession from an existing list of names
+     *
      * @param oldList list of names you wish to use for the challenges session
      */
     public ChallengeSession(List<String> oldList) {
@@ -141,18 +143,15 @@ public class ChallengeSession {
      */
     public void abortSession() {
         Mediator.getInstance().removeInChallengeSession();
-        try {
-            if (_challengeFileList!=null || _challengeFileList!=null) {
-                for (int i = 0; i < _challengeFileList.size(); i++) {
-                    String name = _challengeList.get(i);
-                    if (name != null) {
-                        Challenges.getInstance().deleteChallenge(name, _challengeFileList.get(i)); //removes challenge file and from the model
-                    }
+        if (_challengeFileList != null || _challengeFileList != null) {
+            for (int i = 0; i < _challengeFileList.size(); i++) {
+                String name = _challengeList.get(i);
+                if (name != null) {
+                    Challenges.getInstance().deleteChallenge(name, _challengeFileList.get(i)); //removes challenge file and from the model
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+
     }
 }
 

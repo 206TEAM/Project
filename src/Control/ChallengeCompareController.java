@@ -267,7 +267,6 @@ public class ChallengeCompareController extends ParentController implements Medi
             });
             popupStage.showAndWait();
         } catch (IOException error) {
-            error.printStackTrace();
         }
     }
 

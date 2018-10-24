@@ -88,7 +88,7 @@ public class ChallengeRatings extends Saving {
                 updateAverage(name, false);
             }
 
-        } catch (NumberFormatException e) { //purposefully tries to catch the number format exception, doesn't do anything
+        } catch (Exception e) { //purposefully tries to catch the number format exception, doesn't do anything
         }
     }
 

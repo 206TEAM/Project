@@ -73,7 +73,6 @@ public class ImagesHelper {
         try {
             return _currentImage;
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("exception");
             _currentImage = HOME;
         }
         return null;
