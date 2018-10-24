@@ -2,9 +2,7 @@ package Model;
 
 import Ratings.ChallengeRatings;
 import Ratings.DifficultyRatings;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,7 +19,6 @@ public class ChallengeSession {
     private List<String> _challengeFileList;
     private List<String> _goodList;
     private List<String> _badList;
-    private Control.ChallengePlayController _controller;
 
     public static final String GOODMESSAGE = "Good job!";
     public static final String BADMESSAGE = "Keep trying. You're almost there.";

@@ -1,10 +1,7 @@
 package Save;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -45,17 +42,17 @@ public abstract class Saving {
      */
     protected List<String> getList(String fileName, String key) {
         List<String> list = new ArrayList<>();
-        try {
+        try { //read file contents, and save it as an array
             List<String> fileContents = new ArrayList<String>(Files.readAllLines(Paths.get(fileName)));
             for (int i = 0; i < fileContents.size(); i++) {
                 String output;
                 if (fileContents.get(i).startsWith(key)) {
 
-                    Pattern pattern = Pattern.compile("&+[a-zA-Z_0-9]+&"); //todo
+                    Pattern pattern = Pattern.compile("&+[a-zA-Z_0-9]+&");
                     Matcher matcher = pattern.matcher(fileContents.get(i));
                     if (matcher.find()) {
                         output = matcher.group(0);
-                        list.add(getFieldsString(output, fileName));
+                        list.add(getFieldsString(output)); //add the pattern value into the list
                     }
                 }
             }
@@ -84,7 +81,7 @@ public abstract class Saving {
                     Matcher matcher = pattern.matcher(fileContents.get(i));
                     if (matcher.find()) {
                         output = matcher.group(0);
-                        return getFieldsString(output, fileName);
+                        return getFieldsString(output);
                     }
                 }
             }
@@ -96,12 +93,10 @@ public abstract class Saving {
 
     /**
      * Helper method that gets the value from the decoded value.
-     *
-     * @param param
-     * @param fileName
-     * @return
+     * @param param: e.g &value&
+     * @return value - without the &&
      */
-    private String getFieldsString(String param, String fileName) {
+    private String getFieldsString(String param) {
         int paramLength = param.length();
 
         return param.substring(1, paramLength - 1);
@@ -123,6 +118,10 @@ public abstract class Saving {
         }
     }
 
+    /**
+     * this method deletes the file and creates a new one
+     * @param fileName file to be deleted
+     */
     protected void deleteTextFile(String fileName) {
         File f = new File(fileName);
         if (f.exists()) {

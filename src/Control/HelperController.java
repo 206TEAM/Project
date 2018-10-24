@@ -11,7 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import java.net.URL;
 import java.util.ResourceBundle;
 /**
- * this controller controls the helperpopup.fxml file
+ * this controller controls the Helperpopup.fxml file
  * a pop up is displayed containing information about how to use the app
  *
  * @author Lucy Chen
@@ -24,6 +24,7 @@ public class HelperController extends Controller {
     @FXML
     ImageView imgViewer;
 
+    /*******fields******/
     ImagesHelper _imagesHelper = ImagesHelper.getInstance();
 
     /**
@@ -36,7 +37,7 @@ public class HelperController extends Controller {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        _imagesHelper.setImage(Mediator.getInstance().getPageType());
+        _imagesHelper.setImage(Mediator.getInstance().getPageType()); //sets the image of the helper based on the page the user is currently on
         Image image = _imagesHelper.getCurrentImage();
         imgViewer.setImage(image);
         backButton.setDisable(true);
@@ -44,6 +45,7 @@ public class HelperController extends Controller {
 
     /**
      * when user clicks on the next button, displays next image
+     * disablse next button if on the last image
      * @param event
      */
     @FXML
@@ -61,6 +63,7 @@ public class HelperController extends Controller {
 
     /**
      * when user clicks on back button, displays previous image
+     * disables back button when on first image.
      * @param event
      */
     @FXML

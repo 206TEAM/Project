@@ -105,17 +105,17 @@ public class DifficultyRatings extends Saving {
             if (_hardNames.contains(nameKey)) {
                 _hardNames.remove(nameKey);
             }
-            _easyNames.add(nameKey); //todo should it be easy?
+            _easyNames.add(nameKey); //add the name to the easy list
 
         } else { //user set rating of name to be hard
             if (_easyNames.contains(nameKey)) {
                 _easyNames.remove(nameKey);
 
-                _hardNames.add(nameKey);
+                _hardNames.add(nameKey); //add the name to the hard list
             } else if (_mediumNames.contains(nameKey)) {
                 _mediumNames.remove(nameKey);
 
-                _hardNames.add(nameKey);
+                _hardNames.add(nameKey); //add the name to the hard list
             }
         }
     }
@@ -130,17 +130,15 @@ public class DifficultyRatings extends Saving {
     /**
      * This method reads from saved session text file and updates all the fields to their default values
      */
-    private void updateModel() { //todo
+    private void updateModel() {
         try {
-
             List<String> list = getList(ChallengeRatings.SESSIONFILE, "difficultNames");
             for (String name : list) {
                 _nameRatings.put(name, true);
                 setRating(name, true);
             }
-
         } catch (Exception e) {
-            //todo
+            e.printStackTrace();
         }
     }
 

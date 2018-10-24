@@ -2,26 +2,19 @@ package Ratings;
 
 import Model.*;
 import Save.Saving;
-
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * This class deals with the ratings of challenges and implements some algorithms that dictate the score of the
- * users progress
+ * users progress based on the challenge results
  *
  * @author Lucy Chen
  */
 
 /**
+ * These values dictates the scores:
  * -1 (notAttempted)
  * 0 to 60 (badNames)
  * 60 to 100 (goodNames)
@@ -52,6 +45,9 @@ public class ChallengeRatings extends Saving {
 
         List<String> names = Originals.getInstance().listNames();
 
+        /**
+         * adds all of the names into the not attempted list when initialising
+         */
         for (String name : names) {
             _challengesRating.put(name, -1);
             _notAttemptedNames.add(name);
@@ -75,7 +71,7 @@ public class ChallengeRatings extends Saving {
     }
 
     /**
-     * This method reads from saved session text file and updates the fields
+     * This method reads from saved session text file and updates the fields when this class is initialised.
      */
     private void updateModel() {
         try {
@@ -94,7 +90,7 @@ public class ChallengeRatings extends Saving {
             }
 
         } catch (Exception e) {
-            //todo
+            e.printStackTrace();
         }
     }
 
@@ -125,8 +121,8 @@ public class ChallengeRatings extends Saving {
 
     /**
      * returns the rating for challenge given name and fileName
-     * @param nameKey
-     * @param fileName
+     * @param nameKey the name of the rating to retrieve
+     * @param fileName filename of the particular challenge
      * @return
      */
     public Boolean getRating(String nameKey, String fileName) {
@@ -140,7 +136,6 @@ public class ChallengeRatings extends Saving {
      * and puts the name into the correct list through helper methods.
      */
     private void updateAverage(String nameKey, Boolean rating) {
-        //todo make rating more distinguashable e.g 0 and 100?
         int number;
         if (rating) {
             number = 100;
@@ -150,12 +145,12 @@ public class ChallengeRatings extends Saving {
 
         int currentAvg, newAvg;
 
-        if (_challengesRating.get(nameKey) == -1) { //todo find etter way to distinguish between NA and bad
+        if (_challengesRating.get(nameKey) == -1) { //if the current rating is "not attempted"
             newAvg = number;
-            currentAvg = -1;
+            currentAvg = -1; //take the current average
         } else {
             currentAvg = _challengesRating.get(nameKey);
-            int challengeSize = Challenges.getInstance().getChallengeSize(nameKey);
+            int challengeSize = Challenges.getInstance().getChallengeSize(nameKey); //gets the number of challenges for the nameKey
             newAvg = currentAvg + (number - currentAvg) / challengeSize;
         }
         _challengesRating.put(nameKey, newAvg); //puts new average into hashmap
@@ -164,9 +159,9 @@ public class ChallengeRatings extends Saving {
 
     /**
      * this is a helper method that puts the name into the right list based on their old and new score
-     * @param oldScore
-     * @param newScore
-     * @param nameKey
+     * @param oldScore of score of the name
+     * @param newScore new updated score of the name
+     * @param nameKey name where the score is updated
      */
     private void handleList(int oldScore, int newScore, String nameKey) {
         if (getList(newScore) != getList(oldScore)) {
@@ -175,7 +170,9 @@ public class ChallengeRatings extends Saving {
             } else {
                 _notAttemptedNames.remove(nameKey);
             }
-            getList(newScore).add(nameKey);
+            if (getList(newScore)!=null){
+                getList(newScore).add(nameKey); //adds the new name to the corresponding list with the correct score
+            }
         }
     }
 
@@ -201,7 +198,8 @@ public class ChallengeRatings extends Saving {
     public void newSession(int score) {
         _noOfSessions++;
         int newAvg = _overallScore + (score - _overallScore) / _noOfSessions;
-        double newProgress = 100 - ((_notAttemptedNames.size() / (double) Originals.getInstance().listNames().size()) * 100); //todo make better
+        //calculates the new progress by findind the average (incrementally from the last)
+        double newProgress = 100 - ((_notAttemptedNames.size() / (double) Originals.getInstance().listNames().size()) * 100);
         _progress = (int) newProgress;
         _overallScore = newAvg;
     }
@@ -215,23 +213,21 @@ public class ChallengeRatings extends Saving {
         params.add("_overallScore &" + _overallScore + "&");
         params.add("_progress &" + _progress + "&");
 
-        int i = 0;
-        for (String name : _goodNames) {
+        for (int i = 0;i<_goodNames.size();i++){
             params.add("_goodNames &" + _goodNames.get(i) + "&");
-            i++;
         }
-        i = 0;
-        for (String name : _badNames) {
+
+        for (int i = 0;i<_badNames.size();i++){
             params.add("_badNames &" + _badNames.get(i) + "&");
-            i++;
         }
-        saveSession(SESSIONFILE, params);
+
+        saveSession(SESSIONFILE, params); //writes the params to the text file.
     }
 
     /**
      * this method resets all the fields and variables to the default settings
      */
-    public void reset() throws FileNotFoundException {
+    public void reset() {
         _noOfSessions = 0;
         _overallScore = 0;
         _progress = 0;
