@@ -1,11 +1,9 @@
 package Control;
+import Model.Originals;
 import Ratings.ChallengeRatings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -57,9 +55,22 @@ public class MainMenuController extends ParentController implements MicTesterCon
 		loadNextPane("SelectPractices", PageType.PRACTICE);
 	}
 
+	/**
+	 * If the Recordings folder is empty, notify the user.
+	 */
 	@FXML
 	public void challenge(ActionEvent actionEvent) {
-		loadNextPane("Challenge1", PageType.CHALLENGE);
+		if (_originals.listNames().size() > 0) {
+			loadNextPane("Challenge1", PageType.CHALLENGE);
+		} else {
+			Label l = new Label("Your recordings folder is empty");
+			l.setWrapText(true);
+			Alert alert = new Alert(Alert.AlertType.WARNING);
+			alert.setTitle("Empty recordings");
+			alert.setHeaderText("Empty recordings folder");
+			alert.getDialogPane().setContent(l);
+			alert.showAndWait();
+		}
 	}
 
 	@FXML

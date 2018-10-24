@@ -30,7 +30,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Originals.getInstance().populateFolders();
+
         try {
             if (Files.exists(Paths.get("Temp"))) {
                 Files.walk(Paths.get("Temp")).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
@@ -43,6 +43,8 @@ public class Main extends Application {
             if (Files.notExists(Paths.get("Names"))) {
             	Files.createDirectory(Paths.get("Names"));
             }
+
+            Originals.getInstance().populateFolders();
 
             Parent root = FXMLLoader.load(getClass().getResource("/MainMenu.fxml"));
             Scene scene = new Scene(root);
