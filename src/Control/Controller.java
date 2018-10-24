@@ -392,6 +392,12 @@ abstract class Controller implements Initializable {
         }
     }
 
+    /**
+     * Adjusts the brightness of the image contained within the {@code ImageView}.
+     *
+     * @param brightness desired brightness
+     * @param image      the image to adjust
+     */
     protected void colorAdjust(double brightness, ImageView image) {
         ColorAdjust colorAdjust = new ColorAdjust();
         colorAdjust.setBrightness(brightness);

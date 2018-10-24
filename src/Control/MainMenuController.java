@@ -16,6 +16,13 @@ import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controls MainMenu.fxml which allows the user to navigate
+ * the application
+ *
+ * @author Eric Pedrido
+ * @author Lucy Chen
+ */
 public class MainMenuController extends ParentController implements MicTesterController {
 	@FXML public Button practice, challenge, listen, stats, help;
 	@FXML public AnchorPane mainPane;
@@ -30,13 +37,17 @@ public class MainMenuController extends ParentController implements MicTesterCon
 	public void initialize(URL location, ResourceBundle resources) {
 		MainMenuController instance = this;
 		_mediator.setParent(this);
+		_mediator.setChallengeSession(null); //reset if main menu
+
+		// Print the average success
 		String score = Integer.toString(ChallengeRatings.getInstance().getOverallScore());
 		averageSuccessLabel.setText("Average success: " + score + "%");
 		String progress = Integer.toString(ChallengeRatings.getInstance().getProgress());
 		progressLabel.setText("Progress is: " + progress + "%");
 
+
+		// Tell the user if their microphone is working
 		Thread thread = new Thread(() -> micTester(instance));
-		_mediator.setChallengeSession(null); //reset if main menu
 		thread.setDaemon(true);
 		thread.start();
 	}
@@ -93,13 +104,13 @@ public class MainMenuController extends ParentController implements MicTesterCon
 
 	@FXML
 	public void helpHovered(MouseEvent mouseEvent) {
-		help.setTextFill(Color.WHITE);
+		help.setTextFill(Color.WHITE);  // Set to white and show a label
 		helpLabel.setVisible(true);
 	}
 
 	@FXML
 	public void helpExited(MouseEvent mouseEvent) {
-		help.setTextFill(Paint.valueOf("#ff9900"));
+		help.setTextFill(Paint.valueOf("#ff9900")); // Return to orange and hide label
 		helpLabel.setVisible(false);
 	}
 
@@ -115,16 +126,6 @@ public class MainMenuController extends ParentController implements MicTesterCon
 		settingsLabel.setVisible(false);
 	}
 
-	@Override
-	public void setMicLevel(float rms) {
-		if (rms > 0.01) {
-			micTestLabel.setText("Your microphone is good to go!");
-			micTestLabel.setFill(Color.DARKGREEN);
-			micLabel.setText("✔️");
-			micLabel.setFill(Color.DARKGREEN);
-		}
-	}
-
 	@FXML
 	public void micHovered(MouseEvent mouseEvent) {
 		colorAdjust(1.0, micImage);
@@ -133,5 +134,21 @@ public class MainMenuController extends ParentController implements MicTesterCon
 	@FXML
 	public void micExited(MouseEvent mouseEvent) {
 		colorAdjust(0, micImage);
+	}
+
+	/**
+	 * If a small amount of sound is detected (perhaps background noise),
+	 * notifies the user that their microphone is working.
+	 *
+	 * @param rms The detected level (from 0-1)
+	 */
+	@Override
+	public void setMicLevel(float rms) {
+		if (rms > 0.01) {
+			micTestLabel.setText("Your microphone is good to go!");
+			micTestLabel.setFill(Color.DARKGREEN);
+			micLabel.setText("✔️");
+			micLabel.setFill(Color.DARKGREEN);
+		}
 	}
 }

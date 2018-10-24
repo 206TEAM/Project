@@ -73,7 +73,6 @@ public class Main extends Application {
             } else if (result.get() == cancel) {
                 event.consume();
                 primaryStage.show();
-            } else {
             }
         });
     }

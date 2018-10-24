@@ -27,6 +27,14 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * This controller controls Header.fxml which is a header
+ * that is displayed on all pages of the application excluding
+ * the main menu.
+ *
+ * @author Eric Pedrido
+ * @author Lucy Chen
+ */
 public class HeaderController extends ParentController {
 
 	@FXML public Button home;
@@ -37,13 +45,19 @@ public class HeaderController extends ParentController {
 	@FXML public MenuButton settings;
 	@FXML public MenuItem save, reset, help, quit;
 
-	private PageType _page;
+	private PageType _page; // Current page
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		_mediator.setParent(this);
 	}
 
+	/**
+	 * Returns you to the main menu upon button press.
+	 * If the current page is Practice, Challenge, or Challenge Compare,
+	 * then a confirmation popup appears, asking the user to confirm their
+	 * decision to abandon progress.
+	 */
 	@FXML
 	public void home(ActionEvent actionEvent) {
 
@@ -55,16 +69,14 @@ public class HeaderController extends ParentController {
 				text = "The Challenge list will be lost";
 			}
 
-            boolean confirmAction = false;
-            confirmAction = confirmAction(text);
+            boolean confirmAction = confirmAction(text);
 
-            // If the user confirms, delete it
+			// If the user confirms, delete it
             if (confirmAction) {
-
             	if (_page == PageType.CHALLENGE) {
 					ChallengeSession _session = _mediator.getChallengeSession();
 					if (_session != null) {
-						_session.abortSession(); //gets rid of challenges
+						_session.abortSession(); // gets rid of challenges
 					}
 				}
                 _mediator.loadPane(Type.MAIN, "MainMenu");
@@ -72,7 +84,6 @@ public class HeaderController extends ParentController {
             }
         } else {
             _mediator.loadPane(Type.MAIN, "MainMenu");
-            //Mediator.getInstance().removeInChallengeSession();
         }
 	}
 
@@ -100,6 +111,11 @@ public class HeaderController extends ParentController {
 		}
 	}
 
+	/**
+	 * Updates up the page type whenever a the user changes the page.
+	 *
+	 * @param pageType page the user has selected.
+	 */
 	public void setPage(PageType pageType) {
 		String text;
 		if (pageType == PageType.PRACTICE) {
@@ -129,7 +145,7 @@ public class HeaderController extends ParentController {
 
 	@FXML
 	public void homeHovered(MouseEvent mouseEvent) {
-		home.setTextFill(Paint.valueOf("#ff9900"));
+		home.setTextFill(Paint.valueOf("#ff9900")); // Set to orange
 	}
 
 	@FXML
@@ -147,6 +163,11 @@ public class HeaderController extends ParentController {
 		colorAdjust(0.0, micImage); // Return it to orange
 	}
 
+	/**
+	 * Opens a popup asking the user to confirm their decision, and to either
+	 * save and quit, quit, or cancel. Selecting quit means the current session
+	 * will not save.
+	 */
 	@FXML
 	public void quit(ActionEvent actionEvent) {
 		ButtonType saveQuit = new ButtonType("Save and quit", ButtonBar.ButtonData.YES);
@@ -162,7 +183,8 @@ public class HeaderController extends ParentController {
 
 		Optional<ButtonType> result = confirm.showAndWait();
 		if (result.get() == saveQuit) {
-			//todo "save" the work
+			ChallengeRatings.getInstance().saveSession();
+			DifficultyRatings.getInstance().saveSession();
 			exit(headerPane);
 		} else if (result.get() == quit) {
 			exit(headerPane);
@@ -171,6 +193,9 @@ public class HeaderController extends ParentController {
 		}
 	}
 
+	/**
+	 * Opens the helper menu depending on the current page.
+	 */
 	@FXML
 	private void help(ActionEvent event){
 		createPopUp("HelperPopup", "Help", 740, 490);
@@ -180,7 +205,6 @@ public class HeaderController extends ParentController {
 	 * when user clicks on the reset button in the header, it prompts the user a warning dialog
 	 * asking if they want to delete their progress.
 	 * their progress is reset or undone depending on what the user selected
-	 * @param actionEvent
 	 */
 	@FXML
 	public void reset(ActionEvent actionEvent) { //todo move to header
