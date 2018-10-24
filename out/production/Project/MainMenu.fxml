@@ -15,114 +15,110 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #d9d9d9;" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.MainMenuController">
-   <children>
-      <Text fx:id="micLabel" fill="RED" layoutX="55.0" layoutY="461.0" strokeType="OUTSIDE" strokeWidth="0.0" text="❌" textAlignment="CENTER" wrappingWidth="34.19677019119263">
-         <font>
-            <Font name="DejaVu Sans Bold" size="26.0" />
-         </font>
-      </Text>
-      <Text fill="#1e1e1e" layoutX="383.0" layoutY="82.0" scaleX="1.5" scaleY="1.5" stroke="#1e1e1e" strokeMiterLimit="8.0" strokeType="OUTSIDE" strokeWidth="0.1" text="Welcome to" textAlignment="CENTER" wrappingWidth="134.841796875">
-         <font>
-            <Font name="DejaVu Sans Bold" size="22.0" />
-         </font>
-      </Text>
-      <Text fill="#1e1e1e" layoutX="344.0" layoutY="164.0" scaleX="1.5" scaleY="1.5" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.1" text="NameSayer" textAlignment="CENTER" wrappingWidth="214.841796875">
-         <font>
-            <Font name="DejaVu Sans Bold" size="33.0" />
-         </font>
-      </Text>
-      <Label fx:id="averageSuccessLabel" alignment="CENTER" layoutX="325.0" layoutY="225.0" prefHeight="16.0" prefWidth="254.0" scaleX="1.5" scaleY="1.5" text="Average Success: 100% (A+)" textAlignment="CENTER" textFill="#00900ced" />
-      <Label fx:id="progressLabel" alignment="CENTER" layoutX="343.0" layoutY="258.0" prefHeight="16.0" prefWidth="218.0" scaleX="1.5" scaleY="1.5" text="Progress: 100% (A+)" textAlignment="CENTER" textFill="#00900ced" />
-      <Button fx:id="practice" contentDisplay="TOP" layoutX="248.0" layoutY="303.0" mnemonicParsing="false" onAction="#practice" prefHeight="60.0" prefWidth="202.5" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Practice" textFill="#ff9900">
-         <font>
-            <Font name="DejaVu Sans Condensed Bold" size="23.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="challenge" layoutX="451.0" layoutY="303.0" mnemonicParsing="false" onAction="#challenge" prefHeight="60.0" prefWidth="202.5" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Challenge" textFill="#ff9900">
-         <font>
-            <Font name="DejaVu Sans Condensed Bold" size="23.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Line endX="-9.0" endY="110.0" layoutX="460.0" layoutY="251.0" startX="-9.0" startY="60.0" stroke="#ff9900" />
-      <Button fx:id="listen" layoutX="372.0" layoutY="399.0" mnemonicParsing="false" onAction="#listen" opacity="0.86" prefHeight="51.0" prefWidth="158.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Listen" textFill="#ff9900">
-         <font>
-            <Font name="DejaVu Sans Condensed Bold" size="21.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="stats" layoutX="371.0" layoutY="473.0" mnemonicParsing="false" onAction="#stats" opacity="0.86" prefHeight="51.0" prefWidth="158.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Stats" textFill="#ff9900">
-         <font>
-            <Font name="DejaVu Sans Condensed Bold" size="21.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="micTest" layoutX="20.0" layoutY="433.0" mnemonicParsing="false" onAction="#micTest" prefHeight="32.0" prefWidth="15.0" style="-fx-background-color: #d9d9d9;">
-         <graphic>
-            <ImageView fx:id="micImage" fitHeight="26.0" fitWidth="25.0" preserveRatio="true">
-               <image>
-                  <Image url="@microphone.png" />
-               </image>
-               <effect>
-                  <ColorAdjust hue="0.2" saturation="1.0" />
-               </effect>
-            </ImageView>
-         </graphic>
-         <effect>
-            <ColorAdjust />
-         </effect>
-      </Button>
-      <Button fx:id="help" layoutX="20.0" layoutY="534.0" mnemonicParsing="false" onAction="#help" onMouseEntered="#helpHovered" onMouseExited="#helpExited" prefHeight="32.0" prefWidth="37.0" scaleX="1.5" scaleY="1.5" style="-fx-background-color: #d9d9d9;" text="?" textFill="#ff9900">
-         <font>
-            <Font name="System Bold" size="22.0" />
-         </font></Button>
-      <Text fx:id="helpLabel" fill="#ff9900" layoutX="65.0" layoutY="560.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Help" visible="false">
-         <font>
-            <Font size="15.0" />
-         </font></Text>
-      <Text fx:id="settingsLabel" fill="#ff9900" layoutX="86.0" layoutY="509.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" visible="false">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Text>
-      <MenuButton fx:id="settings" layoutX="18.0" layoutY="483.0" mnemonicParsing="false" onMouseEntered="#settingsHovered" onMouseExited="#settingsExited" style="-fx-background-color: #d9d9d9;">
-         <items>
-            <MenuItem fx:id="save" mnemonicParsing="false" onAction="#save" text="Save session" />
-            <MenuItem fx:id="reset" mnemonicParsing="false" onAction="#reset" text="Reset progress" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem fx:id="quit" mnemonicParsing="false" onAction="#quit" text="Quit" />
-         </items>
-         <graphic>
-            <ImageView fitHeight="32.0" fitWidth="34.0" preserveRatio="true">
-               <image>
-                  <Image url="@settings.png" />
-               </image>
-               <effect>
-                  <ColorAdjust hue="0.2" saturation="1.0" />
-               </effect>
-            </ImageView>
-         </graphic>
-      </MenuButton>
-      <Text fx:id="micTestLabel" fill="RED" layoutX="260.0" layoutY="574.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your microphone is not working" textAlignment="CENTER" wrappingWidth="379.49169921875">
-         <font>
-            <Font name="DejaVu Sans Bold" size="19.0" />
-         </font></Text>
-   </children>
-   <effect>
-      <ColorAdjust />
-   </effect>
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #d9d9d9;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Control.MainMenuController">
+    <children>
+        <Text fx:id="micLabel" fill="RED" layoutX="55.0" layoutY="461.0" strokeType="OUTSIDE" strokeWidth="0.0" text="❌" textAlignment="CENTER" wrappingWidth="34.19677019119263">
+            <font>
+                <Font name="DejaVu Sans Bold" size="26.0" />
+            </font>
+        </Text>
+        <Text fill="#1e1e1e" layoutX="383.0" layoutY="111.0" scaleX="1.5" scaleY="1.5" stroke="#1e1e1e" strokeMiterLimit="8.0" strokeType="OUTSIDE" strokeWidth="0.1" text="Welcome to" textAlignment="CENTER" wrappingWidth="134.841796875">
+            <font>
+                <Font name="DejaVu Sans Bold" size="22.0" />
+            </font>
+        </Text>
+        <Text fill="#1e1e1e" layoutX="344.0" layoutY="193.0" scaleX="1.5" scaleY="1.5" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.1" text="NameSayer" textAlignment="CENTER" wrappingWidth="214.841796875">
+            <font>
+                <Font name="DejaVu Sans Bold" size="33.0" />
+            </font>
+        </Text>
+        <Label fx:id="averageSuccessLabel" alignment="CENTER" layoutX="325.0" layoutY="225.0" prefHeight="16.0" prefWidth="254.0" scaleX="1.5" scaleY="1.5" text="Average Success: 100% (A+)" textAlignment="CENTER" textFill="#00900ced" />
+        <Label fx:id="progressLabel" alignment="CENTER" layoutX="343.0" layoutY="258.0" prefHeight="16.0" prefWidth="218.0" scaleX="1.5" scaleY="1.5" text="Progress: 100% (A+)" textAlignment="CENTER" textFill="#00900ced" />
+        <Button fx:id="practice" contentDisplay="TOP" layoutX="248.0" layoutY="303.0" mnemonicParsing="false" onAction="#practice" prefHeight="60.0" prefWidth="202.5" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Practice" textFill="#ff9900">
+            <font>
+                <Font name="DejaVu Sans Condensed Bold" size="23.0" />
+            </font>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </Button>
+        <Button fx:id="challenge" layoutX="451.0" layoutY="303.0" mnemonicParsing="false" onAction="#challenge" prefHeight="60.0" prefWidth="202.5" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Challenge" textFill="#ff9900">
+            <font>
+                <Font name="DejaVu Sans Condensed Bold" size="23.0" />
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </Button>
+        <Line endX="-9.0" endY="110.0" layoutX="460.0" layoutY="249.0" startX="-9.0" startY="60.0" stroke="#ff9900" />
+        <Button fx:id="listen" layoutX="372.0" layoutY="399.0" mnemonicParsing="false" onAction="#listen" prefHeight="51.0" prefWidth="158.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Listen" textFill="#ff9900">
+            <font>
+                <Font name="DejaVu Sans Condensed Bold" size="21.0" />
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </Button>
+        <Button fx:id="stats" layoutX="371.0" layoutY="473.0" mnemonicParsing="false" onAction="#stats" prefHeight="51.0" prefWidth="158.0" style="-fx-background-color: #1e1e1e; -fx-background-radius: 0;" text="Stats" textFill="#ff9900">
+            <font>
+                <Font name="DejaVu Sans Condensed Bold" size="21.0" />
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </Button>
+        <Button fx:id="micTest" layoutX="20.0" layoutY="433.0" mnemonicParsing="false" onAction="#micTest" onMouseEntered="#micHovered" onMouseExited="#micExited" prefHeight="32.0" prefWidth="15.0" style="-fx-background-color: #d9d9d9;">
+            <graphic>
+                <ImageView fx:id="micImage" fitHeight="26.0" fitWidth="25.0" preserveRatio="true">
+                    <image>
+                        <Image url="@microphone.png" />
+                    </image>
+                    <effect>
+                        <ColorAdjust hue="0.2" saturation="1.0" />
+                    </effect>
+                </ImageView>
+            </graphic>
+            <effect>
+                <ColorAdjust />
+            </effect>
+        </Button>
+        <Button fx:id="help" layoutX="20.0" layoutY="534.0" mnemonicParsing="false" onAction="#help" onMouseEntered="#helpHovered" onMouseExited="#helpExited" prefHeight="32.0" prefWidth="37.0" scaleX="1.5" scaleY="1.5" style="-fx-background-color: #d9d9d9;" text="?" textFill="#ff9900">
+            <font>
+                <Font name="System Bold" size="22.0" />
+            </font></Button>
+        <Text fx:id="helpLabel" fill="#ff9900" layoutX="65.0" layoutY="560.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Help" visible="false">
+            <font>
+                <Font size="15.0" />
+            </font></Text>
+        <Text fx:id="settingsLabel" fill="#ff9900" layoutX="86.0" layoutY="509.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" visible="false">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Text>
+        <MenuButton fx:id="settings" layoutX="18.0" layoutY="483.0" mnemonicParsing="false" onMouseEntered="#settingsHovered" onMouseExited="#settingsExited" style="-fx-background-color: #d9d9d9;">
+            <items>
+                <MenuItem fx:id="save" mnemonicParsing="false" onAction="#save" text="Save session" />
+                <MenuItem fx:id="reset" mnemonicParsing="false" onAction="#reset" text="Reset progress" />
+                <SeparatorMenuItem mnemonicParsing="false" />
+            </items>
+            <graphic>
+                <ImageView fx:id="settingsImage" fitHeight="32.0" fitWidth="34.0" preserveRatio="true">
+                    <effect>
+                        <ColorAdjust hue="0.2" saturation="1.0" />
+                    </effect>
+                    <Image url="@settings.png" />
+                </ImageView>
+            </graphic>
+        </MenuButton>
+        <Text fx:id="micTestLabel" fill="RED" layoutX="260.0" layoutY="574.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your microphone is not working" textAlignment="CENTER" wrappingWidth="379.49169921875">
+            <font>
+                <Font name="DejaVu Sans Bold" size="19.0" />
+            </font></Text>
+    </children>
+    <effect>
+        <ColorAdjust />
+    </effect>
 </AnchorPane>

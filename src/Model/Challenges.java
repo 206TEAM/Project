@@ -41,16 +41,18 @@ public class Challenges {
 
             // if list does not exist create it
             if (challengeList == null) {
-                _existingChallenges.add(challenge);
                 challengeList = new ArrayList<Challenge>();
                 challengeList.add(challenge);
+                _existingChallenges.add(challenge);
                 _challenges.put(nameKey, challengeList);
             } else {
                 challengeList.add(challenge);
+                _existingChallenges.add(challenge);
             }
         } else {
             challengeList.add(challenge);
             _challenges.put(nameKey, challengeList);
+            _existingChallenges.add(challenge);
         }
 
         return challenge.getFileName();

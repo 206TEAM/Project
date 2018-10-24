@@ -2,6 +2,7 @@ package Ratings;
 
 import Model.*;
 import Save.Saving;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -81,13 +82,13 @@ public class ChallengeRatings extends Saving {
             _goodNames = getList(SESSIONFILE, "_goodNames");
             _badNames = getList(SESSIONFILE, "_badNames");
 
-            for (String name : _goodNames) {
-                updateAverage(name, true);
-            }
             for (String name : _badNames) {
-                updateAverage(name, false);
+                updateAverage(name, false, true);
             }
 
+            for (String name : _goodNames) {
+                updateAverage(name, true, true);
+            }
         } catch (Exception e) { //purposefully tries to catch the number format exception, doesn't do anything
         }
     }
@@ -114,12 +115,13 @@ public class ChallengeRatings extends Saving {
     public void setRating(String nameKey, String fileName, Boolean rating) {
         Challenge challenge = Challenges.getInstance().getChallenge(nameKey, fileName);
         challenge.setRating(rating);
-        updateAverage(nameKey, rating);
+        updateAverage(nameKey, rating, false);
     }
 
     /**
      * returns the rating for challenge given name and fileName
-     * @param nameKey the name of the rating to retrieve
+     *
+     * @param nameKey  the name of the rating to retrieve
      * @param fileName filename of the particular challenge
      * @return
      */
@@ -132,15 +134,18 @@ public class ChallengeRatings extends Saving {
      * This method takes the new rating and
      * calculates the score for the particular namekey, adds value to hashmap
      * and puts the name into the correct list through helper methods.
+     *
+     * @param nameKey name
+     * @param rating new rating true for good, false for bad
+     * @param save true for updating model
      */
-    private void updateAverage(String nameKey, Boolean rating) {
+    private void updateAverage(String nameKey, Boolean rating, Boolean save) {
         int number;
         if (rating) {
             number = 100;
         } else {
             number = 0;
         }
-
         int currentAvg, newAvg;
 
         if (_challengesRating.get(nameKey) == -1) { //if the current rating is "not attempted"
@@ -152,24 +157,27 @@ public class ChallengeRatings extends Saving {
             newAvg = currentAvg + (number - currentAvg) / challengeSize;
         }
         _challengesRating.put(nameKey, newAvg); //puts new average into hashmap
-        handleList(currentAvg, newAvg, nameKey); //updates the list
+        handleList(currentAvg, newAvg, nameKey, save); //updates the list
     }
 
     /**
      * this is a helper method that puts the name into the right list based on their old and new score
+     *
      * @param oldScore of score of the name
      * @param newScore new updated score of the name
-     * @param nameKey name where the score is updated
+     * @param nameKey  name where the score is updated
      */
-    private void handleList(int oldScore, int newScore, String nameKey) {
-        if (getList(newScore) != getList(oldScore)) {
-            if (getList(oldScore) != null) {
-                getList(oldScore).remove(nameKey);
-            } else {
-                _notAttemptedNames.remove(nameKey);
-            }
-            if (getList(newScore)!=null){
-                getList(newScore).add(nameKey); //adds the new name to the corresponding list with the correct score
+    private void handleList(int oldScore, int newScore, String nameKey, Boolean save) {
+        if (!save) {
+            if (getList(newScore) != getList(oldScore)) {
+                if (getList(oldScore) != null) {
+                    getList(oldScore).remove(nameKey);
+                } else {
+                    _notAttemptedNames.remove(nameKey);
+                }
+                if (getList(newScore) != null) {
+                    getList(newScore).add(nameKey); //adds the new name to the corresponding list with the correct score
+                }
             }
         }
     }
@@ -177,6 +185,7 @@ public class ChallengeRatings extends Saving {
     /**
      * helper method that returns the list based on the average score of the name
      * can be _badNames or _goodNames (based on scorelimit).
+     *
      * @param average
      * @return
      */
@@ -211,11 +220,11 @@ public class ChallengeRatings extends Saving {
         params.add("_overallScore &" + _overallScore + "&");
         params.add("_progress &" + _progress + "&");
 
-        for (int i = 0;i<_goodNames.size();i++){
+        for (int i = 0; i < _goodNames.size(); i++) {
             params.add("_goodNames &" + _goodNames.get(i) + "&");
         }
 
-        for (int i = 0;i<_badNames.size();i++){
+        for (int i = 0; i < _badNames.size(); i++) {
             params.add("_badNames &" + _badNames.get(i) + "&");
         }
 

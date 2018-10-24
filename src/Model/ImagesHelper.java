@@ -84,7 +84,6 @@ public class ImagesHelper {
      */
     public Image nextImage() {
         _index = _index + 1;
-        System.out.println(_index);
         _currentImage = images.get(_index);
         return getCurrentImage();
     }
@@ -96,7 +95,6 @@ public class ImagesHelper {
     public Image previousImage() {
 
         _index = _index - 1;
-        System.out.println("previous image index is " + _index);
         _currentImage = images.get(_index);
         return getCurrentImage();
     }
@@ -118,7 +116,7 @@ public class ImagesHelper {
      * @return
      */
     public Boolean firstImage() {
-        System.out.println("index is" + _index);
+
         if (_index == 0) {
             return true;
         } else {

@@ -118,7 +118,7 @@ public class Mediator {
     public ParentController.PageType getPageType() {
         return _currentPage;
     }
-
+    
     public void loadPane(ParentController.Type parent, String page) {
         if (parent == ParentController.Type.HEADER) {
             _header.loadPane(page);
