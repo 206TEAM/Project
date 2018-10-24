@@ -30,6 +30,7 @@ public class MainMenuController extends ParentController implements MicTesterCon
 	public void initialize(URL location, ResourceBundle resources) {
 		MainMenuController instance = this;
 		_mediator.setParent(this);
+		System.out.println(ChallengeRatings.getInstance().getOverallScore());
 		String score = Integer.toString(ChallengeRatings.getInstance().getOverallScore());
 		averageSuccessLabel.setText("Average success: " + score + "%");
 		String progress = Integer.toString(ChallengeRatings.getInstance().getProgress());

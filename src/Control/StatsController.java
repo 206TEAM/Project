@@ -102,7 +102,7 @@ public class StatsController implements Initializable {
                 score = NASCORE; //displays NA names as NASCORE constant
             }
             scoreLabel.setText(score);
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

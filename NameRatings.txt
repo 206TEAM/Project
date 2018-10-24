@@ -1,0 +1,7 @@
+_noOfSessions &1&
+_overallScore &25&
+_progress &5&
+_goodNames &Izzy&
+_badNames &Eric&
+_badNames &Li&
+_badNames &Zhu&
