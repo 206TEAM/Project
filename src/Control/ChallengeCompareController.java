@@ -242,7 +242,7 @@ public class ChallengeCompareController extends ParentController implements Medi
     }
 
     /**
-     * pop up for when all the challenges have been rated
+     * creates a pop up for when all the challenges have been rated
      * pop up containing score is loaded.
      */
     public void popup() {

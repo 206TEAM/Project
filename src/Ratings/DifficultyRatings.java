@@ -138,7 +138,6 @@ public class DifficultyRatings extends Saving {
                 setRating(name, true);
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

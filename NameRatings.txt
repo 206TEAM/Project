@@ -1,3 +1,0 @@
-_noOfSessions &0&
-_overallScore &0&
-_progress &0&

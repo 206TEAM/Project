@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * These values dictates the scores:
  * -1 (notAttempted)
- * 0 to 60 (badNames)
+ * 0 to 59 (badNames)
  * 60 to 100 (goodNames)
  */
 public class ChallengeRatings extends Saving {
@@ -76,7 +76,6 @@ public class ChallengeRatings extends Saving {
     private void updateModel() {
         try {
             _noOfSessions = Integer.parseInt(getSaved(SESSIONFILE, "_noOfSessions"));
-            System.out.println(_noOfSessions);
             _overallScore = Integer.parseInt(getSaved(SESSIONFILE, "_overallScore"));
             _progress = Integer.parseInt(getSaved(SESSIONFILE, "_progress"));
             _goodNames = getList(SESSIONFILE, "_goodNames");
@@ -89,8 +88,7 @@ public class ChallengeRatings extends Saving {
                 updateAverage(name, false);
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (NumberFormatException e) { //purposefully tries to catch the number format exception, doesn't do anything
         }
     }
 
