@@ -97,11 +97,7 @@ public abstract class ParentController extends Controller {
 	@FXML
 	protected void reset() {
 		Challenges.getInstance().reset();
-		try {
-			ChallengeRatings.getInstance().reset();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		ChallengeRatings.getInstance().reset();
 		DifficultyRatings.getInstance().reset();
 		_mediator.loadPane(Type.MAIN, "MainMenu");
 	}

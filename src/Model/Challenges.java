@@ -91,7 +91,6 @@ public class Challenges {
     }
 
     /**
-     *
      * @param nameKey name
      * @return list of the fileNames of the challenges given the nameKey
      */
@@ -138,7 +137,7 @@ public class Challenges {
 
     /**
      * gets the challenge from the filename of challenge and the nameKey
-     * @param fileName of the challenge
+     * @param fileName filename of the challenge
      * @return challenge based on name and filename
      */
     public Challenge getChallenge(String nameKey, String fileName) {
@@ -158,7 +157,7 @@ public class Challenges {
      * this method generates a new recording based on the nameKey
      * it then adds it to the _challenges list
      *
-     * @param nameKey
+     * @param nameKey name of the challenge
      * @return the filename of the challenge
      */
     public String addNewChallenge(String nameKey) {
@@ -171,7 +170,7 @@ public class Challenges {
 
     /**
      * helper method that checks if challenge exists as .wav files
-     * @param nameKey
+     * @param nameKey name of the challenge
      * @param fileName to check if file exists
      * @return a boolean that dictates if file exists.
      */
