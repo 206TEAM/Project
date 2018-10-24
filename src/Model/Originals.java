@@ -320,7 +320,7 @@ public class Originals {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("from set rating" + rating);
+
 	}
 
 	/**
