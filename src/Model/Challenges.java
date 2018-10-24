@@ -72,7 +72,7 @@ public class Challenges {
                 String fullName = f.getName();
                 String fileName = fullName.substring(0, fullName.lastIndexOf('.'));
                 Challenge challenge = new Challenge(name, fileName);
-                addChallenge(name, challenge);
+                addChallenge(name, challenge); //creates a challenge from the file and adds the challenge to the hashmap
             }
         }
     }
@@ -80,7 +80,7 @@ public class Challenges {
     /**
      * this method gets the number of challenges
      * @param nameKey
-     * @return
+     * @return the number of challenges
      */
     public int getChallengeSize(String nameKey) {
         if (_challenges.get(nameKey) != null) {
@@ -91,7 +91,9 @@ public class Challenges {
     }
 
     /**
-     * returns a list of the fileNames of the challenges given the nameKey
+     *
+     * @param nameKey name
+     * @return list of the fileNames of the challenges given the nameKey
      */
     public List<String> listChallenges(String nameKey) {
         if (_challenges.get(nameKey) != null) {
@@ -111,8 +113,8 @@ public class Challenges {
     /**
      * deletes the challenge from directory AND the challenges list
      *
-     * @param nameKey
-     * @param fileName
+     * @param nameKey name of challenge to delete
+     * @param fileName filename of the challenge to delete
      */
     public void deleteChallenge(String nameKey, String fileName) {
         Boolean hi = challengeExists(nameKey, fileName);
@@ -125,18 +127,19 @@ public class Challenges {
     }
 
     /**
-     * deletes the challenge from directory AND the challenges list
+     *
+     * @param challenge challenge to delete
      */
     public void deleteChallenge(Challenge challenge) {
         challenge.getNameKey();
-        _challenges.get(challenge.getNameKey()).remove(challenge); //not sure if this works yet (needs testing)
+        _challenges.get(challenge.getNameKey()).remove(challenge);
         challenge.delete();
     }
 
     /**
      * gets the challenge from the filename of challenge and the nameKey
-     * @param fileName
-     * @return
+     * @param fileName of the challenge
+     * @return challenge based on name and filename
      */
     public Challenge getChallenge(String nameKey, String fileName) {
         ArrayList<Challenge> challengeList = _challenges.get(nameKey);
@@ -156,12 +159,11 @@ public class Challenges {
      * it then adds it to the _challenges list
      *
      * @param nameKey
-     * @return challenge
+     * @return the filename of the challenge
      */
     public String addNewChallenge(String nameKey) {
-        // Create a new challenge of the given name
-        Challenge challenge = new Challenge(nameKey);
-        challenge.create();
+        Challenge challenge = new Challenge(nameKey); // Create a new challenge of the given name
+        challenge.create(); //create the challenge
         addChallenge(nameKey, challenge);
         _existingChallenges.add(challenge);
         return challenge.getFileName();
@@ -170,7 +172,7 @@ public class Challenges {
     /**
      * helper method that checks if challenge exists as .wav files
      * @param nameKey
-     * @param fileName
+     * @param fileName to check if file exists
      * @return
      */
     private Boolean challengeExists(String nameKey, String fileName) {

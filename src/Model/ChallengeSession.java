@@ -30,9 +30,8 @@ public class ChallengeSession {
     }
 
     /**
-     * constructor for creating a challengesession from an existing list of names
-     *
-     * @param oldList
+     * constructor for creating a challengeSession from an existing list of names
+     * @param oldList list of names you wish to use for the challenges session
      */
     public ChallengeSession(List<String> oldList) {
         _numberOfNames = oldList.size();
@@ -80,7 +79,6 @@ public class ChallengeSession {
     public int getSessionScore() {
         double ratio = (_goodList.size() / (double) _numberOfNames) * 100;
         return (int) ratio;
-
     }
 
     public String getCurrentName() {
@@ -127,7 +125,7 @@ public class ChallengeSession {
     /**
      * this method returns the score message based on the score of the session.
      *
-     * @return
+     * @return score message based on the score limit
      */
     public String getScoreMessage() {
         int score = getSessionScore();
@@ -142,7 +140,6 @@ public class ChallengeSession {
      * this method gets rid of all the challenge files and removes from challenge list
      */
     public void abortSession() {
-        //todo: kill processes
         Mediator.getInstance().removeInChallengeSession();
         try {
             if (_challengeFileList!=null || _challengeFileList!=null) {
@@ -152,10 +149,9 @@ public class ChallengeSession {
                         Challenges.getInstance().deleteChallenge(name, _challengeFileList.get(i)); //removes challenge file and from the model
                     }
                 }
-
             }
         } catch (Exception e) {
-            System.out.println("error");
+            e.printStackTrace();
         }
     }
 }
