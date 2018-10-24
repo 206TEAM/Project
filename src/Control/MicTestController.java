@@ -55,6 +55,7 @@ public class MicTestController extends Controller implements MicTesterController
 		double level = 2*rms;
 		if (rms > 0.01 && !_working) {
 			_working = true;
+			notWorkingLabel.setVisible(false);
 		}
 		if (level >= 1) {
 			micLevel.setProgress(1);
