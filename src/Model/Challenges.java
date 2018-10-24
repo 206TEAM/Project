@@ -173,7 +173,7 @@ public class Challenges {
      * helper method that checks if challenge exists as .wav files
      * @param nameKey
      * @param fileName to check if file exists
-     * @return
+     * @return a boolean that dictates if file exists.
      */
     private Boolean challengeExists(String nameKey, String fileName) {
 
